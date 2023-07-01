@@ -104,6 +104,7 @@ function handleDragEnter(event) {
 function handleDragOver(event) {
   event.stopPropagation();
   event.preventDefault();
+  event.dataTransfer.dropEffect = "copy";
   console.log("Drag over happened");
 }
 
