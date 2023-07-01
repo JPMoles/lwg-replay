@@ -12,6 +12,10 @@ fileInput.addEventListener("input", handleInput, false);
 dropInput.addEventListener("dragenter", handleDragEnter, false);
 dropInput.addEventListener("dragover", handleDragOver, false);
 dropInput.addEventListener("drop", handleDrop, false);
+dropInput.addEventListener("dragleave", handleDragLeave, false);
+dropInput.addEventListener("click", handleClick, false);
+dropInput.addEventListener("mousedown", handleMouseDown, false);
+dropInput.addEventListener("mouseup", handleMouseUp, false);
 
 async function handleChange(event) {
   // event.target.files is same as fileInput.files because it's the target
@@ -37,10 +41,22 @@ function handleInput() {
 // Both "change" and "input" appear to be called at the same time for file upload
 // They do not get called again if you select the exact same file(s) additional times
 
+function setDefaultDropStyles() {
+  fileDrop.style.backgroundColor = "lightblue";
+  fileDrop.style.boxShadow = "";
+}
+
+function setDropStyles() {
+  fileDrop.style.backgroundColor = "#88daf4";
+  fileDrop.style.boxShadow = "inset 0 0 10px #444";
+}
+
 function handleDragEnter(event) {
   event.stopPropagation();
   event.preventDefault();
   console.log("Drag enter happened");
+
+  setDropStyles();
 }
 
 function handleDragOver(event) {
@@ -54,7 +70,30 @@ function handleDrop(event) {
   event.preventDefault();
   console.log("Drop happened");
 
+  setDefaultDropStyles();
+
   const dataTransfer = event.dataTransfer;
   const files = dataTransfer.files;
   console.log(files);
+}
+
+function handleDragLeave(event) {
+  event.stopPropagation();
+  event.preventDefault();
+
+  setDefaultDropStyles();
+}
+
+function handleClick(event) {
+  fileInput.click();
+}
+
+function handleMouseDown(event) {
+  console.log("mouse down");
+  setDropStyles();
+}
+
+function handleMouseUp(event) {
+  console.log("mouse up");
+  setDefaultDropStyles();
 }
