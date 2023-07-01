@@ -5,6 +5,7 @@ console.log("inside the module");
 
 const fileInput = document.getElementById("fileUpload");
 const dropInput = document.getElementById("fileDrop");
+const fileContent = document.getElementById("fileContent");
 
 fileInput.addEventListener("change", handleChange, false);
 fileInput.addEventListener("input", handleInput, false);
@@ -16,6 +17,18 @@ dropInput.addEventListener("dragleave", handleDragLeave, false);
 dropInput.addEventListener("click", handleClick, false);
 dropInput.addEventListener("mousedown", handleMouseDown, false);
 dropInput.addEventListener("mouseup", handleMouseUp, false);
+
+const lwgReplayKeys = [
+  "map",
+  "mapVersion",
+  "gameVersion",
+  "players",
+  "aiRandomizer",
+  "ticksCounter",
+  "orders",
+  "messages",
+  "playerLefts",
+];
 
 async function handleChange(event) {
   // event.target.files is same as fileInput.files because it's the target
@@ -31,7 +44,36 @@ async function handleChange(event) {
     const data = JSON.parse(await fileList[0].text());
     console.log("The json object: ");
     console.log(data);
+
+    // Create paragraph elements for each key value pair in the json object
+    for (const key in data) {
+      const value = data[key];
+      console.log("Key: ", key);
+      console.log("Value: ", value);
+    }
+
+    if (isLWGReplay(data)) {
+      // Process and print info
+      console.log("It is a LWG replay!");
+
+      for (const key in data) {
+        const p = document.createElement("p");
+        const value = typeof data[key] === "object" ? JSON.stringify(data[key]) : data[key];
+        p.innerText = key + ": " + value;
+        fileContent.appendChild(p);
+      }
+    } else {
+      console.log("It is not a LWG replay!");
+    }
   }
+}
+
+function isLWGReplay(obj) {
+  for (const key of lwgReplayKeys) {
+    if (!Object.hasOwn(obj, key)) return false;
+  }
+
+  return true;
 }
 
 function handleInput() {

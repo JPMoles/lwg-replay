@@ -21,3 +21,7 @@ body {
   background-color: lightblue;
   border-radius: 24px;
 }
+
+#fileContent {
+  background-color: #fff;
+}
