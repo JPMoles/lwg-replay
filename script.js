@@ -6,6 +6,7 @@ console.log("inside the module");
 const fileInput = document.getElementById("fileUpload");
 const dropInput = document.getElementById("fileDrop");
 const fileContent = document.getElementById("fileContent");
+const mapImages = document.getElementById("mapImages");
 
 fileInput.addEventListener("change", handleChange, false);
 fileInput.addEventListener("input", handleInput, false);
@@ -140,3 +141,56 @@ function handleMouseUp(event) {
   console.log("mouse up");
   setDefaultDropStyles();
 }
+
+// Create a WebSocket with the littlewargame server to get map data
+
+const socket = new WebSocket("wss://sockets.littlewargame.com:8083");
+
+socket.addEventListener("message", (event) => {
+  if (event.data.startsWith("maps-list")) {
+    // Maps are paginated
+    // console.log(event.data);
+
+    const splitMsg = event.data.split("<<$");
+
+    const page = parseInt(splitMsg[1]) + 1;
+    console.log("Current page: ", page);
+    const totalPages = parseInt(splitMsg[2]);
+    console.log("Total pages: ", totalPages);
+    const maps = [];
+
+    for (let i = 3; i < splitMsg.length; i += 6) {
+      maps.push({
+        name: splitMsg[i],
+        description: splitMsg[i + 1],
+        img: splitMsg[i + 2],
+        countPlayers: splitMsg[i + 3],
+        mode: splitMsg[i + 4],
+        popularity: splitMsg[i + 5],
+      });
+    }
+
+    for (let map of maps) {
+      const img = document.createElement("img");
+      img.src = map.img;
+      mapImages.appendChild(img);
+    }
+
+    console.log(maps);
+  }
+  // console.log("Message from server: ", event);
+});
+
+socket.addEventListener("open", (event) => {
+  console.log("sending message");
+  setTimeout(() => {
+    socket.send("login-guest<<$dummy-string");
+  }, 5000);
+  setTimeout(() => {
+    socket.send("game-version<<$4.9.3");
+  }, 10000);
+  setTimeout(() => {
+    socket.send("get-custom-maps<<$0<<$<<$*<<$0<<$popularity");
+    console.log("sent the final message :)");
+  }, 15000);
+});
