@@ -19,6 +19,8 @@ dropInput.addEventListener("click", handleClick, false);
 dropInput.addEventListener("mousedown", handleMouseDown, false);
 dropInput.addEventListener("mouseup", handleMouseUp, false);
 
+const TICKS_PER_SECOND = 20;
+
 const lwgReplayKeys = [
   "map",
   "mapVersion",
@@ -67,29 +69,73 @@ async function handleChange(event) {
       // "messages",
       // "playerLefts",
 
-      for (const key in lwgReplayKeys) {
+      const playerList = [];
+
+      for (const key of lwgReplayKeys) {
+        const value = data[key];
         switch (key) {
           case "map":
+            const h2 = document.createElement("h2");
+            h2.innerText = "Map: " + value;
+            fileContent.appendChild(h2);
             break;
           case "mapVersion":
+            const mapParagraph = document.createElement("p");
+            mapParagraph.innerText = "Map Version: " + value;
+            fileContent.appendChild(mapParagraph);
             break;
           case "gameVersion":
+            const gameVersionParagraph = document.createElement("p");
+            gameVersionParagraph.innerText = "Game Version: " + value;
+            fileContent.appendChild(gameVersionParagraph);
             break;
           case "players":
+            // Add players to full playerList
+            value.map((player) => playerList.push(player));
+
+            const h3 = document.createElement("h3");
+            // TODO: Create title based off map gamemode: 1v1, 2v2, 3v3, ect.
+            h3.innerText = value[0].name + " v " + value[1].name;
+            fileContent.appendChild(h3);
             break;
           case "aiRandomizer":
+            const aiSeedParagraph = document.createElement("p");
+            aiSeedParagraph.innerText = "AI Seed: " + value;
+            fileContent.appendChild(aiSeedParagraph);
             break;
           case "ticksCounter":
+            // TODO: Calculate game length -> ticks / ticks per second = seconds in the game -> format in terms of hours:minutes:seconds
+            const gameLengthParagraph = document.createElement("p");
+            gameLengthParagraph.innerText =
+              "Game Length: " + formatTime(Math.ceil(value / TICKS_PER_SECOND));
+            fileContent.appendChild(gameLengthParagraph);
             break;
           case "orders":
             break;
           case "messages":
+            const messagesTextArea = document.createElement("p");
+            const messages =
+              "<b>Chat Messages:</b> <br>" +
+              Object.keys(value).reduce((prev, curr) => prev + " " + value[curr] + "<br>", "");
+            messagesTextArea.innerHTML = messages;
+            fileContent.appendChild(messagesTextArea);
             break;
           case "playerLefts":
+            console.log(playerList);
+            const winner = document.createElement("h3");
+            // TODO: List out all winners: 2v2, 3v3, ect.
+            // playersLeft gives the team that won
+            const winningTeam = Object.keys(value).reduce((prev, curr) => prev + value[curr], "");
+            console.log("Winning team: ", winningTeam);
+            winner.innerHTML =
+              "Winning Team: " +
+              Object.keys(value).reduce((prev, curr) => prev + " " + value[curr], "") +
+              "<br>" +
+              "Winning Players: ";
+            fileContent.appendChild(winner);
             break;
           default:
             const p = document.createElement("p");
-            const value = typeof data[key] === "object" ? JSON.stringify(data[key]) : data[key];
             p.innerText = key + ": " + value;
             fileContent.appendChild(p);
             break;
@@ -99,6 +145,24 @@ async function handleChange(event) {
       console.log("It is not a LWG replay!");
     }
   }
+}
+
+function formatTime(sec) {
+  var sec_num = sec;
+  var hours = Math.floor(sec_num / 3600);
+  var minutes = Math.floor((sec_num - hours * 3600) / 60);
+  var seconds = sec_num - hours * 3600 - minutes * 60;
+
+  if (hours < 10) {
+    hours = "0" + hours;
+  }
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+  return hours + ":" + minutes + ":" + seconds;
 }
 
 function isLWGReplay(obj) {
