@@ -111,6 +111,28 @@ async function handleChange(event) {
             fileContent.appendChild(gameLengthParagraph);
             break;
           case "orders":
+            // Print out orders done by player 1:
+            const playerOneOrders = Object.keys(value)
+              .map((tickNumber) => {
+                const tickOrders = value[tickNumber];
+                const playerOneOrder = tickOrders.filter(
+                  (order) => order.length > 0 && order[0] === 1
+                );
+                // console.log(playerOneOrder);
+                if (playerOneOrder.length > 0 && playerOneOrder[0]) return playerOneOrder[0];
+                return null;
+              })
+              .filter((value) => value !== null)
+              .reduce((prev, order) => {
+                if (commands[order[2]]) return prev + commands[order[2]].commandName + "<br>";
+                else return prev + " not sure yet<br>";
+              }, "");
+            const ordersParagraph = document.createElement("p");
+            ordersParagraph.innerHTML = "Orders: <br>" + playerOneOrders;
+            fileContent.appendChild(ordersParagraph);
+
+            // Print out orders done by player 2:
+
             break;
           case "messages":
             const messagesTextArea = document.createElement("p");

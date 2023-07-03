@@ -33,3 +33,7 @@ body {
 #mapImages {
   background-color: rgb(189, 228, 228);
 }
+
+p {
+  overflow-wrap: anywhere;
+}
