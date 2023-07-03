@@ -121,17 +121,22 @@ async function handleChange(event) {
             fileContent.appendChild(messagesTextArea);
             break;
           case "playerLefts":
-            console.log(playerList);
+            console.log("Player List: ", playerList);
             const winner = document.createElement("h3");
             // TODO: List out all winners: 2v2, 3v3, ect.
             // playersLeft gives the team that won
             const winningTeam = Object.keys(value).reduce((prev, curr) => prev + value[curr], "");
+            const winningPlayers = playerList
+              .filter((p) => p.team === parseInt(winningTeam))
+              .reduce((prev, curr) => prev + " " + curr.name + ", ", "");
             console.log("Winning team: ", winningTeam);
+            console.log("Winning players: ", winningPlayers);
             winner.innerHTML =
               "Winning Team: " +
               Object.keys(value).reduce((prev, curr) => prev + " " + value[curr], "") +
               "<br>" +
-              "Winning Players: ";
+              "Winning Players: " +
+              winningPlayers;
             fileContent.appendChild(winner);
             break;
           default:
