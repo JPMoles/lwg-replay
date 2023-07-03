@@ -3,6 +3,14 @@
 // Is a module
 console.log("inside the module");
 
+const uploadButton = document.getElementById("uploadButton");
+
+uploadButton.addEventListener("click", handleUploadButtonClick, false);
+
+function handleUploadButtonClick() {
+  window.location.href = "/";
+}
+
 const fileInput = document.getElementById("fileUpload");
 const dropInput = document.getElementById("fileDrop");
 const fileContent = document.getElementById("fileContent");

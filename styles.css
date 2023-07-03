@@ -37,3 +37,24 @@ body {
 p {
   overflow-wrap: anywhere;
 }
+
+header {
+  font-size: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header > a {
+  text-decoration: none;
+  color: inherit;
+  height: fit-content;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
