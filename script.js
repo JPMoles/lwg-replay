@@ -118,14 +118,23 @@ async function handleChange(event) {
                 const playerOneOrder = tickOrders.filter(
                   (order) => order.length > 0 && order[0] === 1
                 );
-                // console.log(playerOneOrder);
-                if (playerOneOrder.length > 0 && playerOneOrder[0]) return playerOneOrder[0];
+                console.log(playerOneOrder);
+                if (playerOneOrder.length > 0 && playerOneOrder[0]) {
+                  playerOneOrder[0].tickNumber = tickNumber;
+                  return playerOneOrder[0];
+                }
                 return null;
               })
               .filter((value) => value !== null)
               .reduce((prev, order) => {
                 if ((order[2] < 7 || order[2] > 15) && commands[order[2]])
-                  return prev + commands[order[2]].commandName + "<br>";
+                  return (
+                    prev +
+                    formatTime(Math.floor(order.tickNumber / TICKS_PER_SECOND)) +
+                    " " +
+                    commands[order[2]].commandName +
+                    "<br>"
+                  );
                 else return prev + " ";
               }, "");
             const ordersParagraph = document.createElement("p");
