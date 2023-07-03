@@ -124,8 +124,9 @@ async function handleChange(event) {
               })
               .filter((value) => value !== null)
               .reduce((prev, order) => {
-                if (commands[order[2]]) return prev + commands[order[2]].commandName + "<br>";
-                else return prev + " not sure yet<br>";
+                if ((order[2] < 7 || order[2] > 15) && commands[order[2]])
+                  return prev + commands[order[2]].commandName + "<br>";
+                else return prev + " ";
               }, "");
             const ordersParagraph = document.createElement("p");
             ordersParagraph.innerHTML = "Orders: <br>" + playerOneOrders;
