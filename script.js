@@ -57,11 +57,43 @@ async function handleChange(event) {
       // Process and print info
       console.log("It is a LWG replay!");
 
-      for (const key in data) {
-        const p = document.createElement("p");
-        const value = typeof data[key] === "object" ? JSON.stringify(data[key]) : data[key];
-        p.innerText = key + ": " + value;
-        fileContent.appendChild(p);
+      // "map",
+      // "mapVersion",
+      // "gameVersion",
+      // "players",
+      // "aiRandomizer",
+      // "ticksCounter",
+      // "orders",
+      // "messages",
+      // "playerLefts",
+
+      for (const key in lwgReplayKeys) {
+        switch (key) {
+          case "map":
+            break;
+          case "mapVersion":
+            break;
+          case "gameVersion":
+            break;
+          case "players":
+            break;
+          case "aiRandomizer":
+            break;
+          case "ticksCounter":
+            break;
+          case "orders":
+            break;
+          case "messages":
+            break;
+          case "playerLefts":
+            break;
+          default:
+            const p = document.createElement("p");
+            const value = typeof data[key] === "object" ? JSON.stringify(data[key]) : data[key];
+            p.innerText = key + ": " + value;
+            fileContent.appendChild(p);
+            break;
+        }
       }
     } else {
       console.log("It is not a LWG replay!");
