@@ -60,11 +60,15 @@ footer {
 }
 
 /* For Observable Plot */
-svg {
+/* svg {
   color: black;
   fill: black;
-}
+} */
 
-rect {
+/* rect {
   fill: black;
+} */
+
+#myplot {
+  color: black;
 }
