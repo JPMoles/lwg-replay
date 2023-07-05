@@ -8,8 +8,12 @@ console.log("The graph script was ran!");
 // testLoop();
 
 let plot = Plot.rectY({ length: 10000 }, Plot.binX({ y: "count" }, { x: Math.random })).plot();
-const div = document.querySelector("#myplot");
+const div = document.querySelector("#unusedGoldPlot");
 div.append(plot);
+
+let plot2 = Plot.rectY({ length: 10000 }, Plot.binX({ y: "count" }, { x: Math.random })).plot();
+const totalSupplyDiv = document.querySelector("#totalSupplyPlot");
+totalSupplyDiv.append(plot2);
 
 const replayOutputDataDiv = document.getElementById("replayOutputData");
 
@@ -52,5 +56,20 @@ const replayOutputInterval = setInterval(() => {
       ],
     });
     div.replaceChildren(plot);
+
+    // Total Supply Chart
+    const totalSupplyPlot = Plot.plot({
+      grid: true,
+      color: { legend: true },
+      y: {
+        label: "Total Supply",
+      },
+      marks: [
+        Plot.ruleY([0]),
+        Plot.line(playerOneData, { x: "tick", y: "totalSupply", stroke: "name" }),
+        Plot.line(playerTwoData, { x: "tick", y: "totalSupply", stroke: "name" }),
+      ],
+    });
+    totalSupplyDiv.replaceChildren(totalSupplyPlot);
   }
 }, 5_000);
