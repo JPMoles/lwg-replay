@@ -4,10 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LWG Replay Summarizer</title>
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+
+    <!-- Testing lwg game code -->
+    <link href="game/jquery-ui-1.10.4.custom.css" rel="stylesheet" type="text/css" />
+    <link href="game/style.css" rel="stylesheet" type="text/css" />
+    <!-- End Testing lwg game code -->
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
+
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header>
+    <!-- <header>
       <a href="/home.html">LWG Replay</a>
       <button id="uploadButton">Upload</button>
     </header>
@@ -17,10 +27,27 @@
       <div id="fileDrop"></div>
     </div>
     <div id="fileContent"></div>
-    <div id="mapImages"></div>
+    <div id="mapImages"></div> -->
 
-    <footer>Made for the LWG Community.</footer>
+    <!-- Testing lwg game code -->
+    <canvas id="canvas" oncontextmenu="return false"></canvas>
+    <div id="loadingSoldier"></div>
+
+    <button id="uploadReplayButton">Upload Replay</button>
+    <div id="myplot"></div>
+
+    <script type="module" src="graph-script.js"></script>
+
+    <script type="text/javascript" src="game/underscore-min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="game/FileSaver.js"></script>
+    <script type="text/javascript" src="game/jquery-ui-1.10.3.custom.min.js"></script>
+
+    <script type="text/javascript" src="game/lwg-4.9.3.js"></script>
+    <!-- End Testing lwg game code -->
+
+    <!-- <footer>Made for the LWG Community.</footer> -->
     <!-- Load the script as the last element in the body -->
-    <script type="module" src="script.js"></script>
+    <!-- <script type="module" src="script.js"></script> -->
   </body>
 </html>

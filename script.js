@@ -5,27 +5,27 @@ console.log("inside the module");
 
 const uploadButton = document.getElementById("uploadButton");
 
-uploadButton.addEventListener("click", handleUploadButtonClick, false);
+// uploadButton.addEventListener("click", handleUploadButtonClick, false);
 
 function handleUploadButtonClick() {
   window.location.href = "/";
 }
 
-const fileInput = document.getElementById("fileUpload");
-const dropInput = document.getElementById("fileDrop");
-const fileContent = document.getElementById("fileContent");
-const mapImages = document.getElementById("mapImages");
+// const fileInput = document.getElementById("fileUpload");
+// const dropInput = document.getElementById("fileDrop");
+// const fileContent = document.getElementById("fileContent");
+// const mapImages = document.getElementById("mapImages");
 
-fileInput.addEventListener("change", handleChange, false);
-fileInput.addEventListener("input", handleInput, false);
+// fileInput.addEventListener("change", handleChange, false);
+// fileInput.addEventListener("input", handleInput, false);
 
-dropInput.addEventListener("dragenter", handleDragEnter, false);
-dropInput.addEventListener("dragover", handleDragOver, false);
-dropInput.addEventListener("drop", handleDrop, false);
-dropInput.addEventListener("dragleave", handleDragLeave, false);
-dropInput.addEventListener("click", handleClick, false);
-dropInput.addEventListener("mousedown", handleMouseDown, false);
-dropInput.addEventListener("mouseup", handleMouseUp, false);
+// dropInput.addEventListener("dragenter", handleDragEnter, false);
+// dropInput.addEventListener("dragover", handleDragOver, false);
+// dropInput.addEventListener("drop", handleDrop, false);
+// dropInput.addEventListener("dragleave", handleDragLeave, false);
+// dropInput.addEventListener("click", handleClick, false);
+// dropInput.addEventListener("mousedown", handleMouseDown, false);
+// dropInput.addEventListener("mouseup", handleMouseUp, false);
 
 const TICKS_PER_SECOND = 20;
 
@@ -43,7 +43,11 @@ const lwgReplayKeys = [
 
 async function handleChange(event) {
   // event.target.files is same as fileInput.files because it's the target
-  const fileList = fileInput.files;
+  analyzeReplayFile(fileInput.files);
+}
+
+async function analyzeReplayFile(files) {
+  const fileList = files;
   console.log(fileList);
   if (fileList.length > 0) {
     const bufferSliced = fileList[0].slice(0, 50); // slice([start[, end[, contentType]])
@@ -260,6 +264,8 @@ function handleDrop(event) {
   const dataTransfer = event.dataTransfer;
   const files = dataTransfer.files;
   console.log(files);
+
+  analyzeReplayFile(files);
 }
 
 function handleDragLeave(event) {
@@ -284,7 +290,7 @@ function handleMouseUp(event) {
 }
 
 // Create a WebSocket with the littlewargame server to get map data
-
+/*
 const socket = new WebSocket("wss://sockets.littlewargame.com:8083");
 
 socket.addEventListener("message", (event) => {
@@ -335,6 +341,7 @@ socket.addEventListener("open", (event) => {
     console.log("sent the final message :)");
   }, 15000);
 });
+*/
 
 const commands = [
   { commandName: "Train Worker", number: 0 },

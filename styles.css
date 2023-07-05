@@ -15,12 +15,12 @@ body {
   align-items: center;
 }
 
-#fileDrop {
+/* #fileDrop {
   width: 600px;
   height: 600px;
   background-color: lightblue;
   border-radius: 24px;
-}
+} */
 
 #fileContent {
   background-color: #fff;
@@ -57,4 +57,14 @@ footer {
   align-items: center;
   padding-top: 8px;
   padding-bottom: 8px;
+}
+
+/* For Observable Plot */
+svg {
+  color: black;
+  fill: black;
+}
+
+rect {
+  fill: black;
 }
