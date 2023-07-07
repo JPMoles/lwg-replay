@@ -33020,15 +33020,15 @@
                 "Join a clan and meet new friends! You can also create a clan if you want.",
               ];
 
-              var tipsDiv = new UIElement("div", "tipsDiv", function () {
-                return (
-                  game_state == GAME.LOBBY ||
-                  game_state == GAME.LOGIN ||
-                  game_state == GAME.REGISTER ||
-                  game_state == GAME.RECOVERY
-                );
-              });
-              $("#tipsDiv").html("Tip:   " + _.sample(tipMessages));
+              // var tipsDiv = new UIElement("div", "tipsDiv", function () {
+              //   return (
+              //     game_state == GAME.LOBBY ||
+              //     game_state == GAME.LOGIN ||
+              //     game_state == GAME.REGISTER ||
+              //     game_state == GAME.RECOVERY
+              //   );
+              // });
+              // $("#tipsDiv").html("Tip:   " + _.sample(tipMessages));
 
               /*
                * Win / Loss Window
@@ -34393,7 +34393,6 @@
                 this.quitGameButton,
                 this.optionsPauseButton,
                 versionNumber,
-                tipsDiv,
                 linksMenu,
                 achivementsButton,
                 emotesButton,

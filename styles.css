@@ -75,6 +75,14 @@ footer {
 
 #plotDivs {
   color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#plotDivs > div {
+  min-width: 500px;
 }
 
 #uploadReplayButton {
