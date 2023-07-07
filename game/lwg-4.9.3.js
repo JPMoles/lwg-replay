@@ -20574,12 +20574,12 @@
 
               if (!noSound) soundManager.playSound(SOUND.BING2, null, 0.65);
 
-              $("#bingMessageWindow").html("<p>" + msg + "</p>");
-              $("#bingMessageWindow").fadeIn(1000);
+              // $("#bingMessageWindow").html("<p>" + msg + "</p>");
+              // $("#bingMessageWindow").fadeIn(1000);
 
-              setTimeout(function () {
-                $("#bingMessageWindow").fadeOut(1000);
-              }, 4000);
+              // setTimeout(function () {
+              //   $("#bingMessageWindow").fadeOut(1000);
+              // }, 4000);
             }
 
             function editPersonalText() {
@@ -23068,10 +23068,10 @@
                   cc = this.buildings[k];
 
               // clear the stats window of any previous information
-              StatsWindow.clear();
+              // StatsWindow.clear();
 
               // empty chat history
-              $("#chatHistorytextContainer").html("");
+              // $("#chatHistorytextContainer").html("");
 
               // Initialize the dropdowns for spectators
               // Disable them in the editor, in editor testing, LCG, and obviously if the player is not a spectator
@@ -23890,14 +23890,14 @@
             };
 
             Game.prototype.addChatMsgToLog = function (msg) {
-              var escapedMsg = escapeHtml(msg);
+              //var escapedMsg = escapeHtml(msg);
               // if this index already exists, push the msg
-              if (this.chatLog[ticksCounter]) this.chatLog[ticksCounter].push(msg);
+              //if (this.chatLog[ticksCounter]) this.chatLog[ticksCounter].push(msg);
               // if the index doesnt exist, create it and add the msg
-              else this.chatLog[ticksCounter] = [msg];
+              //else this.chatLog[ticksCounter] = [msg];
               console.log(`Chat msg ${msg}`);
               // add to chat history window
-              $("#chatHistorytextContainer")[0].innerHTML += "<p>" + escapedMsg + "</p>";
+              //$("#chatHistorytextContainer")[0].innerHTML += "<p>" + escapedMsg + "</p>";
             };
 
             // refresh the neighbours of a field, gets called everytime a building gets destroyed or created
@@ -34226,10 +34226,10 @@
               };
 
               // Bing message
-              var bingMessage = document.createElement("div");
-              bingMessage.id = "bingMessageWindow";
-              bingMessage.className = "ingameWindow";
-              document.body.appendChild(bingMessage);
+              // var bingMessage = document.createElement("div");
+              // bingMessage.id = "bingMessageWindow";
+              // bingMessage.className = "ingameWindow";
+              // document.body.appendChild(bingMessage);
 
               // Player Info Window
               this.playerInfoWindow = new UIWindow(
@@ -42956,15 +42956,15 @@
               }
 
               StatsWindow_.prototype.init = function () {
-                this.statisticsWindow = new UIWindow(
-                  "statisticsWindow",
-                  null,
-                  true,
-                  "Statistics",
-                  true
-                );
-                this.statisticsWindow.addScrollableSubDiv("statisticsTextArea");
-                $("#statisticsWindow").hide();
+                // this.statisticsWindow = new UIWindow(
+                //   "statisticsWindow",
+                //   null,
+                //   true,
+                //   "Statistics",
+                //   true
+                // );
+                // this.statisticsWindow.addScrollableSubDiv("statisticsTextArea");
+                // $("#statisticsWindow").hide();
 
                 // TODO: don't use the global variable game if we can help it
                 const saveReplay = addClickSound(() => {
@@ -42974,14 +42974,14 @@
                   saveAs(blob, game.getReplayName() + ".json");
                 });
 
-                new HTMLBuilder()
-                  .add(
-                    "<div id='showLadderPointsDiv' title='Ladder points determine your rank in your division. " +
-                      "You win ladder points for victories in ranked games and lose ladder points for losses in ranked games.'></div>"
-                  )
-                  .add("<div id='xpBarDiv'></div>")
-                  .add(generateButton("saveReplayButton", null, null, saveReplay, "Save Replay"))
-                  .appendInto("#statisticsWindow");
+                // new HTMLBuilder()
+                //   .add(
+                //     "<div id='showLadderPointsDiv' title='Ladder points determine your rank in your division. " +
+                //       "You win ladder points for victories in ranked games and lose ladder points for losses in ranked games.'></div>"
+                //   )
+                //   .add("<div id='xpBarDiv'></div>")
+                //   .add(generateButton("saveReplayButton", null, null, saveReplay, "Save Replay"))
+                //   .appendInto("#statisticsWindow");
 
                 this.__initNetworkListeners();
               };
@@ -43123,90 +43123,82 @@
 
               StatsWindow_.prototype.showGameStatistics = function (curGame) {
                 // Build statistics table
-                const statsBuilder = new HTMLBuilder();
-                statsBuilder.add("<table style='margin: 40px auto 30px;'>");
-                statsBuilder.add(
-                  "<tr><td></td><td>Units Killed</td><td>Units Lost</td><td>Buildings Destroyed</td><td>Buildings Lost</td><td>Actions Per Minute</td><td>Mined Gold</td></tr>"
-                );
-
-                // Write out statistics for each player
-                for (let i = 1; i < curGame.players.length; i++) {
-                  if (curGame.players[i] && curGame.players[i].controller != CONTROLLER.SPECTATOR) {
-                    const player = curGame.players[i];
-                    const apm = Math.floor(player.apm / (ticksCounter / 1200));
-                    const backgroundColorStyle =
-                      PLAYING_PLAYER == player
-                        ? " background-color: rgba(255, 255, 255, 0.2);"
-                        : "";
-
-                    statsBuilder.add(
-                      `<tr style='color: ${player.getColor()}; ${backgroundColorStyle};'>`
-                    );
-                    statsBuilder.add("<td style='font-size: 18px;'>");
-                    statsBuilder.add(player.name);
-                    statsBuilder.add(`</td><td class='size24px'>${player.unitKills}</td>`);
-                    statsBuilder.add(
-                      `<td class='size24px'>${player.unitDeaths}</td><td class='size24px'>${player.buildingKills}</td>`
-                    );
-                    statsBuilder.add(
-                      `<td class='size24px'>${player.buildingDeaths}</td><td class='size24px'>${apm}</td>`
-                    );
-                    statsBuilder.add(`<td class='size24px'>${player.minedGold}</td></tr>`);
-                  }
-                }
-                statsBuilder.add("</table>");
-
-                if (!curGame.replay_mode && Login.loginState == Login.LoginStates.GUEST)
-                  statsBuilder.add(
-                    "<div id='guestAccountPrompt'>Log in to gain exp and level up rewards!<br /><br /></div>"
-                  );
-
-                if (!curGame.replay_mode && PLAYING_PLAYER.controller != CONTROLLER.SPECTATOR) {
-                  const apmRank = this.__calculateFromThresholds(
-                    PLAYING_PLAYER.apm / (ticksCounter / 1200),
-                    30,
-                    60,
-                    120
-                  );
-                  const goldRank = this.__calculateFromThresholds(
-                    PLAYING_PLAYER.minedGold / (ticksCounter / 1200),
-                    300,
-                    600,
-                    1000
-                  );
-                  // Inverted as less is better
-                  const buildingsLostRank = this.__calculateFromThresholds(
-                    -PLAYING_PLAYER.buildingDeaths,
-                    -20,
-                    -10,
-                    -5
-                  );
-
-                  statsBuilder
-                    .add("<div id='rankContainer'>")
-                    .add(this.__createLetterRankDiv(apmRank, "APM"))
-                    .add(this.__createLetterRankDiv(goldRank, "GOLD PER MIN"))
-                    .add(this.__createLetterRankDiv(buildingsLostRank, "BUILDINGS LOST"))
-                    .add("</div>");
-                }
-
-                statsBuilder.insertInto("#statisticsTextArea");
-
-                if (curGame.replay_mode) {
-                  $("#saveReplayButton").css("display", "none");
-                  this.statisticsWindow.setTitleText("Replay complete");
-                  this.statisticsWindow.setTitleStyle("windowTitle");
-                } else {
-                  $("#saveReplayButton").css("display", "inline-block");
-                  this.statisticsWindow.setTitleText(
-                    curGame.playingPlayerWon ? "Victory" : "Defeat"
-                  );
-                  this.statisticsWindow.setTitleStyle(
-                    curGame.playingPlayerWon ? "victoryTitle" : "defeatTitle"
-                  );
-                }
-
-                fadeIn($("#statisticsWindow"));
+                // const statsBuilder = new HTMLBuilder();
+                // statsBuilder.add("<table style='margin: 40px auto 30px;'>");
+                // statsBuilder.add(
+                //   "<tr><td></td><td>Units Killed</td><td>Units Lost</td><td>Buildings Destroyed</td><td>Buildings Lost</td><td>Actions Per Minute</td><td>Mined Gold</td></tr>"
+                // );
+                // // Write out statistics for each player
+                // for (let i = 1; i < curGame.players.length; i++) {
+                //   if (curGame.players[i] && curGame.players[i].controller != CONTROLLER.SPECTATOR) {
+                //     const player = curGame.players[i];
+                //     const apm = Math.floor(player.apm / (ticksCounter / 1200));
+                //     const backgroundColorStyle =
+                //       PLAYING_PLAYER == player
+                //         ? " background-color: rgba(255, 255, 255, 0.2);"
+                //         : "";
+                //     statsBuilder.add(
+                //       `<tr style='color: ${player.getColor()}; ${backgroundColorStyle};'>`
+                //     );
+                //     statsBuilder.add("<td style='font-size: 18px;'>");
+                //     statsBuilder.add(player.name);
+                //     statsBuilder.add(`</td><td class='size24px'>${player.unitKills}</td>`);
+                //     statsBuilder.add(
+                //       `<td class='size24px'>${player.unitDeaths}</td><td class='size24px'>${player.buildingKills}</td>`
+                //     );
+                //     statsBuilder.add(
+                //       `<td class='size24px'>${player.buildingDeaths}</td><td class='size24px'>${apm}</td>`
+                //     );
+                //     statsBuilder.add(`<td class='size24px'>${player.minedGold}</td></tr>`);
+                //   }
+                // }
+                // statsBuilder.add("</table>");
+                // if (!curGame.replay_mode && Login.loginState == Login.LoginStates.GUEST)
+                // statsBuilder.add(
+                //   "<div id='guestAccountPrompt'>Log in to gain exp and level up rewards!<br /><br /></div>"
+                // );
+                // if (!curGame.replay_mode && PLAYING_PLAYER.controller != CONTROLLER.SPECTATOR) {
+                //   const apmRank = this.__calculateFromThresholds(
+                //     PLAYING_PLAYER.apm / (ticksCounter / 1200),
+                //     30,
+                //     60,
+                //     120
+                //   );
+                //   const goldRank = this.__calculateFromThresholds(
+                //     PLAYING_PLAYER.minedGold / (ticksCounter / 1200),
+                //     300,
+                //     600,
+                //     1000
+                //   );
+                //   // Inverted as less is better
+                //   const buildingsLostRank = this.__calculateFromThresholds(
+                //     -PLAYING_PLAYER.buildingDeaths,
+                //     -20,
+                //     -10,
+                //     -5
+                //   );
+                //   statsBuilder
+                //     .add("<div id='rankContainer'>")
+                //     .add(this.__createLetterRankDiv(apmRank, "APM"))
+                //     .add(this.__createLetterRankDiv(goldRank, "GOLD PER MIN"))
+                //     .add(this.__createLetterRankDiv(buildingsLostRank, "BUILDINGS LOST"))
+                //     .add("</div>");
+                // }
+                // statsBuilder.insertInto("#statisticsTextArea");
+                // if (curGame.replay_mode) {
+                //   // $("#saveReplayButton").css("display", "none");
+                //   // this.statisticsWindow.setTitleText("Replay complete");
+                //   // this.statisticsWindow.setTitleStyle("windowTitle");
+                // } else {
+                //   $("#saveReplayButton").css("display", "inline-block");
+                //   this.statisticsWindow.setTitleText(
+                //     curGame.playingPlayerWon ? "Victory" : "Defeat"
+                //   );
+                //   this.statisticsWindow.setTitleStyle(
+                //     curGame.playingPlayerWon ? "victoryTitle" : "defeatTitle"
+                //   );
+                // }
+                // fadeIn($("#statisticsWindow"));
               };
 
               return new StatsWindow_();
