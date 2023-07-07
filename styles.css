@@ -13,6 +13,7 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin: 2rem;
 }
 
 /* #fileDrop {
@@ -71,4 +72,9 @@ footer {
 
 #plotDivs {
   color: black;
+}
+
+#uploadReplayButton {
+  width: 600px;
+  height: 600px;
 }
