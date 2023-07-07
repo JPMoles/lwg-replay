@@ -3207,10 +3207,17 @@
                 window.uploadButtonEventListenerAdded = false;
                 console.log("Setting replay variables up!");
 
-                // Button should be loaded before this script runs
-                if (!window.replayLoaded) {
-                  // Load replay file from folder using fetch?
+                window.receiveReplayFile = function (replayFileInstant) {
+                  setTimeout(async () => {
+                    console.log("Starting the replay!");
+                    replayFile = replayFileInstant;
+                    console.log(replayFileInstant);
+                    network.send(`get-map-for-replay<<$${replayFileInstant.map}`);
+                  }, 2_000);
+                };
 
+                // Button should be loaded before this script runs
+                if (!window.replayLoaded && false) {
                   // Only add event listener one time on initialization
                   if (!window.uploadButtonEventListenerAdded) {
                     const uploadReplayButton = document.getElementById("uploadReplayButton");
@@ -19486,449 +19493,385 @@
 
             const lcgVolume = LocalConfig.registerValue("lcgVolume", 1);
             function littlechatgame(log_) {
-              var lcg_canvas = document.createElement("canvas");
-              var lcg_context = lcg_canvas.getContext("2d");
-              lcg_canvas.width = $("#lobbyChatTextArea").width() - 20;
-              lcg_canvas.height = 90;
-
-              lcg = log_;
-              lcg.currentPhase = -1;
-              lcg.army = [];
-              lcg.startTime = Date.now() + 2000;
-              lcg.canvas = lcg_canvas;
-              lcg.ticksCounter = -1;
-              lcg.actualPhase = -1;
-
-              game = new Game();
-              game.loadMap(
-                {
-                  name: "unnamed",
-                  x: 30,
-                  y: 10,
-                  units: [],
-                  buildings: [],
-                  tiles: [],
-                  defaultTiles: ["Ground n 6"],
-                  unitData: {
-                    dragon: {
-                      imageScale: 0.7,
-                      height: 1.5,
-                      projectileSpeed: 12,
-                    },
-
-                    ballista: {
-                      imageScale: 0.8,
-                    },
-
-                    catapult: {
-                      projectileSpeed: 12,
-                      imageScale: 0.8,
-                    },
-
-                    fireball: {
-                      projectileSpeed: 9,
-                      // },
-
-                      // "gyrocraft":
-                      // {
-                      // 	"imageScale": 0.1,
-                      // 	"height": 1.5
-                    },
-                  },
-                },
-                null,
-                null,
-                null,
-                false,
-                true
-              );
-
-              lcg_context.font = "bold 32px LCDSOlid";
-              drawText(
-                lcg_context,
-                log_.players[0],
-                game.players[1].getColor(),
-                "bold 32px LCDSolid",
-                10,
-                30
-              );
-              var w1 = lcg_context.measureText(log_.players[0]).width;
-              drawText(lcg_context, "vs", "white", "bold 32px LCDSolid", 10 + w1 + 10, 30);
-              var w2 = lcg_context.measureText("vs").width;
-              drawText(
-                lcg_context,
-                log_.players[1],
-                game.players[2].getColor(),
-                "bold 32px LCDSolid",
-                10 + w1 + w2 + 20,
-                30
-              );
-
-              soundManager.playSound(SOUND.BATTLE_FANFARE, null, lcgVolume.get());
-
-              // vision
-              for (var x = 0; x < 30; x++)
-                for (var y = 0; y < 10; y++) PLAYING_PLAYER.team.mask[x][y] = 2;
-
-              var players = [
-                new Player("pl1", CONTROLLER.COMPUTER, 1),
-                new Player("pl2", CONTROLLER.COMPUTER, 2),
-              ];
-
-              var pos = 3;
-
-              for (var i = 0; i < log_.armies[0].length; i++)
-                lcg.army.push(
-                  new Unit({
-                    x: pos++,
-                    y: 3.2,
-                    type:
-                      log_.armies[0][i] == "Gatlinggun"
-                        ? "Gatling Gun".toUnitType()
-                        : log_.armies[0][i].toUnitType(),
-                    owner: players[0],
-                  })
-                );
-
-              for (var i = log_.armies[1].length - 1; i >= 0; i--)
-                lcg.army.push(
-                  new Unit({
-                    x: pos++,
-                    y: 3.2,
-                    type:
-                      log_.armies[1][i] == "Gatlinggun"
-                        ? "Gatling Gun".toUnitType()
-                        : log_.armies[1][i].toUnitType(),
-                    owner: players[1],
-                  })
-                );
-
-              addToChatWindow(lcg_canvas);
-
-              clearInterval(lcg_interval);
-
-              lcg_interval = setInterval(function () {
-                var timeNow = Date.now();
-
-                if (game_state != GAME.LOBBY) {
-                  clearInterval(lcg_interval);
-                  return;
-                }
-
-                if (lcg.startTime > timeNow) return;
-
-                var age = timeNow - lcg.startTime;
-                var phaseAge = age % 1500;
-                var phaseStartTime = timeNow - phaseAge;
-                var phaseAgeInTicks = Math.floor(phaseAge / 50);
-                var phase = Math.floor(age / 1500);
-                ticksCounter = Math.floor((age / 1000) * 20);
-                percentageOfCurrentTickPassed = (age % 50) / 50;
-                var phaseType = lcg.actualPhase % 3;
-                tickDiff = 0;
-
-                // if not die phase, set units that have been thrown to target pos, because it might not have happened correctly, if the screen was inactive during throwing
-                if (phaseType != 1)
-                  for (var i = 0; i < lcg.army.length; i++)
-                    if (lcg.army[i].setToPos) {
-                      lcg.army[i].pos = lcg.army[i].setToPos;
-                      lcg.army[i].lastTicksPosition = lcg.army[i].setToPos;
-                      lcg.army[i].drawPos = lcg.army[i].setToPos;
-                      delete lcg.army[i].setToPos;
-                    }
-
-                // update
-                if (phase != lcg.currentPhase) {
-                  lcg.currentPhase = phase;
-
-                  for (var i = 0; i < lcg.army.length; i++) {
-                    lcg.army[i].order = lists.types.stop;
-                    lcg.army[i].lastAttackingTick = -999;
-                    lcg.army[i].lastTicksPosition = lcg.army[i].pos;
-                  }
-
-                  var arr = [];
-                  while (arr.length == 0) {
-                    lcg.actualPhase++;
-                    arr = lcg.replay[lcg.actualPhase];
-
-                    if (!arr) {
-                      // battle over
-                      if (lcg.hasBeenDrawn) {
-                        clearInterval(lcg_interval);
-                        lcg_context.font = "bold 32px LCDSOlid";
-
-                        if (lcg.winner == 0)
-                          drawText(lcg_context, "draw", "white", "bold 32px LCDSolid", 200, 60);
-                        else
-                          drawText(
-                            lcg_context,
-                            lcg.players[lcg.winner - 1] + " wins",
-                            game.players[lcg.winner].getColor(),
-                            "bold 32px LCDSolid",
-                            200,
-                            60
-                          );
-
-                        return;
-                      } else arr = [0];
-                    }
-                  }
-
-                  phaseType = lcg.actualPhase % 3;
-
-                  if (phaseType == 0) {
-                    // attack phase
-                    for (var i = 0; i < arr.length; i++) {
-                      if (arr[i].indexOf && arr[i].indexOf("A") >= 0) {
-                        // attack
-                        var split = arr[i].split("A");
-
-                        var u1 = game.getUnitById(split[0]);
-                        var u2 = game.getUnitById(split[1]);
-
-                        u1.targetUnit = u2;
-                        u1.order = lists.types.attack;
-                        u1.lastAttackingTick = ticksCounter;
-                        u1.tickOfLastWeaponFired = ticksCounter + u1.type.weaponDelay;
-                      } else if (arr[i].indexOf && arr[i].indexOf("S") >= 0) {
-                        // smash
-                        var split = arr[i].split("S");
-
-                        var u1 = game.getUnitById(split[0]);
-                        var u2 = game.getUnitById(split[1]);
-
-                        u1.targetUnit = u2;
-                        u1.order = lists.types.smash;
-                        u1.lastAttackingTick = ticksCounter;
-                        u1.tickOfLastWeaponFired = ticksCounter + u1.type.weaponDelay;
-                      } else if (arr[i].indexOf && arr[i].indexOf("H") >= 0) {
-                        // heal
-                        var split = arr[i].split("H");
-
-                        var u1 = game.getUnitById(split[0]);
-                        var u2 = game.getUnitById(split[1]);
-
-                        u1.targetUnit = u2;
-                        u1.order = lists.types.heal;
-                        u1.lastAttackingTick = ticksCounter;
-                        u1.tickOfLastWeaponFired = ticksCounter + u1.type.weaponDelay;
-                      } else if (arr[i].indexOf && arr[i].indexOf("F") >= 0) {
-                        // fireball
-                        var split = arr[i].split("F");
-
-                        var u1 = game.getUnitById(split[0]);
-                        var u2 = game.getUnitById(split[1]);
-
-                        u1.targetUnit = u2;
-                        u1.order = lists.types.attack;
-                        u1.lastAttackingTick = ticksCounter;
-                        u1.tickOfLastWeaponFired = ticksCounter + u1.type.weaponDelay;
-
-                        new Flamestrike({
-                          from: u1,
-                          to: new Field(parseInt(split[2]), u1.pos.py, true),
-                          speed: 3,
-                          noFinalBlow: true,
-                          scale: 1,
-                        });
-
-                        soundManager.playSound(SOUND.FIREBALL, null, lcgVolume.get());
-                      }
-                    }
-                  }
-
-                  if (phaseType == 1) {
-                    // die phase
-                    for (var i = 0; i < arr.length; i++) {
-                      if (arr[i].indexOf && arr[i].indexOf("X") >= 0) {
-                        // get smashed
-                        var u1 = game.getUnitById(arr[i].split("X")[0]);
-
-                        u1.isThrowedUntil = ticksCounter + 15;
-                        u1.throwStart = ticksCounter;
-                        u1.throwFrom = u1.pos.getCopy();
-                        u1.throwTo = new Field(parseInt(arr[i].split("X")[1]), u1.pos.py, true);
-                        u1.lastTicksPosition = u1.throwTo.getCopy();
-                        u1.setToPos = u1.throwTo.getCopy();
-                        u1.targetPos_ = u1.throwTo.getCopy();
-                        u1.target = u1.throwTo.getCopy();
-                      } else if (arr[i].indexOf && arr[i].indexOf("Z") >= 0) {
-                        // flash
-                        soundManager.playSound(SOUND.WARP, null, lcgVolume.get());
-                        var u1 = game.getUnitById(arr[i].split("Z")[0]);
-
-                        u1.targetPos_ = new Field(parseInt(arr[i].split("Z")[1]), u1.pos.py, true);
-                        u1.setToPos = u1.targetPos_.getCopy();
-                        u1.originPos_ = u1.pos.getCopy();
-                        u1.target = u1.targetPos_.getCopy();
-                        u1.moveStartTime_ = phaseStartTime;
-                        u1.order = lists.types.TELEPORT;
-                      } // die
-                      else {
-                        var u1 = game.getUnitById(arr[i]);
-
-                        u1.isAlive = false;
-                        u1.throwStart = ticksCounter;
-                        u1.isThrowedUntil = ticksCounter + 25;
-                        u1.throwFrom = u1.pos;
-                        u1.throwTo = u1.pos;
-
-                        if (u1.type.deathSound)
-                          soundManager.playSound(u1.type.deathSound, null, lcgVolume.get());
-                      }
-                    }
-                  }
-
-                  if (phaseType == 2) {
-                    // move phase
-                    for (var i = 0; i < arr.length; i++)
-                      if (arr[i].indexOf && arr[i].indexOf("M") >= 0) {
-                        var u1 = game.getUnitById(arr[i].split("M")[0]);
-
-                        u1.targetPos_ = new Field(arr[i].split("M")[1], u1.pos.py, true);
-                        u1.originPos_ = u1.pos.getCopy();
-                        u1.target = u1.targetPos_;
-                        u1.moveStartTime_ = phaseStartTime;
-                        u1.order = lists.types.move;
-                      }
-                  }
-                }
-
-                if (lcg.ticksCounter != ticksCounter) {
-                  lcg.ticksCounter = ticksCounter;
-                  tickDiff = 1;
-
-                  for (var i = 0; i < lcg.army.length; i++) {
-                    var u = lcg.army[i];
-
-                    if (phaseType == 0) {
-                      // attack phase
-                      if (
-                        (u.order == lists.types.attack || u.order == lists.types.smash) &&
-                        phaseAgeInTicks < u.type.weaponCooldown - 5
-                      ) {
-                        u.hitCycle++;
-                        u.lastAttackingTick = ticksCounter;
-
-                        if (u.tickOfLastWeaponFired == ticksCounter) {
-                          if (u.type.attackEffect)
-                            // create projectile (if ranged)
-                            startEffect(u.type.attackEffect, {
-                              from: u,
-                              to: u.targetUnit,
-                              speed: u.type.projectileSpeed / 2,
-                            });
-
-                          if (u.type.meleeHitSound)
-                            soundManager.playSound(u.type.meleeHitSound, null, lcgVolume.get());
-
-                          if (u.type.attackLaunchSound)
-                            soundManager.playSound(u.type.attackLaunchSound, null, lcgVolume.get());
-
-                          if (u.targetUnit.type.painSound)
-                            soundManager.playSound(
-                              u.targetUnit.type.painSound,
-                              null,
-                              lcgVolume.get()
-                            );
-                        }
-                      }
-
-                      if (u.tickOfLastWeaponFired == ticksCounter && u.order == lists.types.heal) {
-                        startEffect("heal", {
-                          originPos: u.pos,
-                          from: u.targetUnit,
-                        });
-
-                        soundManager.playSound(SOUND.HEAL, null, lcgVolume.get());
-                      }
-                    }
-
-                    if (u.targetPos_ && u.pos.distanceTo2(u.targetPos_) > 0.03) {
-                      if (u.order == lists.types.TELEPORT) {
-                        u.lastTicksPosition = u.pos;
-                        u.pos = u.originPos_.addNormalizedVector(
-                          u.targetPos_,
-                          (Math.min(timeNow - u.moveStartTime_, 1) / 1) *
-                            u.originPos_.distanceTo2(u.targetPos_)
-                        );
-                      } else {
-                        u.lastTicksPosition = u.pos;
-                        u.pos = u.originPos_.addNormalizedVector(
-                          u.targetPos_,
-                          (Math.min(timeNow - u.moveStartTime_, 1500) / 1500) *
-                            u.originPos_.distanceTo2(u.targetPos_)
-                        );
-                      }
-                    } else u.lastTicksPosition = u.pos;
-                  }
-                }
-
-                lcg.canvas.style.width = "95%";
-                lcg.canvas.width = lcg.canvas.width;
-                SCALE_FACTOR = 1.5;
-                FIELD_SIZE = 16 * SCALE_FACTOR;
-                c = lcg.canvas.getContext("2d");
-                lcg.hasBeenDrawn = true;
-
-                // draw
-                for (var i = 0; i < lcg.army.length; i++) {
-                  lcg.army[i].updateDrawPosition();
-                  lcg.army[i].draw();
-                }
-
-                // draw effectz
-                var objs = game.objectsToDraw.slice();
-                for (var i = 0; i < objs.length; i++)
-                  if (objs[i].isEffect) {
-                    objs[i].draw(0, 0, 0, 0, lcgVolume.get());
-
-                    if (objs[i].isExpired()) {
-                      if (objs[i].to && objs[i].to.type && objs[i].to.type.painSound)
-                        soundManager.playSound(objs[i].to.type.painSound, null, lcgVolume.get());
-
-                      if (objs[i].to && objs[i].to.type && objs[i].to.type.painSound2)
-                        soundManager.playSound(objs[i].to.type.painSound2, null, lcgVolume.get());
-
-                      if (objs[i].constructor == LaunchedRock)
-                        soundManager.playSound(SOUND.CATA_IMPACT, null, lcgVolume.get());
-
-                      game.objectsToDraw.erease(objs[i]);
-                    }
-                  }
-
-                var ageFactor = Math.min(age / 1000, 1);
-                lcg_context.font = "bold " + (31 - ageFactor * 13) + "px LCDSOlid";
-                drawText(
-                  lcg_context,
-                  log_.players[0],
-                  game.players[1].getColor(),
-                  "bold " + (31 - ageFactor * 13) + "px LCDSolid",
-                  10,
-                  30 - ageFactor * 9
-                );
-                var w1 = lcg_context.measureText(log_.players[0]).width;
-                drawText(
-                  lcg_context,
-                  "vs",
-                  "white",
-                  "bold " + (31 - ageFactor * 13) + "px LCDSolid",
-                  10 + w1 + (10 - ageFactor * 4),
-                  30 - ageFactor * 9
-                );
-                var w2 = lcg_context.measureText("vs").width;
-                drawText(
-                  lcg_context,
-                  log_.players[1],
-                  game.players[2].getColor(),
-                  "bold " + (31 - ageFactor * 13) + "px LCDSolid",
-                  10 + w1 + w2 + (20 - ageFactor * 8),
-                  30 - ageFactor * 9
-                );
-
-                c = originalC;
-              }, 10);
+              // var lcg_canvas = document.createElement("canvas");
+              // var lcg_context = lcg_canvas.getContext("2d");
+              // lcg_canvas.width = $("#lobbyChatTextArea").width() - 20;
+              // lcg_canvas.height = 90;
+              // lcg = log_;
+              // lcg.currentPhase = -1;
+              // lcg.army = [];
+              // lcg.startTime = Date.now() + 2000;
+              // lcg.canvas = lcg_canvas;
+              // lcg.ticksCounter = -1;
+              // lcg.actualPhase = -1;
+              // game = new Game();
+              // game.loadMap(
+              //   {
+              //     name: "unnamed",
+              //     x: 30,
+              //     y: 10,
+              //     units: [],
+              //     buildings: [],
+              //     tiles: [],
+              //     defaultTiles: ["Ground n 6"],
+              //     unitData: {
+              //       dragon: {
+              //         imageScale: 0.7,
+              //         height: 1.5,
+              //         projectileSpeed: 12,
+              //       },
+              //       ballista: {
+              //         imageScale: 0.8,
+              //       },
+              //       catapult: {
+              //         projectileSpeed: 12,
+              //         imageScale: 0.8,
+              //       },
+              //       fireball: {
+              //         projectileSpeed: 9,
+              //         // },
+              //         // "gyrocraft":
+              //         // {
+              //         // 	"imageScale": 0.1,
+              //         // 	"height": 1.5
+              //       },
+              //     },
+              //   },
+              //   null,
+              //   null,
+              //   null,
+              //   false,
+              //   true
+              // );
+              // lcg_context.font = "bold 32px LCDSOlid";
+              // drawText(
+              //   lcg_context,
+              //   log_.players[0],
+              //   game.players[1].getColor(),
+              //   "bold 32px LCDSolid",
+              //   10,
+              //   30
+              // );
+              // var w1 = lcg_context.measureText(log_.players[0]).width;
+              // drawText(lcg_context, "vs", "white", "bold 32px LCDSolid", 10 + w1 + 10, 30);
+              // var w2 = lcg_context.measureText("vs").width;
+              // drawText(
+              //   lcg_context,
+              //   log_.players[1],
+              //   game.players[2].getColor(),
+              //   "bold 32px LCDSolid",
+              //   10 + w1 + w2 + 20,
+              //   30
+              // );
+              // soundManager.playSound(SOUND.BATTLE_FANFARE, null, lcgVolume.get());
+              // // vision
+              // for (var x = 0; x < 30; x++)
+              //   for (var y = 0; y < 10; y++) PLAYING_PLAYER.team.mask[x][y] = 2;
+              // var players = [
+              //   new Player("pl1", CONTROLLER.COMPUTER, 1),
+              //   new Player("pl2", CONTROLLER.COMPUTER, 2),
+              // ];
+              // var pos = 3;
+              // for (var i = 0; i < log_.armies[0].length; i++)
+              //   lcg.army.push(
+              //     new Unit({
+              //       x: pos++,
+              //       y: 3.2,
+              //       type:
+              //         log_.armies[0][i] == "Gatlinggun"
+              //           ? "Gatling Gun".toUnitType()
+              //           : log_.armies[0][i].toUnitType(),
+              //       owner: players[0],
+              //     })
+              //   );
+              // for (var i = log_.armies[1].length - 1; i >= 0; i--)
+              //   lcg.army.push(
+              //     new Unit({
+              //       x: pos++,
+              //       y: 3.2,
+              //       type:
+              //         log_.armies[1][i] == "Gatlinggun"
+              //           ? "Gatling Gun".toUnitType()
+              //           : log_.armies[1][i].toUnitType(),
+              //       owner: players[1],
+              //     })
+              //   );
+              // addToChatWindow(lcg_canvas);
+              // clearInterval(lcg_interval);
+              // lcg_interval = setInterval(function () {
+              //   var timeNow = Date.now();
+              //   if (game_state != GAME.LOBBY) {
+              //     clearInterval(lcg_interval);
+              //     return;
+              //   }
+              //   if (lcg.startTime > timeNow) return;
+              //   var age = timeNow - lcg.startTime;
+              //   var phaseAge = age % 1500;
+              //   var phaseStartTime = timeNow - phaseAge;
+              //   var phaseAgeInTicks = Math.floor(phaseAge / 50);
+              //   var phase = Math.floor(age / 1500);
+              //   ticksCounter = Math.floor((age / 1000) * 20);
+              //   percentageOfCurrentTickPassed = (age % 50) / 50;
+              //   var phaseType = lcg.actualPhase % 3;
+              //   tickDiff = 0;
+              //   // if not die phase, set units that have been thrown to target pos, because it might not have happened correctly, if the screen was inactive during throwing
+              //   if (phaseType != 1)
+              //     for (var i = 0; i < lcg.army.length; i++)
+              //       if (lcg.army[i].setToPos) {
+              //         lcg.army[i].pos = lcg.army[i].setToPos;
+              //         lcg.army[i].lastTicksPosition = lcg.army[i].setToPos;
+              //         lcg.army[i].drawPos = lcg.army[i].setToPos;
+              //         delete lcg.army[i].setToPos;
+              //       }
+              //   // update
+              //   if (phase != lcg.currentPhase) {
+              //     lcg.currentPhase = phase;
+              //     for (var i = 0; i < lcg.army.length; i++) {
+              //       lcg.army[i].order = lists.types.stop;
+              //       lcg.army[i].lastAttackingTick = -999;
+              //       lcg.army[i].lastTicksPosition = lcg.army[i].pos;
+              //     }
+              //     var arr = [];
+              //     while (arr.length == 0) {
+              //       lcg.actualPhase++;
+              //       arr = lcg.replay[lcg.actualPhase];
+              //       if (!arr) {
+              //         // battle over
+              //         if (lcg.hasBeenDrawn) {
+              //           clearInterval(lcg_interval);
+              //           lcg_context.font = "bold 32px LCDSOlid";
+              //           if (lcg.winner == 0)
+              //             drawText(lcg_context, "draw", "white", "bold 32px LCDSolid", 200, 60);
+              //           else
+              //             drawText(
+              //               lcg_context,
+              //               lcg.players[lcg.winner - 1] + " wins",
+              //               game.players[lcg.winner].getColor(),
+              //               "bold 32px LCDSolid",
+              //               200,
+              //               60
+              //             );
+              //           return;
+              //         } else arr = [0];
+              //       }
+              //     }
+              //     phaseType = lcg.actualPhase % 3;
+              //     if (phaseType == 0) {
+              //       // attack phase
+              //       for (var i = 0; i < arr.length; i++) {
+              //         if (arr[i].indexOf && arr[i].indexOf("A") >= 0) {
+              //           // attack
+              //           var split = arr[i].split("A");
+              //           var u1 = game.getUnitById(split[0]);
+              //           var u2 = game.getUnitById(split[1]);
+              //           u1.targetUnit = u2;
+              //           u1.order = lists.types.attack;
+              //           u1.lastAttackingTick = ticksCounter;
+              //           u1.tickOfLastWeaponFired = ticksCounter + u1.type.weaponDelay;
+              //         } else if (arr[i].indexOf && arr[i].indexOf("S") >= 0) {
+              //           // smash
+              //           var split = arr[i].split("S");
+              //           var u1 = game.getUnitById(split[0]);
+              //           var u2 = game.getUnitById(split[1]);
+              //           u1.targetUnit = u2;
+              //           u1.order = lists.types.smash;
+              //           u1.lastAttackingTick = ticksCounter;
+              //           u1.tickOfLastWeaponFired = ticksCounter + u1.type.weaponDelay;
+              //         } else if (arr[i].indexOf && arr[i].indexOf("H") >= 0) {
+              //           // heal
+              //           var split = arr[i].split("H");
+              //           var u1 = game.getUnitById(split[0]);
+              //           var u2 = game.getUnitById(split[1]);
+              //           u1.targetUnit = u2;
+              //           u1.order = lists.types.heal;
+              //           u1.lastAttackingTick = ticksCounter;
+              //           u1.tickOfLastWeaponFired = ticksCounter + u1.type.weaponDelay;
+              //         } else if (arr[i].indexOf && arr[i].indexOf("F") >= 0) {
+              //           // fireball
+              //           var split = arr[i].split("F");
+              //           var u1 = game.getUnitById(split[0]);
+              //           var u2 = game.getUnitById(split[1]);
+              //           u1.targetUnit = u2;
+              //           u1.order = lists.types.attack;
+              //           u1.lastAttackingTick = ticksCounter;
+              //           u1.tickOfLastWeaponFired = ticksCounter + u1.type.weaponDelay;
+              //           new Flamestrike({
+              //             from: u1,
+              //             to: new Field(parseInt(split[2]), u1.pos.py, true),
+              //             speed: 3,
+              //             noFinalBlow: true,
+              //             scale: 1,
+              //           });
+              //           soundManager.playSound(SOUND.FIREBALL, null, lcgVolume.get());
+              //         }
+              //       }
+              //     }
+              //     if (phaseType == 1) {
+              //       // die phase
+              //       for (var i = 0; i < arr.length; i++) {
+              //         if (arr[i].indexOf && arr[i].indexOf("X") >= 0) {
+              //           // get smashed
+              //           var u1 = game.getUnitById(arr[i].split("X")[0]);
+              //           u1.isThrowedUntil = ticksCounter + 15;
+              //           u1.throwStart = ticksCounter;
+              //           u1.throwFrom = u1.pos.getCopy();
+              //           u1.throwTo = new Field(parseInt(arr[i].split("X")[1]), u1.pos.py, true);
+              //           u1.lastTicksPosition = u1.throwTo.getCopy();
+              //           u1.setToPos = u1.throwTo.getCopy();
+              //           u1.targetPos_ = u1.throwTo.getCopy();
+              //           u1.target = u1.throwTo.getCopy();
+              //         } else if (arr[i].indexOf && arr[i].indexOf("Z") >= 0) {
+              //           // flash
+              //           soundManager.playSound(SOUND.WARP, null, lcgVolume.get());
+              //           var u1 = game.getUnitById(arr[i].split("Z")[0]);
+              //           u1.targetPos_ = new Field(parseInt(arr[i].split("Z")[1]), u1.pos.py, true);
+              //           u1.setToPos = u1.targetPos_.getCopy();
+              //           u1.originPos_ = u1.pos.getCopy();
+              //           u1.target = u1.targetPos_.getCopy();
+              //           u1.moveStartTime_ = phaseStartTime;
+              //           u1.order = lists.types.TELEPORT;
+              //         } // die
+              //         else {
+              //           var u1 = game.getUnitById(arr[i]);
+              //           u1.isAlive = false;
+              //           u1.throwStart = ticksCounter;
+              //           u1.isThrowedUntil = ticksCounter + 25;
+              //           u1.throwFrom = u1.pos;
+              //           u1.throwTo = u1.pos;
+              //           if (u1.type.deathSound)
+              //             soundManager.playSound(u1.type.deathSound, null, lcgVolume.get());
+              //         }
+              //       }
+              //     }
+              //     if (phaseType == 2) {
+              //       // move phase
+              //       for (var i = 0; i < arr.length; i++)
+              //         if (arr[i].indexOf && arr[i].indexOf("M") >= 0) {
+              //           var u1 = game.getUnitById(arr[i].split("M")[0]);
+              //           u1.targetPos_ = new Field(arr[i].split("M")[1], u1.pos.py, true);
+              //           u1.originPos_ = u1.pos.getCopy();
+              //           u1.target = u1.targetPos_;
+              //           u1.moveStartTime_ = phaseStartTime;
+              //           u1.order = lists.types.move;
+              //         }
+              //     }
+              //   }
+              //   if (lcg.ticksCounter != ticksCounter) {
+              //     lcg.ticksCounter = ticksCounter;
+              //     tickDiff = 1;
+              //     for (var i = 0; i < lcg.army.length; i++) {
+              //       var u = lcg.army[i];
+              //       if (phaseType == 0) {
+              //         // attack phase
+              //         if (
+              //           (u.order == lists.types.attack || u.order == lists.types.smash) &&
+              //           phaseAgeInTicks < u.type.weaponCooldown - 5
+              //         ) {
+              //           u.hitCycle++;
+              //           u.lastAttackingTick = ticksCounter;
+              //           if (u.tickOfLastWeaponFired == ticksCounter) {
+              //             if (u.type.attackEffect)
+              //               // create projectile (if ranged)
+              //               startEffect(u.type.attackEffect, {
+              //                 from: u,
+              //                 to: u.targetUnit,
+              //                 speed: u.type.projectileSpeed / 2,
+              //               });
+              //             if (u.type.meleeHitSound)
+              //               soundManager.playSound(u.type.meleeHitSound, null, lcgVolume.get());
+              //             if (u.type.attackLaunchSound)
+              //               soundManager.playSound(u.type.attackLaunchSound, null, lcgVolume.get());
+              //             if (u.targetUnit.type.painSound)
+              //               soundManager.playSound(
+              //                 u.targetUnit.type.painSound,
+              //                 null,
+              //                 lcgVolume.get()
+              //               );
+              //           }
+              //         }
+              //         if (u.tickOfLastWeaponFired == ticksCounter && u.order == lists.types.heal) {
+              //           startEffect("heal", {
+              //             originPos: u.pos,
+              //             from: u.targetUnit,
+              //           });
+              //           soundManager.playSound(SOUND.HEAL, null, lcgVolume.get());
+              //         }
+              //       }
+              //       if (u.targetPos_ && u.pos.distanceTo2(u.targetPos_) > 0.03) {
+              //         if (u.order == lists.types.TELEPORT) {
+              //           u.lastTicksPosition = u.pos;
+              //           u.pos = u.originPos_.addNormalizedVector(
+              //             u.targetPos_,
+              //             (Math.min(timeNow - u.moveStartTime_, 1) / 1) *
+              //               u.originPos_.distanceTo2(u.targetPos_)
+              //           );
+              //         } else {
+              //           u.lastTicksPosition = u.pos;
+              //           u.pos = u.originPos_.addNormalizedVector(
+              //             u.targetPos_,
+              //             (Math.min(timeNow - u.moveStartTime_, 1500) / 1500) *
+              //               u.originPos_.distanceTo2(u.targetPos_)
+              //           );
+              //         }
+              //       } else u.lastTicksPosition = u.pos;
+              //     }
+              //   }
+              //   lcg.canvas.style.width = "95%";
+              //   lcg.canvas.width = lcg.canvas.width;
+              //   SCALE_FACTOR = 1.5;
+              //   FIELD_SIZE = 16 * SCALE_FACTOR;
+              //   c = lcg.canvas.getContext("2d");
+              //   lcg.hasBeenDrawn = true;
+              //   // draw
+              //   for (var i = 0; i < lcg.army.length; i++) {
+              //     lcg.army[i].updateDrawPosition();
+              //     lcg.army[i].draw();
+              //   }
+              //   // draw effectz
+              //   var objs = game.objectsToDraw.slice();
+              //   for (var i = 0; i < objs.length; i++)
+              //     if (objs[i].isEffect) {
+              //       objs[i].draw(0, 0, 0, 0, lcgVolume.get());
+              //       if (objs[i].isExpired()) {
+              //         if (objs[i].to && objs[i].to.type && objs[i].to.type.painSound)
+              //           soundManager.playSound(objs[i].to.type.painSound, null, lcgVolume.get());
+              //         if (objs[i].to && objs[i].to.type && objs[i].to.type.painSound2)
+              //           soundManager.playSound(objs[i].to.type.painSound2, null, lcgVolume.get());
+              //         if (objs[i].constructor == LaunchedRock)
+              //           soundManager.playSound(SOUND.CATA_IMPACT, null, lcgVolume.get());
+              //         game.objectsToDraw.erease(objs[i]);
+              //       }
+              //     }
+              //   var ageFactor = Math.min(age / 1000, 1);
+              //   lcg_context.font = "bold " + (31 - ageFactor * 13) + "px LCDSOlid";
+              //   drawText(
+              //     lcg_context,
+              //     log_.players[0],
+              //     game.players[1].getColor(),
+              //     "bold " + (31 - ageFactor * 13) + "px LCDSolid",
+              //     10,
+              //     30 - ageFactor * 9
+              //   );
+              //   var w1 = lcg_context.measureText(log_.players[0]).width;
+              //   drawText(
+              //     lcg_context,
+              //     "vs",
+              //     "white",
+              //     "bold " + (31 - ageFactor * 13) + "px LCDSolid",
+              //     10 + w1 + (10 - ageFactor * 4),
+              //     30 - ageFactor * 9
+              //   );
+              //   var w2 = lcg_context.measureText("vs").width;
+              //   drawText(
+              //     lcg_context,
+              //     log_.players[1],
+              //     game.players[2].getColor(),
+              //     "bold " + (31 - ageFactor * 13) + "px LCDSolid",
+              //     10 + w1 + w2 + (20 - ageFactor * 8),
+              //     30 - ageFactor * 9
+              //   );
+              //   c = originalC;
+              // }, 10);
             }
 
             function escapeHtml(text) {
@@ -30934,7 +30877,19 @@
 
             Network.prototype.onmessage = function (data, flags) {
               var msg = data.data;
-              console.log("Received message from server: ", msg);
+              if (
+                !msg.startsWith("games-list") &&
+                !msg.startsWith("player-location-update") &&
+                !msg.startsWith("player-left") &&
+                !msg.startsWith("player-joined") &&
+                !msg.startsWith("chat")
+              ) {
+                console.log(
+                  "%cReceived message from server: ",
+                  "color: #818270; font-style: italic; padding: 2px",
+                  msg
+                );
+              }
               var splitMsg = msg.split("<<$");
               // console.log(`msg: ${splitMsg[0]} state ${game_state}`);
 

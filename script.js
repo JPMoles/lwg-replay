@@ -3,29 +3,29 @@
 // Is a module
 console.log("inside the module");
 
-const uploadButton = document.getElementById("uploadButton");
+// const uploadButton = document.getElementById("uploadButton");
 
 // uploadButton.addEventListener("click", handleUploadButtonClick, false);
 
-function handleUploadButtonClick() {
-  window.location.href = "/";
-}
+// function handleUploadButtonClick() {
+//   window.location.href = "/";
+// }
 
-// const fileInput = document.getElementById("fileUpload");
-// const dropInput = document.getElementById("fileDrop");
-// const fileContent = document.getElementById("fileContent");
+const fileInput = document.getElementById("fileUpload");
+const dropInput = document.getElementById("uploadReplayButton");
+const fileContent = document.getElementById("fileContent");
 // const mapImages = document.getElementById("mapImages");
 
-// fileInput.addEventListener("change", handleChange, false);
-// fileInput.addEventListener("input", handleInput, false);
+fileInput.addEventListener("change", handleChange, false);
+fileInput.addEventListener("input", handleInput, false);
 
-// dropInput.addEventListener("dragenter", handleDragEnter, false);
-// dropInput.addEventListener("dragover", handleDragOver, false);
-// dropInput.addEventListener("drop", handleDrop, false);
-// dropInput.addEventListener("dragleave", handleDragLeave, false);
-// dropInput.addEventListener("click", handleClick, false);
-// dropInput.addEventListener("mousedown", handleMouseDown, false);
-// dropInput.addEventListener("mouseup", handleMouseUp, false);
+dropInput.addEventListener("dragenter", handleDragEnter, false);
+dropInput.addEventListener("dragover", handleDragOver, false);
+dropInput.addEventListener("drop", handleDrop, false);
+dropInput.addEventListener("dragleave", handleDragLeave, false);
+dropInput.addEventListener("click", handleClick, false);
+dropInput.addEventListener("mousedown", handleMouseDown, false);
+dropInput.addEventListener("mouseup", handleMouseUp, false);
 
 const TICKS_PER_SECOND = 20;
 
@@ -41,9 +41,11 @@ const lwgReplayKeys = [
   "playerLefts",
 ];
 
-async function handleChange(event) {
+function handleChange(event) {
   // event.target.files is same as fileInput.files because it's the target
-  analyzeReplayFile(fileInput.files);
+  console.log("fileInput received change event");
+  // analyzeReplayFile(fileInput.files);
+  setupReplay(fileInput.files);
 }
 
 async function analyzeReplayFile(files) {
@@ -244,7 +246,7 @@ function handleDragEnter(event) {
   event.preventDefault();
   console.log("Drag enter happened");
 
-  setDropStyles();
+  // setDropStyles();
 }
 
 function handleDragOver(event) {
@@ -259,34 +261,53 @@ function handleDrop(event) {
   event.preventDefault();
   console.log("Drop happened");
 
-  setDefaultDropStyles();
+  // setDefaultDropStyles();
 
   const dataTransfer = event.dataTransfer;
   const files = dataTransfer.files;
-  console.log(files);
+  //console.log(files);
 
-  analyzeReplayFile(files);
+  // analyzeReplayFile(files);
+  setupReplay(files);
 }
 
 function handleDragLeave(event) {
   event.stopPropagation();
   event.preventDefault();
+  console.log("Drag leave happened");
 
-  setDefaultDropStyles();
+  // setDefaultDropStyles();
 }
 
 function handleClick(event) {
+  console.log("Upload button clicked");
   fileInput.click();
 }
 
 function handleMouseDown(event) {
   console.log("mouse down");
-  setDropStyles();
+  // setDropStyles();
 }
 
 function handleMouseUp(event) {
   console.log("mouse up");
-  setDefaultDropStyles();
+  // setDefaultDropStyles();
+}
+
+async function setupReplay(fileList) {
+  // window.receiveReplayFile
+  // window.receiveReplayFile(files[0]);
+  console.log(fileList);
+  console.log("calling receive replay file");
+
+  const data = JSON.parse(await fileList[0].text());
+  if (validateReplayFile(data)) {
+    window.receiveReplayFile(data);
+  }
+}
+
+function validateReplayFile(data) {
+  return isLWGReplay(data);
 }
 
 // Create a WebSocket with the littlewargame server to get map data

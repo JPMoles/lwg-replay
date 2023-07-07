@@ -34,7 +34,14 @@
     <div id="loadingSoldier"></div>
 
     <div class="container">
+      <input
+        type="file"
+        id="fileUpload"
+        style="display: none"
+        accept=".json, application/json"
+        multiple />
       <button id="uploadReplayButton">Upload Replay</button>
+      <div id="fileContent"></div>
     </div>
     <div id="plotDivs">
       <div id="unusedGoldPlot"></div>
@@ -58,6 +65,6 @@
 
     <!-- <footer>Made for the LWG Community.</footer> -->
     <!-- Load the script as the last element in the body -->
-    <!-- <script type="module" src="script.js"></script> -->
+    <script type="module" src="script.js"></script>
   </body>
 </html>

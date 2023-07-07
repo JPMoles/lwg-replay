@@ -10,10 +10,11 @@ body {
 
 .container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 2rem;
+  color: black;
 }
 
 /* #fileDrop {
@@ -36,6 +37,7 @@ body {
 }
 
 p {
+  color: black;
   overflow-wrap: anywhere;
 }
 
