@@ -315,7 +315,7 @@ async function setupReplay(fileList) {
     const file = fileList[fileIndex];
     console.log("Uploaded file: ", file.name);
     const fileListItem = document.createElement("li");
-    fileListItem.innerText = file.name;
+    fileListItem.innerText = Number(fileIndex) + 1 + ". " + file.name;
     if (!validReplays[fileIndex]) fileListItem.style.color = "red";
     else fileListItem.style.color = "green";
     fileListElement.append(fileListItem);
