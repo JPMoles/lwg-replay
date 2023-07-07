@@ -295,9 +295,37 @@ function handleMouseUp(event) {
 }
 
 async function setupReplay(fileList) {
-  // window.receiveReplayFile
-  // window.receiveReplayFile(files[0]);
-  console.log(fileList);
+  // Display uploaded files
+  // Highlight incorrect file formats in red
+
+  console.log("The file list: ", fileList);
+
+  // Determines if each replay is valid
+  const validReplays = [];
+
+  // Set index to true/false if is valid replay
+  for (let fileIndex = 0; fileIndex < fileList.length; fileIndex++) {
+    const file = fileList[fileIndex];
+    validReplays[fileIndex] = validateReplayFile(JSON.parse(await file.text()));
+  }
+
+  // Add replay name to div (in red if invalid file)
+  const fileListElement = document.createElement("ul");
+  Object.keys(fileList).forEach((fileIndex) => {
+    const file = fileList[fileIndex];
+    console.log("Uploaded file: ", file.name);
+    const fileListItem = document.createElement("li");
+    fileListItem.innerText = file.name;
+    if (!validReplays[fileIndex]) fileListItem.style.color = "red";
+    else fileListItem.style.color = "green";
+    fileListElement.append(fileListItem);
+  });
+
+  fileContent.append(fileListElement);
+
+  // Make file list visible
+  fileContent.style.display = "block";
+
   console.log("calling receive replay file");
 
   const data = JSON.parse(await fileList[0].text());

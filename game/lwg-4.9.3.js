@@ -3195,7 +3195,7 @@
 
                 initCustomImgsObj();
 
-                $("#loadingSoldier").remove();
+                // $("#loadingSoldier").remove();
                 // Login after this?
 
                 Initialization.__loadedResources();
