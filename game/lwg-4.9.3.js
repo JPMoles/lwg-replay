@@ -28995,7 +28995,7 @@
               var y_start = this.y < 0 ? HEIGHT + this.y : this.y;
 
               // draw tiles image
-              // c.drawImage(this.canvasTiles, this.x, y_start, MINIMAP_WIDTH, MINIMAP_HEIGHT);
+              c.drawImage(this.canvasTiles, this.x, y_start, MINIMAP_WIDTH, MINIMAP_HEIGHT);
 
               // buildings
               for (var i = 0; i < this.game.buildings2.length; i++)
@@ -34530,27 +34530,27 @@
             }
 
             function MapEditorData() {
-              $("#mapEditorData").remove();
-              $("#dataAddListWindow").remove();
-              $("#dataNewObjectWindow").remove();
+              //$("#mapEditorData").remove();
+              //$("#dataAddListWindow").remove();
+              //$("#dataNewObjectWindow").remove();
 
-              this.window = new UIWindow(
-                "mapEditorData",
-                function () {
-                  return game_state == GAME.EDITOR;
-                },
-                true,
-                "Data",
-                true
-              );
-              elements.push(this.window);
-              this.window.addScrollableSubDiv("mapEditorDataSubDiv");
+              // this.window = new UIWindow(
+              //   "mapEditorData",
+              //   function () {
+              //     return game_state == GAME.EDITOR;
+              //   },
+              //   true,
+              //   "Data",
+              //   true
+              // );
+              // elements.push(this.window);
+              // this.window.addScrollableSubDiv("mapEditorDataSubDiv");
 
               // make windows draggable (with jquery ui)
-              $("#mapEditorData").draggable({
-                drag: onDrag,
-                cancel: "p, input, select, textarea, button, #personalTextDiv, .nodrag",
-              });
+              // $("#mapEditorData").draggable({
+              //   drag: onDrag,
+              //   cancel: "p, input, select, textarea, button, #personalTextDiv, .nodrag",
+              // });
 
               // create riders
               var riders = document.createElement("div");
@@ -34623,115 +34623,115 @@
               this.switchRider(0);
 
               // create types list
-              var typesList = document.createElement("div");
-              typesList.id = "typesList";
-              $("#mapEditorDataSubDiv").append(typesList);
+              // var typesList = document.createElement("div");
+              // typesList.id = "typesList";
+              // $("#mapEditorDataSubDiv").append(typesList);
 
-              // create fields table
-              var fieldsTable = document.createElement("div");
-              fieldsTable.id = "dataFieldsTable";
-              $("#mapEditorDataSubDiv").append(fieldsTable);
+              // // create fields table
+              // var fieldsTable = document.createElement("div");
+              // fieldsTable.id = "dataFieldsTable";
+              // $("#mapEditorDataSubDiv").append(fieldsTable);
 
               // create new object window
-              var dataNewObjectWindow = new UIWindow(
-                "dataNewObjectWindow",
-                function () {
-                  return true;
-                },
-                true,
-                "New Object",
-                true
-              );
-              var dataNewObjectWindowSubdiv = dataNewObjectWindow.addScrollableSubDiv(
-                "dataNewObjectWindowSubdiv"
-              );
-              dataNewObjectWindowSubdiv.innerHTML =
-                "<br />Clone from <select id='dataNewObjectSelect'></select><br />";
-              dataNewObjectWindowSubdiv.innerHTML +=
-                "<span title='A unique string (only lower case letters) to refer to the unit'>ID String: </span><input id='dataNewObjectInput' type='text' /><br />";
-              dataNewObjectWindowSubdiv.innerHTML +=
-                "<span title='The unit's name, has to be unique'>Name: </span><input id='dataNewObjectInputName' type='text' /></br /><br />";
-              var newObjectOKButton = uimanager.createButton(
-                "newObjectOKButton",
-                "create",
-                function () {
-                  mapEditorData.createNewInstance();
-                  soundManager.playSound(SOUND.CLICK);
-                }
-              );
-              dataNewObjectWindowSubdiv.appendChild(newObjectOKButton);
+              // var dataNewObjectWindow = new UIWindow(
+              //   "dataNewObjectWindow",
+              //   function () {
+              //     return true;
+              //   },
+              //   true,
+              //   "New Object",
+              //   true
+              // );
+              // var dataNewObjectWindowSubdiv = dataNewObjectWindow.addScrollableSubDiv(
+              //   "dataNewObjectWindowSubdiv"
+              // );
+              // dataNewObjectWindowSubdiv.innerHTML =
+              //   "<br />Clone from <select id='dataNewObjectSelect'></select><br />";
+              // dataNewObjectWindowSubdiv.innerHTML +=
+              //   "<span title='A unique string (only lower case letters) to refer to the unit'>ID String: </span><input id='dataNewObjectInput' type='text' /><br />";
+              // dataNewObjectWindowSubdiv.innerHTML +=
+              //   "<span title='The unit's name, has to be unique'>Name: </span><input id='dataNewObjectInputName' type='text' /></br /><br />";
+              // var newObjectOKButton = uimanager.createButton(
+              //   "newObjectOKButton",
+              //   "create",
+              //   function () {
+              //     mapEditorData.createNewInstance();
+              //     soundManager.playSound(SOUND.CLICK);
+              //   }
+              // );
+              // dataNewObjectWindowSubdiv.appendChild(newObjectOKButton);
 
               // new button
-              var newButton = uimanager.createButton("dataNewButton", "new", function () {
-                fadeIn($("#dataNewObjectWindow"));
-                soundManager.playSound(SOUND.CLICK);
+              // var newButton = uimanager.createButton("dataNewButton", "new", function () {
+              //   fadeIn($("#dataNewObjectWindow"));
+              //   soundManager.playSound(SOUND.CLICK);
 
-                var html = "";
-                var types = mapEditorData.types[mapEditorData.listIndex];
-                for (var i = 0; i < types.length; i++)
-                  html +=
-                    "<option value='" + types[i].id_string + "'>" + types[i].name + "</option>";
-                $("#dataNewObjectSelect").html(html);
-              });
-              newButton.title = "Create a new type";
-              $("#mapEditorData").append(newButton);
+              //   var html = "";
+              //   var types = mapEditorData.types[mapEditorData.listIndex];
+              //   for (var i = 0; i < types.length; i++)
+              //     html +=
+              //       "<option value='" + types[i].id_string + "'>" + types[i].name + "</option>";
+              //   $("#dataNewObjectSelect").html(html);
+              // });
+              // newButton.title = "Create a new type";
+              // $("#mapEditorData").append(newButton);
 
               // delete button
-              var dataDeleteButton = uimanager.createButton(
-                "dataDeleteButton",
-                "delete",
-                function () {
-                  soundManager.playSound(SOUND.CLICK);
-                  var typeToDelete = mapEditorData.type;
+              // var dataDeleteButton = uimanager.createButton(
+              //   "dataDeleteButton",
+              //   "delete",
+              //   function () {
+              //     soundManager.playSound(SOUND.CLICK);
+              //     var typeToDelete = mapEditorData.type;
 
-                  if (typeToDelete.getBasicType()) {
-                    displayInfoMsg("You can't delete basic units");
-                    return;
-                  }
+              //     if (typeToDelete.getBasicType()) {
+              //       displayInfoMsg("You can't delete basic units");
+              //       return;
+              //     }
 
-                  const ID = uniqueID();
-                  displayInfoMsg(
-                    new HTMLBuilder()
-                      .add(`Delete type?<br /><br /><button id='${ID}'>delete</button>`)
-                      .addHook(() => $(`#${ID}`).click(() => mapEditorData.killType()))
-                  );
-                }
-              );
-              dataDeleteButton.title = "Delete the current selected type";
-              $("#mapEditorData").append(dataDeleteButton);
+              //     const ID = uniqueID();
+              //     displayInfoMsg(
+              //       new HTMLBuilder()
+              //         .add(`Delete type?<br /><br /><button id='${ID}'>delete</button>`)
+              //         .addHook(() => $(`#${ID}`).click(() => mapEditorData.killType()))
+              //     );
+              //   }
+              // );
+              // dataDeleteButton.title = "Delete the current selected type";
+              // $("#mapEditorData").append(dataDeleteButton);
 
               // reset button
-              var dataResetButton = uimanager.createButton("dataResetButton", "reset", function () {
-                soundManager.playSound(SOUND.CLICK);
-                var typeToReset = mapEditorData.type;
+              // var dataResetButton = uimanager.createButton("dataResetButton", "reset", function () {
+              //   soundManager.playSound(SOUND.CLICK);
+              //   var typeToReset = mapEditorData.type;
 
-                if (!typeToReset.getBasicType()) {
-                  displayInfoMsg("you can only reset basic units");
-                  return;
-                }
+              //   if (!typeToReset.getBasicType()) {
+              //     displayInfoMsg("you can only reset basic units");
+              //     return;
+              //   }
 
-                const ID = uniqueID();
-                displayInfoMsg(
-                  new HTMLBuilder()
-                    .add(`Reset type?<br /><br /><button id='${ID}'>reset</button>`)
-                    .addHook(() => $(`#${ID}`).click(() => mapEditorData.resetType()))
-                );
-              });
-              dataResetButton.title = "Reset the current selected type";
-              $("#mapEditorData").append(dataResetButton);
+              //   const ID = uniqueID();
+              //   displayInfoMsg(
+              //     new HTMLBuilder()
+              //       .add(`Reset type?<br /><br /><button id='${ID}'>reset</button>`)
+              //       .addHook(() => $(`#${ID}`).click(() => mapEditorData.resetType()))
+              //   );
+              // });
+              // dataResetButton.title = "Reset the current selected type";
+              // $("#mapEditorData").append(dataResetButton);
 
               // add list item window
-              var dataAddListWindow = new UIWindow(
-                "dataAddListWindow",
-                function () {
-                  return true;
-                },
-                true,
-                "Add",
-                true
-              );
-              var dataAddListWindowSubdiv =
-                dataAddListWindow.addScrollableSubDiv("dataAddListWindowSubdiv");
+              // var dataAddListWindow = new UIWindow(
+              //   "dataAddListWindow",
+              //   function () {
+              //     return true;
+              //   },
+              //   true,
+              //   "Add",
+              //   true
+              // );
+              // var dataAddListWindowSubdiv =
+              //   dataAddListWindow.addScrollableSubDiv("dataAddListWindowSubdiv");
 
               this.previewImages = [];
               this.switchRider(0);
@@ -34853,7 +34853,7 @@
                 return;
               }
 
-              fadeOut($("#dataNewObjectWindow"));
+              // fadeOut($("#dataNewObjectWindow"));
 
               var o = null;
 
@@ -34888,39 +34888,34 @@
             };
 
             MapEditorData.prototype.showDataAddListWindow = function () {
-              const builder = new HTMLBuilder();
-
-              builder.add("<select id='dataAddList'>");
-              for (let i = 0; i < game.commands.length; i++) {
-                builder.add(
-                  `<option name='${game.commands[i].id_string}'>${game.commands[i].name}</option>`
-                );
-              }
-              builder.add("</select><br />");
-
-              const ID = uniqueID();
-              builder
-                .add(`<button id='${ID}'>add</button>`)
-                .addHook(() =>
-                  $(`#${ID}`).click(addClickSound(() => mapEditorData.saveListData()))
-                );
-
-              builder.insertInto("#dataAddListWindowSubdiv");
-              fadeIn($("#dataAddListWindow"));
+              // const builder = new HTMLBuilder();
+              // builder.add("<select id='dataAddList'>");
+              // for (let i = 0; i < game.commands.length; i++) {
+              //   builder.add(
+              //     `<option name='${game.commands[i].id_string}'>${game.commands[i].name}</option>`
+              //   );
+              // }
+              // builder.add("</select><br />");
+              // const ID = uniqueID();
+              // builder
+              //   .add(`<button id='${ID}'>add</button>`)
+              //   .addHook(() =>
+              //     $(`#${ID}`).click(addClickSound(() => mapEditorData.saveListData()))
+              //   );
+              // builder.insertInto("#dataAddListWindowSubdiv");
+              // fadeIn($("#dataAddListWindow"));
             };
 
             MapEditorData.prototype.saveListData = function () {
-              var index = $("#dataAddList")[0].selectedIndex;
-
-              const ID = uniqueID();
-              new HTMLBuilder()
-                .add(`<p name='${game.commands[index].id_string}'>${game.commands[index].name} `)
-                .add(`<button id='${ID}'>X</button></p>`)
-                .addHook(() => $(`#${ID}`).click(() => deleteMapEditorDataElement(ID)))
-                .appendInto(".d_data_commands_div");
-
-              fadeOut($("#dataAddListWindow"));
-              this.saveUnit();
+              // var index = $("#dataAddList")[0].selectedIndex;
+              // const ID = uniqueID();
+              // new HTMLBuilder()
+              //   .add(`<p name='${game.commands[index].id_string}'>${game.commands[index].name} `)
+              //   .add(`<button id='${ID}'>X</button></p>`)
+              //   .addHook(() => $(`#${ID}`).click(() => deleteMapEditorDataElement(ID)))
+              //   .appendInto(".d_data_commands_div");
+              // fadeOut($("#dataAddListWindow"));
+              // this.saveUnit();
             };
 
             MapEditorData.prototype.switchRider = function (type) {
@@ -35390,14 +35385,14 @@
                     .addHook(() => $(`#${ID}`).click(() => deleteMapEditorDataElement(ID)));
                 });
 
-                const addBtnID = uniqueID();
-                builder
-                  .add(`</div><p><button id='${addBtnID}'>add</button></p>`)
-                  .addHook(() =>
-                    $(`#${addBtnID}`).click(
-                      addClickSound(() => mapEditorData.showDataAddListWindow())
-                    )
-                  );
+                // const addBtnID = uniqueID();
+                // builder
+                //   .add(`</div><p><button id='${addBtnID}'>add</button></p>`)
+                //   .addHook(() =>
+                //     $(`#${addBtnID}`).click(
+                //       addClickSound(() => mapEditorData.showDataAddListWindow())
+                //     )
+                //   );
               }
 
               // else (single string, float or int, make a simple input)
@@ -39552,7 +39547,7 @@
 
                 // draw everything
                 game.draw();
-                keyManager.draw();
+                // keyManager.draw();
                 // interface_.draw(); // Draws the in-game canvas interface (gold, units, minimap box, wood elements, ect.)
 
                 if (!window.lwgReplayStarted) {
@@ -42614,15 +42609,15 @@
               }
 
               MapSelection_.prototype.init = function () {
-                this.mapSelectionWindow = new UIWindow(
-                  "pickMapWindow",
-                  null,
-                  true,
-                  "Select Map",
-                  true
-                );
-                this.mapSelectionWindow.addSubDiv("pickMapWindowContents");
-                $("#pickMapWindow").hide();
+                // this.mapSelectionWindow = new UIWindow(
+                //   "pickMapWindow",
+                //   null,
+                //   true,
+                //   "Select Map",
+                //   true
+                // );
+                // this.mapSelectionWindow.addSubDiv("pickMapWindowContents");
+                // $("#pickMapWindow").hide();
 
                 // Close the menu whenever the game state changes
                 onGameStateChange(() => this.closeWindow());
@@ -42780,15 +42775,15 @@
                   );
                 }
 
-                builder.insertInto("#pickMapWindowContents");
+                // builder.insertInto("#pickMapWindowContents");
 
                 this.__requestCustomMapsPage(0);
-                $("#mapSearchInput")[0].focus();
-                fadeIn($("#pickMapWindow"));
+                // $("#mapSearchInput")[0].focus();
+                // fadeIn($("#pickMapWindow"));
               };
 
               MapSelection_.prototype.closeWindow = function () {
-                fadeOut($("#pickMapWindow"));
+                // fadeOut($("#pickMapWindow"));
               };
 
               MapSelection_.prototype.__showLoading = function () {
