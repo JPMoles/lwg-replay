@@ -28316,11 +28316,11 @@
                 else fadeOut($("#optionsWindow"));
               }
 
-              if (key == KEY.F9) {
-                if ($("#chatHistoryWindow")[0].style.display == "none")
-                  fadeIn($("#chatHistoryWindow"));
-                else fadeOut($("#chatHistoryWindow"));
-              }
+              // if (key == KEY.F9) {
+              //   if ($("#chatHistoryWindow")[0].style.display == "none")
+              //     fadeIn($("#chatHistoryWindow"));
+              //   else fadeOut($("#chatHistoryWindow"));
+              // }
 
               // set current tab prio to the next lower one
               if (key == KEY.TAB && this.unitTypeWithCurrentTabPrio && game.humanUnitsSelected()) {
@@ -33033,40 +33033,40 @@
               /*
                * Win / Loss Window
                */
-              this.winLossWindow = new UIWindow(
-                "winLossWindow",
-                function () {
-                  return game && game.gameHasEnded && game_state == GAME.PLAYING;
-                },
-                true,
-                "Game Statistics",
-                true
-              );
-              this.winLossWindow.addScrollableSubDiv("winLossTextArea");
+              // this.winLossWindow = new UIWindow(
+              //   "winLossWindow",
+              //   function () {
+              //     return game && game.gameHasEnded && game_state == GAME.PLAYING;
+              //   },
+              //   true,
+              //   "Game Statistics",
+              //   true
+              // );
+              // this.winLossWindow.addScrollableSubDiv("winLossTextArea");
 
-              var quitLogo = document.createElement("img");
-              quitLogo.id = "quitLogo";
-              quitLogo.src = "game/imgs/Logo.png";
-              quitLogo.className = "quitLogo";
-              $("#winLossWindow").append(quitLogo);
+              // var quitLogo = document.createElement("img");
+              // quitLogo.id = "quitLogo";
+              // quitLogo.src = "game/imgs/Logo.png";
+              // quitLogo.className = "quitLogo";
+              // $("#winLossWindow").append(quitLogo);
 
               // Quit Game Button
-              $("#winLossWindow").append(
-                this.createButton("winLossWindowQuitButton", "Quit", () => exitGame())
-              );
+              // $("#winLossWindow").append(
+              //   this.createButton("winLossWindowQuitButton", "Quit", () => exitGame())
+              // );
 
               /*
                * chat history window
                */
-              var chatHistoryWindow = new UIWindow(
-                "chatHistoryWindow",
-                function () {
-                  return true;
-                },
-                true,
-                "Chat History"
-              );
-              chatHistoryWindow.addScrollableSubDiv("chatHistorytextContainer");
+              // var chatHistoryWindow = new UIWindow(
+              //   "chatHistoryWindow",
+              //   function () {
+              //     return true;
+              //   },
+              //   true,
+              //   "Chat History"
+              // );
+              // chatHistoryWindow.addScrollableSubDiv("chatHistorytextContainer");
 
               /*
                * Lobby div (invis, holds all teh elements)
@@ -34164,12 +34164,12 @@
               ingameChatHistoryButton.blocksCanvas = false;
               ingameChatHistoryButton.domElement.className = "menuButtons";
               ingameChatHistoryButton.domElement.title = "Chat History";
-              ingameChatHistoryButton.domElement.onclick = function () {
-                if ($("#chatHistoryWindow")[0].style.display == "none")
-                  fadeIn($("#chatHistoryWindow"));
-                else fadeOut($("#chatHistoryWindow"));
-                soundManager.playSound(SOUND.CLICK);
-              };
+              // ingameChatHistoryButton.domElement.onclick = function () {
+              //   if ($("#chatHistoryWindow")[0].style.display == "none")
+              //     fadeIn($("#chatHistoryWindow"));
+              //   else fadeOut($("#chatHistoryWindow"));
+              //   soundManager.playSound(SOUND.CLICK);
+              // };
 
               // clans button
               var clansButton = new UIElement("button", "clansButton", function () {
@@ -34385,7 +34385,6 @@
 
               // put elements in array
               elements.push(
-                this.winLossWindow,
                 lobbyDiv,
                 this.ingameInput,
                 ingameChatDropdown,
@@ -39265,23 +39264,23 @@
                   } else if (msg[0] == "gameEnd") {
                     game.gameHasEnded = true;
                     game.playingPlayerWon = msg[1] == "1";
-                    uimanager.winLossWindow.setTitle(
-                      game.playingPlayerWon ? "Victory!" : "Defeat."
-                    );
-                    uimanager.winLossWindow.active = true;
-                    uimanager.winLossWindow.setTitleStyle(
-                      game.playingPlayerWon ? "gameVictoryTitle" : "gameLossTitle"
-                    );
-                    uimanager.winLossWindow.setBackgroundStyle(
-                      game.playingPlayerWon ? "ingameVictory" : "ingameDefeat"
-                    );
-                    $("#winLossWindowQuitButton")[0].className = game.playingPlayerWon
-                      ? "ingameVictory"
-                      : "ingameDefeat";
-                    uimanager.winLossWindow.setCloseButtonStyle(
-                      game.playingPlayerWon ? "victoryclosebutton" : "lossclosebutton"
-                    );
-                    uimanager.winLossWindow.active = true;
+                    // uimanager.winLossWindow.setTitle(
+                    //   game.playingPlayerWon ? "Victory!" : "Defeat."
+                    // );
+                    // uimanager.winLossWindow.active = true;
+                    // uimanager.winLossWindow.setTitleStyle(
+                    //   game.playingPlayerWon ? "gameVictoryTitle" : "gameLossTitle"
+                    // );
+                    // uimanager.winLossWindow.setBackgroundStyle(
+                    //   game.playingPlayerWon ? "ingameVictory" : "ingameDefeat"
+                    // );
+                    // $("#winLossWindowQuitButton")[0].className = game.playingPlayerWon
+                    //   ? "ingameVictory"
+                    //   : "ingameDefeat";
+                    // uimanager.winLossWindow.setCloseButtonStyle(
+                    //   game.playingPlayerWon ? "victoryclosebutton" : "lossclosebutton"
+                    // );
+                    // uimanager.winLossWindow.active = true;
                     soundManager.playSound(game.playingPlayerWon ? SOUND.VICTORY : SOUND.DEFEAT);
                     clearCache(game.playingPlayerWon);
                     if (!game.playingPlayerWon) PLAYING_PLAYER.team = game.teams[0];
