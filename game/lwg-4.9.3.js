@@ -3200,9 +3200,37 @@
 
                 Initialization.__loadedResources();
 
+                // LWG Replay initialization variables
                 window.lwgReplayStarted = false;
                 window.replayLoaded = false;
                 window.finishedReplay = false;
+                window.uploadButtonEventListenerAdded = false;
+                console.log("Setting replay variables up!");
+
+                // Button should be loaded before this script runs
+                if (!window.replayLoaded) {
+                  // Load replay file from folder using fetch?
+
+                  // Only add event listener one time on initialization
+                  if (!window.uploadButtonEventListenerAdded) {
+                    const uploadReplayButton = document.getElementById("uploadReplayButton");
+                    window.uploadReplay = () => {
+                      setTimeout(async () => {
+                        console.log("Requesting the replay file");
+                        const replayFileData = await fetch(
+                          "/test-replays/Cladorhiza_v_glaba_on_Xenos.json"
+                        );
+                        const replayFileInstant = await replayFileData.json();
+                        replayFile = replayFileInstant;
+                        console.log(replayFileInstant);
+                        network.send(`get-map-for-replay<<$${replayFileInstant.map}`);
+                      }, 2_000);
+                    };
+                    uploadReplayButton.addEventListener("click", window.uploadReplay, false);
+                    window.uploadButtonEventListenerAdded = true;
+                  }
+                  window.replayLoaded = true;
+                }
 
                 // start Main Loop
                 requestAnimationFrame(mainLoop);
@@ -34533,17 +34561,18 @@
               }
 
               // Exiting from a regular game to the lobby
+              // THIS INCLUDES REPLAYS
               else if (game_state == GAME.PLAYING || game_state == GAME.SKIRMISH) {
                 keyManager.resetCommand();
 
                 setChatFocus(true);
-                StatsWindow.showGameStatistics(game);
-                network.send("leave-game");
+                // StatsWindow.showGameStatistics(game);
+                // network.send("leave-game");
 
                 game_state = GAME.LOBBY;
                 network_game = false;
 
-                setTimeout(() => showAchievement(), 2000);
+                // setTimeout(() => showAchievement(), 2000);
               }
             }
 
@@ -39612,6 +39641,20 @@
 
                     // Should indicate to the outside that the replay is finished and no more data should be generated
                     window.finishedReplay = true;
+
+                    // Exit the game and reset all variables
+                    setTimeout(() => {
+                      exitGame();
+                      // Reset all stats and settings for replay playback:
+                      window.replayStats = [];
+                      window.lwgReplayStarted = false;
+                      window.replayLoaded = false;
+                      window.finishedReplay = false;
+                      // Don't have intervals here for now
+                      console.log(
+                        "Reseting all replay variables. Maybe can start a new replay now?"
+                      );
+                    }, 5_000);
                   }
                 }
 
@@ -39643,26 +39686,6 @@
               else {
                 c.fillStyle = "black";
                 c.fillRect(0, 0, WIDTH, HEIGHT);
-
-                // Not playing or in editor (ie: home)
-                if (!window.replayLoaded) {
-                  // Load replay file from folder using fetch?
-                  const uploadReplayButton = document.getElementById("uploadReplayButton");
-                  window.uploadReplay = () => {
-                    setTimeout(async () => {
-                      console.log("Requesting the replay file");
-                      const replayFileData = await fetch(
-                        "/test-replays/Cladorhiza_v_glaba_on_Xenos.json"
-                      );
-                      const replayFileInstant = await replayFileData.json();
-                      replayFile = replayFileInstant;
-                      console.log(replayFileInstant);
-                      network.send(`get-map-for-replay<<$${replayFileInstant.map}`);
-                    }, 2_000);
-                  };
-                  uploadReplayButton.addEventListener("click", window.uploadReplay, false);
-                  window.replayLoaded = true;
-                }
               }
 
               // musicManager.draw();

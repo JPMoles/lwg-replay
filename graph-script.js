@@ -31,15 +31,15 @@ const replayOutputDataDiv = document.getElementById("replayOutputData");
 
 const replayOutputInterval = setInterval(() => {
   // Check if the replay is over every 5 seconds
-  if (window.replayStats) {
+  if (window.replayStats && Object.keys(window.replayStats).length > 0) {
     if (window.replayStats["16275"]) {
       // Clear the interval
-      console.log("Clearing the interval checking for replay finishing!");
-      clearInterval(replayOutputInterval);
+      // console.log("Clearing the interval checking for replay finishing!");
+      // clearInterval(replayOutputInterval);
     }
 
     // Output the data in string form to a div
-    replayOutputDataDiv.innerText = JSON.stringify(window.replayStats);
+    // replayOutputDataDiv.innerText = JSON.stringify(window.replayStats);
 
     // Format data for graph
     // We want an array of objects, where each array is only data on one player ideally
