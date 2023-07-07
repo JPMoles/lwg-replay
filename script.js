@@ -328,7 +328,17 @@ async function setupReplay(fileList) {
 
   console.log("calling receive replay file");
 
+  // Get the json data from the file object
   const data = JSON.parse(await fileList[0].text());
+
+  // Create div to show time progress of current game
+  const gameProgressTimeDiv = document.getElementById("gameProgressTime");
+  gameProgressTimeDiv.innerText =
+    "0:00 / " + formatTime(Math.ceil(data["ticksCounter"] / TICKS_PER_SECOND));
+
+  const gameProgressDiv = document.getElementById("gameProgress");
+  gameProgressDiv.style.display = "block";
+
   if (validateReplayFile(data)) {
     window.receiveReplayFile(data);
   }

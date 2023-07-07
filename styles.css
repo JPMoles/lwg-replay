@@ -106,3 +106,15 @@ footer {
   text-decoration: underline;
   margin-top: 0;
 }
+
+#gameProgress {
+  text-align: center;
+  display: none;
+  background-color: white;
+  padding: 16px;
+}
+
+#gameProgress > h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
