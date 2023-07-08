@@ -7,6 +7,12 @@ console.log("The graph script was ran!");
 
 // testLoop();
 
+const TICKS_PER_SECOND = 20;
+
+const buildOrderPlayerOneDiv = document.getElementById("buildOrderP1");
+const buildOrderPlayerTwoDiv = document.getElementById("buildOrderP2");
+let lastTickChecked = 0;
+
 let plot = Plot.rectY({ length: 10000 }, Plot.binX({ y: "count" }, { x: Math.random })).plot();
 const div = document.querySelector("#unusedGoldPlot");
 div.append(plot);
@@ -129,5 +135,65 @@ const replayOutputInterval = setInterval(() => {
       ],
     });
     armySupplyDiv.replaceChildren(armySupplyPlot);
+
+    // Update build order
+
+    // Player 1
+    // window.replayStats[tickNumber][0]
+    // Player 2
+    // window.replayStats[tickNumber][1]
+
+    let playerOneBuild = "";
+    let playerTwoBuild = "";
+
+    for (const tickNumber in window.replayStats) {
+      const tickArray = window.replayStats[tickNumber];
+      const p1 = tickArray[0].unitsCreated;
+      const p2 = tickArray[1].unitsCreated;
+
+      if (p1) {
+        playerOneBuild += Object.keys(p1).reduce(
+          (prev, curr) => prev + curr + ": " + p1[curr] + ", ",
+          `${formatTime(Math.floor(tickNumber / TICKS_PER_SECOND))}: `
+        );
+        playerOneBuild += "\n";
+      }
+
+      if (p2) {
+        playerTwoBuild += Object.keys(p2).reduce(
+          (prev, curr) => prev + curr + ": " + p2[curr] + ", ",
+          `${formatTime(Math.floor(tickNumber / TICKS_PER_SECOND))}: `
+        );
+        playerTwoBuild += "\n";
+      }
+    }
+
+    buildOrderPlayerOneDiv.innerText = playerOneBuild;
+    buildOrderPlayerTwoDiv.innerText = playerTwoBuild;
   }
 }, 5_000);
+
+function formatTime(sec) {
+  var sec_num = sec;
+  var hours = Math.floor(sec_num / 3600);
+  var minutes = Math.floor((sec_num - hours * 3600) / 60);
+  var seconds = sec_num - hours * 3600 - minutes * 60;
+
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+
+  if (hours < 1) {
+    return minutes + ":" + seconds;
+  }
+
+  if (hours < 10) {
+    hours = "0" + hours;
+  }
+
+  return hours + ":" + minutes + ":" + seconds;
+}

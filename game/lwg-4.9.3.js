@@ -38582,14 +38582,37 @@
                           b.workload.splice(0, 1);
                         }
                       }
-                  } else if (msg[0] == "creaU")
+                  } else if (msg[0] == "creaU") {
                     new Unit({
                       x: parseFloat(msg[2]),
                       y: parseFloat(msg[3]),
                       type: msg[1].toUnitType(),
                       owner: game.players[msg[4]],
                     });
-                  else if (msg[0] == "creaB")
+
+                    // Add units created to current tick
+                    let currentReplayStats;
+                    if ((currentReplayStats = window.replayStats[ticksCounter])) {
+                      // current tick object already exists
+                      // window.replayStats[tickCounter][playerNumber].unitsCreated = { "the units created?" }
+                      // TODO: DETERMINE PLAYER NUMBER WITHOUT SUBTRACTING 1
+                      const currentReplayStatsPlayer = currentReplayStats[parseInt(msg[4]) - 1]; // for specific player
+                      if ("unitsCreated" in currentReplayStatsPlayer) {
+                        // if unitsCreated object already exists either add new unit, or increment for same unit
+                        currentReplayStatsPlayer.unitsCreated[msg[1]] = currentReplayStatsPlayer
+                          .unitsCreated[msg[1]]
+                          ? currentReplayStatsPlayer.unitsCreated[msg[1]] + 1
+                          : 1;
+                      } else {
+                        // Create new unitsCreated object on replay stats object and set unit type to 1
+                        currentReplayStatsPlayer.unitsCreated = {};
+                        currentReplayStatsPlayer.unitsCreated[msg[1]] = 1;
+                      }
+                    } else {
+                      // To test and see how often this happens
+                      console.log("Not created yet for this tick...");
+                    }
+                  } else if (msg[0] == "creaB")
                     new Building({
                       x: parseInt(msg[2]),
                       y: parseInt(msg[3]),
