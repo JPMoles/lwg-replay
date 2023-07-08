@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
@@ -124,4 +128,36 @@ footer {
 #gameProgress > h3 {
   margin-top: 0;
   margin-bottom: 0.5rem;
+}
+
+#buildOrder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  color: black;
+}
+
+#buildOrder > h4 {
+  color: black;
+  text-decoration: underline;
+  text-align: center;
+}
+
+#buildOrderPlayers {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+#buildOrderPlayers > div {
+  width: 400px;
+  height: 200px;
+  text-align: center;
+  background-color: white;
+  padding: 8px;
 }
