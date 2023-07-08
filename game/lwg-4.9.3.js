@@ -36232,7 +36232,7 @@
                     return;
                   }
 
-                  this.addMessage(conversationPartner, rawMsg, sender, msgStatus);
+                  // this.addMessage(conversationPartner, rawMsg, sender, msgStatus);
                 });
               };
 
