@@ -26,6 +26,11 @@
 
     <!-- Testing lwg game code -->
 
+    <header>
+      <a href="/">LWG Replay</a>
+      <button id="uploadButton" onClick="navigateHome()">Upload</button>
+    </header>
+
     <div class="container">
       <input
         type="file"
@@ -33,7 +38,7 @@
         style="display: none"
         accept=".json, application/json"
         multiple />
-      <button id="uploadReplayButton">Upload Replay</button>
+      <button id="uploadReplayButton">Upload Replay(s)</button>
       <div id="fileContent"><h3>Files</h3></div>
 
       <!-- Current Game Progress -->
@@ -67,7 +72,7 @@
     <script type="text/javascript" src="game/lwg-4.9.3.js"></script>
     <!-- End Testing lwg game code -->
 
-    <!-- <footer>Made for the LWG Community.</footer> -->
+    <footer>Made for the LWG Community.</footer>
     <!-- Load the script as the last element in the body -->
     <script type="module" src="script.js"></script>
   </body>

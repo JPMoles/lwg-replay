@@ -31426,11 +31426,11 @@
             };
 
             function setChatFocus(show) {
-              if (show) {
-                $("#lobbyChatInput")[0].focus();
-              } else {
-                $("#lobbyGameChatInput")[0].focus();
-              }
+              // if (show) {
+              //   $("#lobbyChatInput")[0].focus();
+              // } else {
+              //   $("#lobbyGameChatInput")[0].focus();
+              // }
             }
 
             function currencyFormatter(currency) {

@@ -348,6 +348,13 @@ function validateReplayFile(data) {
   return isLWGReplay(data);
 }
 
+function navigateHome() {
+  console.log("Loading home page");
+  window.location.href = "/";
+}
+
+window.navigateHome = navigateHome;
+
 // Create a WebSocket with the littlewargame server to get map data
 /*
 const socket = new WebSocket("wss://sockets.littlewargame.com:8083");
