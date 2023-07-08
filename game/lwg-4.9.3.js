@@ -25409,9 +25409,10 @@
                 }
               }
 
+              // REPLAY: REMOVE DUST PARTICLES ON MAP
               if (game_state == GAME.PLAYING) {
-                this.env.draw();
-                this.rain.draw();
+                // this.env.draw();
+                // this.rain.draw();
               }
 
               // draw fog
