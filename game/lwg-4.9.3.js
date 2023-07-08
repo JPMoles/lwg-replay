@@ -183,7 +183,7 @@
             })();
             const Changelog = (() => {
               function Changelog_() {
-                Initialization.onDocumentReady(() => this.init());
+                // Initialization.onDocumentReady(() => this.init());
                 this.__html = null;
               }
 
@@ -479,7 +479,7 @@
               const LOCAL_STORAGE_KEY_NAME = "hotkeys";
 
               function Hotkeys_() {
-                Initialization.onDocumentReady(() => this.init());
+                // Initialization.onDocumentReady(() => this.init());
                 this.__hotkeys = new HotkeyGroup("", true);
                 this.__onChangedListeners = {};
 
@@ -19323,7 +19323,7 @@
                 builder.add(`<span>: ${escapedMsg}</span>`);
                 builder.add("</p>");
 
-                addToChatWindow(builder);
+                // addToChatWindow(builder);
               }
             }
 
@@ -20229,9 +20229,9 @@
             }
 
             function showAchievementsWindow(ach_str) {
-              uimanager.playerInfoWindow.setTitle(
-                "<font style='color: rgb(255, 248, 57);'>Achievements</font>"
-              );
+              // uimanager.playerInfoWindow.setTitle(
+              //   "<font style='color: rgb(255, 248, 57);'>Achievements</font>"
+              // );
 
               var str = "";
 
@@ -20302,9 +20302,9 @@
                 "<br /><br /><div style='margin-left: 30px;'>littlewargame.com<br /><br />Owner:<br />Addicting Games, Inc.<br />15332 Antioch Street Los Angeles<br /> Suite 200<br /> California 90272<br /> USA</br>email: chris@addictinggames.com</div>"
               );
               fadeIn($("#playerInfoWindow2"));
-              uimanager.playerInfoWindow2.setTitle(
-                "<font style='color: rgb(255, 248, 57);'>Imprint</font>"
-              );
+              // uimanager.playerInfoWindow2.setTitle(
+              //   "<font style='color: rgb(255, 248, 57);'>Imprint</font>"
+              // );
             }
 
             function getItemFromArtNr(artNr) {
@@ -20352,15 +20352,15 @@
                 dataType: "text",
                 url: "game/agb.html",
               }).done(function (data) {
-                soundManager.playSound(SOUND.CLICK);
-                uimanager.playerInfoWindow2.setTitle(
-                  "<font style='color: rgb(255, 248, 57);'>Terms and conditions</font>"
-                );
-                $("#addScrollableSubDivTextArea2").html(
-                  "<div style='font-size: 14px;'>" + data + "</div>"
-                );
-                fadeIn($("#playerInfoWindow2"));
-                $("#addScrollableSubDivTextArea2")[0].scrollTop = 0;
+                // soundManager.playSound(SOUND.CLICK);
+                // uimanager.playerInfoWindow2.setTitle(
+                //   "<font style='color: rgb(255, 248, 57);'>Terms and conditions</font>"
+                // );
+                // $("#addScrollableSubDivTextArea2").html(
+                //   "<div style='font-size: 14px;'>" + data + "</div>"
+                // );
+                // fadeIn($("#playerInfoWindow2"));
+                // $("#addScrollableSubDivTextArea2")[0].scrollTop = 0;
               });
             }
 
@@ -20369,15 +20369,15 @@
                 dataType: "text",
                 url: "wre.html",
               }).done(function (data) {
-                soundManager.playSound(SOUND.CLICK);
-                uimanager.playerInfoWindow2.setTitle(
-                  "<font style='color: rgb(255, 248, 57);'>Cancellation policy</font>"
-                );
-                $("#addScrollableSubDivTextArea2").html(
-                  "<div style='font-size: 14px;'>" + data + "</div>"
-                );
-                fadeIn($("#playerInfoWindow2"));
-                $("#addScrollableSubDivTextArea2")[0].scrollTop = 0;
+                // soundManager.playSound(SOUND.CLICK);
+                // uimanager.playerInfoWindow2.setTitle(
+                //   "<font style='color: rgb(255, 248, 57);'>Cancellation policy</font>"
+                // );
+                // $("#addScrollableSubDivTextArea2").html(
+                //   "<div style='font-size: 14px;'>" + data + "</div>"
+                // );
+                // fadeIn($("#playerInfoWindow2"));
+                // $("#addScrollableSubDivTextArea2")[0].scrollTop = 0;
               });
             }
 
@@ -20386,15 +20386,15 @@
                 dataType: "text",
                 url: "dse.html",
               }).done(function (data) {
-                soundManager.playSound(SOUND.CLICK);
-                uimanager.playerInfoWindow2.setTitle(
-                  "<font style='color: rgb(255, 248, 57);'>Privacy Policy</font>"
-                );
-                $("#addScrollableSubDivTextArea2").html(
-                  "<div style='font-size: 14px;'>" + data + "</div>"
-                );
-                fadeIn($("#playerInfoWindow2"));
-                $("#addScrollableSubDivTextArea2")[0].scrollTop = 0;
+                // soundManager.playSound(SOUND.CLICK);
+                // uimanager.playerInfoWindow2.setTitle(
+                //   "<font style='color: rgb(255, 248, 57);'>Privacy Policy</font>"
+                // );
+                // $("#addScrollableSubDivTextArea2").html(
+                //   "<div style='font-size: 14px;'>" + data + "</div>"
+                // );
+                // fadeIn($("#playerInfoWindow2"));
+                // $("#addScrollableSubDivTextArea2")[0].scrollTop = 0;
               });
             }
 
@@ -20431,7 +20431,7 @@
             function testMap() {
               mapData = game.export_(false); // save map data, so after ending test game, we can go back to the editor and reload the start map state
               mapData.img = getImageFromMap(game.export_(true));
-              uimanager.showLoadingScreen(mapData); // show loading screen
+              // uimanager.showLoadingScreen(mapData); // show loading screen
 
               setTimeout(function () {
                 game_state = GAME.PLAYING;
@@ -20930,9 +20930,9 @@
 
             function displayConfirmPrompt(msg, yesCallback, noCallback) {
               // The only way they can exit is by pressing yes or no
-              $(uimanager.infoWindow.closeButton).hide();
-              const restoreCloseButton = () =>
-                setTimeout(() => $(uimanager.infoWindow.closeButton).show(), 201);
+              // $(uimanager.infoWindow.closeButton).hide();
+              // const restoreCloseButton = () =>
+              //   setTimeout(() => $(uimanager.infoWindow.closeButton).show(), 201);
 
               const yesButtonID = uniqueID();
               const noButtonID = uniqueID();
@@ -20986,10 +20986,10 @@
 
               builder.insertInto("#addScrollableSubDivTextArea");
 
-              uimanager.playerInfoWindow.setTitleText("Divisions");
-              uimanager.playerInfoWindow.setRider(new HTMLBuilder());
-              uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
-              fadeIn($("#playerInfoWindow"));
+              // uimanager.playerInfoWindow.setTitleText("Divisions");
+              // uimanager.playerInfoWindow.setRider(new HTMLBuilder());
+              // uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
+              // fadeIn($("#playerInfoWindow"));
             }
 
             function clearCache(extended) {
@@ -23075,8 +23075,8 @@
 
               // Initialize the dropdowns for spectators
               // Disable them in the editor, in editor testing, LCG, and obviously if the player is not a spectator
-              if (!this.isEditor && !mapData && !this.isLCG && PLAYING_PLAYER.number > MAX_PLAYERS)
-                this.initSpectatorInterface();
+              // if (!this.isEditor && !mapData && !this.isLCG && PLAYING_PLAYER.number > MAX_PLAYERS)
+              //   this.initSpectatorInterface();
 
               // Load settings if we are in the editor
               MapEditorSettings.loadFromMap(data);
@@ -23103,23 +23103,23 @@
                 $("#spectatorDropdowns").empty();
 
                 // Dropdown containing information about the game
-                const infoBuilder = new HTMLBuilder();
+                // const infoBuilder = new HTMLBuilder();
                 //infoBuilder.add("<p id='spectatorLabel'>Info</p>");
                 //infoBuilder.add("<select id='spectatorDropdown'>");
                 //infoBuilder.add("<option value='0'>Nothing</option>");
-                interface_.specGeneralHotkeys.forEach((hotkey, i) => {
-                  const ID = uniqueID();
-                  infoBuilder.add(
-                    `<option id='${ID}' value='${i + 1}'>${hotkey.name} [${getKeyName(
-                      hotkey.value
-                    )}]</option>`
-                  );
+                // interface_.specGeneralHotkeys.forEach((hotkey, i) => {
+                //   const ID = uniqueID();
+                //   infoBuilder.add(
+                //     `<option id='${ID}' value='${i + 1}'>${hotkey.name} [${getKeyName(
+                //       hotkey.value
+                //     )}]</option>`
+                //   );
 
-                  keyManager.registerListener(hotkey.value, "GAME_SPEC_INFO", () => {
-                    this.refreshSpectatorTab(i + 1);
-                    $(`#${ID}`).prop("selected", "selected");
-                  });
-                });
+                //   keyManager.registerListener(hotkey.value, "GAME_SPEC_INFO", () => {
+                //     this.refreshSpectatorTab(i + 1);
+                //     $(`#${ID}`).prop("selected", "selected");
+                //   });
+                // });
                 // infoBuilder
                 //   .add("</select>")
                 //   .addHook(() =>
@@ -23718,13 +23718,15 @@
             Game.prototype.refreshSpectatorTab = function (index) {
               //if (isNaN(index)) index = $("#spectatorDropdown")[0].selectedIndex;
 
-              interface_.showInfoDiv = index > 0;
+              return;
+
+              // interface_.showInfoDiv = index > 0;
               if (index == 0) return;
 
               var fieldName = this.specFieldNames[index];
 
               // draw
-              $("#spectatorDiv").html("");
+              // $("#spectatorDiv").html("");
 
               var x = 0;
               var y = 0;
@@ -25832,7 +25834,7 @@
                 return true;
 
               keyManager.callListeners(key);
-              uimanager.onKey(key);
+              // uimanager.onKey(key);
 
               // if were not ingame, return, because no delegation to the game
               if (game_state != GAME.PLAYING && game_state != GAME.EDITOR) return true;
@@ -25882,8 +25884,8 @@
               }
 
               // open ingame chat input and set all/allies dropdown
-              if (game_state == GAME.PLAYING && key == KEY.ENTER && !uimanager.ingameInput.active) {
-                uimanager.ingameInput.active = true;
+              if (game_state == GAME.PLAYING && key == KEY.ENTER) {
+                // uimanager.ingameInput.active = true;
 
                 // check, if playing player has allies
                 var playingPlayerHasAllies = false;
@@ -26470,7 +26472,7 @@
             // replace the cursor with tho normal one
             KeyManager.prototype.resetCommand = function () {
               this.command = null;
-              document.body.style.cursor = `url(${CursorFiles[Cursors.DEFAULT]}), auto`;
+              // document.body.style.cursor = `url(${CursorFiles[Cursors.DEFAULT]}), auto`;
             };
 
             // a command is started
@@ -26502,8 +26504,8 @@
               else if (
                 game.selectedUnitsCanPerformOrder(cmd, interface_.unitTypeWithCurrentTabPrio)
               ) {
-                if (cmd.cursor && cmd.cursor in CursorFiles)
-                  document.body.style.cursor = `url(${CursorFiles[cmd.cursor]}), auto`;
+                // if (cmd.cursor && cmd.cursor in CursorFiles)
+                //   document.body.style.cursor = `url(${CursorFiles[cmd.cursor]}), auto`;
 
                 if (
                   cmd.type == COMMAND.MAKEBUILDING &&
@@ -26671,7 +26673,7 @@
             };
 
             function Interface() {
-              Initialization.onDocumentReady(() => this.init());
+              // Initialization.onDocumentReady(() => this.init());
 
               this.messages = []; // active chat messages are stores here
 
@@ -30947,10 +30949,10 @@
 
                 builder.insertInto("#addScrollableSubDivTextArea");
 
-                uimanager.playerInfoWindow.setTitleText(leagueNames[splitMsg[1]]);
-                uimanager.playerInfoWindow.setRider(new HTMLBuilder());
-                uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
-                fadeIn($("#playerInfoWindow"));
+                // uimanager.playerInfoWindow.setTitleText(leagueNames[splitMsg[1]]);
+                // uimanager.playerInfoWindow.setRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
+                // fadeIn($("#playerInfoWindow"));
               } else if (splitMsg[0] == "custom-map-editor-file") {
                 const canEditMap = splitMsg[2] == "1";
                 if (!canEditMap) {
@@ -30961,7 +30963,7 @@
                 this.onMapFile = (map) => {
                   map.img = splitMsg[1];
 
-                  uimanager.showLoadingScreen(map);
+                  // uimanager.showLoadingScreen(map);
 
                   setTimeout(() => {
                     game = new Game();
@@ -30990,7 +30992,7 @@
                   }
 
                   network.send("cancel-ladder");
-                  fadeOut($("#ladderWindow"));
+                  // fadeOut($("#ladderWindow"));
 
                   const p = replayFile.players.concat([
                     {
@@ -31002,7 +31004,7 @@
                   ]);
 
                   map.img = getImageFromMap(map);
-                  uimanager.showLoadingScreen(map, p);
+                  // uimanager.showLoadingScreen(map, p);
 
                   setTimeout(() => {
                     game_state = GAME.PLAYING;
@@ -31038,7 +31040,7 @@
 
                     mapData = "";
 
-                    $("#replayShowSpeed").html("1x");
+                    // $("#replayShowSpeed").html("1x");
                   }, 50);
                 };
               } else if (splitMsg[0] == "laddermaps-list") {
@@ -31057,38 +31059,38 @@
 
                 str = str.substr(0, str.length - 2) + "</font><br /><br />";
 
-                $("#ladderWindow").html(str);
+                // $("#ladderWindow").html(str);
 
-                $("#ladderWindow").append(
-                  uimanager.createButton("ladderButton2", "Start searching", function () {
-                    if (AccountInfo.authedAndLogged) {
-                      network.send("init-ladder<<$" + GAME_VERSION);
-                      fadeIn($("#ladderWindow"));
-                      $("#ladderWindow").html(
-                        "<br /><p style='font-size: 30px; margin: 20px auto;'>searching for opponent ...</p><br /><br /><br />"
-                      );
-                      $("#ladderWindow").append(
-                        uimanager.createButton("cancelLadderButton", "cancel", function () {
-                          network.send("cancel-ladder");
-                          fadeOut($("#ladderWindow"));
-                          soundManager.playSound(SOUND.CLICK);
-                        })
-                      );
-                    } else {
-                      displayInfoMsg("Only registered users can play ranked matches.");
-                      fadeOut($("#ladderWindow"));
-                    }
+                // $("#ladderWindow").append(
+                //   uimanager.createButton("ladderButton2", "Start searching", function () {
+                //     if (AccountInfo.authedAndLogged) {
+                //       network.send("init-ladder<<$" + GAME_VERSION);
+                //       fadeIn($("#ladderWindow"));
+                //       $("#ladderWindow").html(
+                //         "<br /><p style='font-size: 30px; margin: 20px auto;'>searching for opponent ...</p><br /><br /><br />"
+                //       );
+                //       $("#ladderWindow").append(
+                //         uimanager.createButton("cancelLadderButton", "cancel", function () {
+                //           network.send("cancel-ladder");
+                //           fadeOut($("#ladderWindow"));
+                //           soundManager.playSound(SOUND.CLICK);
+                //         })
+                //       );
+                //     } else {
+                //       displayInfoMsg("Only registered users can play ranked matches.");
+                //       fadeOut($("#ladderWindow"));
+                //     }
 
-                    soundManager.playSound(SOUND.CLICK);
-                  })
-                );
+                //     soundManager.playSound(SOUND.CLICK);
+                //   })
+                // );
 
-                $("#ladderWindow").append(
-                  uimanager.createButton("ladderCancelButton2", "Cancel", function () {
-                    fadeOut($("#ladderWindow"));
-                    soundManager.playSound(SOUND.CLICK);
-                  })
-                );
+                // $("#ladderWindow").append(
+                //   uimanager.createButton("ladderCancelButton2", "Cancel", function () {
+                //     fadeOut($("#ladderWindow"));
+                //     soundManager.playSound(SOUND.CLICK);
+                //   })
+                // );
               } else if (splitMsg[0] == "achivements-list") {
                 showAchievementsWindow(splitMsg[1]);
               } else if (splitMsg[0] == "gold-reward") {
@@ -31186,7 +31188,7 @@
                   ladder_game = false;
 
                   // show loading screen
-                  uimanager.showLoadingScreen(LobbyPlayerManager.map, players);
+                  // uimanager.showLoadingScreen(LobbyPlayerManager.map, players);
 
                   setTimeout(function () {
                     game = new Game();
@@ -31238,7 +31240,7 @@
 
                       $("#ladderWindow").hide();
 
-                      uimanager.showLoadingScreen(map, players);
+                      // uimanager.showLoadingScreen(map, players);
                       network.send("load-ladder-map");
 
                       setTimeout(() => {
@@ -31768,7 +31770,7 @@
               const PlayerType = Object.freeze({ PLAYER: 0, CPU: 1 });
 
               function LobbyPlayerManager_() {
-                Initialization.onDocumentReady(() => this.init());
+                // Initialization.onDocumentReady(() => this.init());
 
                 this.active = false;
                 this.map = null;
@@ -31830,7 +31832,7 @@
 
                 // Create the main window that contains the entire lobby
                 const lobbyWindow = new UIWindow("gameLobbyWindow", () => this.active);
-                UIManagerSingleton.registerUIElement(lobbyWindow);
+                // UIManagerSingleton.registerUIElement(lobbyWindow);
 
                 // Construct the contents of the game lobby
                 const builder = new HTMLBuilder();
@@ -31860,7 +31862,7 @@
                   .addHook(() =>
                     $("#lobbyGameChatInput").keydown((e) => {
                       if (keyManager.getKeyCode(e) == KEY.ENTER && network.connected) {
-                        uimanager.chatFunction($("#lobbyGameChatInput"));
+                        // uimanager.chatFunction($("#lobbyGameChatInput"));
                       }
                     })
                   )
@@ -32797,7 +32799,7 @@
                   const ps = this.getPlayerSettingsForGame();
 
                   this.active = false;
-                  uimanager.showLoadingScreen(this.map, ps);
+                  // uimanager.showLoadingScreen(this.map, ps);
 
                   setTimeout(() => {
                     game_state = GAME.PLAYING;
@@ -32825,7 +32827,7 @@
 
             const ReplaysWindow = (() => {
               function ReplaysWindow_() {
-                Initialization.onDocumentReady(() => this.createWindow());
+                // Initialization.onDocumentReady(() => this.createWindow());
 
                 if (!localStorage.getItem("Replays")) {
                   localStorage.setItem("Replays", JSON.stringify([]));
@@ -33674,7 +33676,7 @@
               });
               $("#ingameChatInput")[0].type = "text";
               $("#ingameChatInput")[0].onkeydown = function (e) {
-                if (keyManager.getKeyCode(e) == KEY.ENTER && uimanager.ingameInput.active) {
+                if (keyManager.getKeyCode(e) == KEY.ENTER) {
                   if (this.value.length > 0) {
                     if (network_game && network && network.socket) {
                       const chatCommand = game.commands.find((c) => c.chat_str == this.value);
@@ -33700,7 +33702,7 @@
                     this.value = "";
                   }
 
-                  uimanager.ingameInput.active = false;
+                  // uimanager.ingameInput.active = false;
                 }
 
                 // tab between ally chat and all chat
@@ -33712,13 +33714,13 @@
 
                 // close input on ESC
                 else if (keyManager.getKeyCode(e) == KEY.ESC) {
-                  uimanager.ingameInput.active = false;
+                  // uimanager.ingameInput.active = false;
                 }
               };
 
               // allies / all dropdown for ingame chat
               var ingameChatDropdown = new UIElement("select", "ingameChatDropdown", function () {
-                return game_state == GAME.PLAYING && uimanager.ingameInput.active;
+                return game_state == GAME.PLAYING; // && uimanager.ingameInput.active;
               });
               $("#ingameChatDropdown").html(
                 "<option value='*'>All</option><option value='~'>Allies</option>"
@@ -33845,7 +33847,7 @@
                       const y = parseInt($("#newMapSizeY")[0].value);
                       const defaultHeight = $("#heightLevelSelect").val();
 
-                      uimanager.showLoadingScreen();
+                      // uimanager.showLoadingScreen();
                       setTimeout(() => (editor = new MapEditor(x, y, theme, defaultHeight)), 50);
                     }
                   })
@@ -34262,33 +34264,33 @@
               $("#addScrollableSubDivTextArea2").addClass("nodrag");
 
               // Version number display
-              var versionNumber = new UIElement("div", "versionNumber", function () {
-                return (
-                  game_state == GAME.LOGIN ||
-                  game_state == GAME.REGISTER ||
-                  game_state == GAME.LOBBY ||
-                  game_state == GAME.RECOVERY
-                );
-              });
-              $("#versionNumber").html(
-                "<a title='This is the current version of the game. Click for a complete version log.' id='versionNumber' target='_blank'>v" +
-                  GAME_VERSION +
-                  "</a>"
-              );
-              $("#versionNumber")[0].onclick = function () {
-                Changelog.tryShow(true);
-                soundManager.playSound(SOUND.CLICK);
-              };
-              // faq container
-              var faqContainer = new UIElement("div", "faqContainer", function () {
-                return (
-                  game_state == GAME.LOGIN ||
-                  game_state == GAME.REGISTER ||
-                  game_state == GAME.LOBBY ||
-                  game_state == GAME.RECOVERY
-                );
-              });
-              $("#faqContainer").html("");
+              // var versionNumber = new UIElement("div", "versionNumber", function () {
+              //   return (
+              //     game_state == GAME.LOGIN ||
+              //     game_state == GAME.REGISTER ||
+              //     game_state == GAME.LOBBY ||
+              //     game_state == GAME.RECOVERY
+              //   );
+              // });
+              // $("#versionNumber").html(
+              //   "<a title='This is the current version of the game. Click for a complete version log.' id='versionNumber' target='_blank'>v" +
+              //     GAME_VERSION +
+              //     "</a>"
+              // );
+              // $("#versionNumber")[0].onclick = function () {
+              //   Changelog.tryShow(true);
+              //   soundManager.playSound(SOUND.CLICK);
+              // };
+              // // faq container
+              // var faqContainer = new UIElement("div", "faqContainer", function () {
+              //   return (
+              //     game_state == GAME.LOGIN ||
+              //     game_state == GAME.REGISTER ||
+              //     game_state == GAME.LOBBY ||
+              //     game_state == GAME.RECOVERY
+              //   );
+              // });
+              // $("#faqContainer").html("");
 
               // F.A.Q. Window
               var faqWindow = new UIWindow(
@@ -34307,81 +34309,81 @@
               });
 
               // links menu
-              var linksMenu = new UIElement("div", "linksMenu", function () {
-                return (
-                  game_state == GAME.LOGIN ||
-                  game_state == GAME.REGISTER ||
-                  game_state == GAME.LOBBY ||
-                  game_state == GAME.RECOVERY
-                );
-              });
-              linksMenu.domElement.innerHTML = "<p id='links-title'>Quick Links</p>";
+              // var linksMenu = new UIElement("div", "linksMenu", function () {
+              //   return (
+              //     game_state == GAME.LOGIN ||
+              //     game_state == GAME.REGISTER ||
+              //     game_state == GAME.LOBBY ||
+              //     game_state == GAME.RECOVERY
+              //   );
+              // });
+              // linksMenu.domElement.innerHTML = "<p id='links-title'>Quick Links</p>";
 
-              var linksMenu2 = document.createElement("div");
-              linksMenu2.innerHTML =
-                "<p><a href='https://www.facebook.com/littlewargame' target='_blank'>Facebook</a></p>";
-              linksMenu2.innerHTML +=
-                "<p><a href='https://discord.gg/y334eXGQ8J' target='_blank'>Discord</a></p>";
-              linksMenu2.innerHTML +=
-                "<p><a href='http://www.reddit.com/r/Littlewargame' target='_blank'>Subreddit</a></p>";
-              linksMenu2.innerHTML +=
-                "<p><a href='http://littlewargame.gamepedia.com/Little_War_Game_Wiki' target='_blank'>Wiki</a></p>";
-              linksMenu2.innerHTML +=
-                "<p><a href='https://www.youtube.com/user/LittleWarGameRTS' target='_blank'>Youtube</a></p>";
-              linksMenu2.innerHTML +=
-                "<p><a href='https://iogames.space/' target='_blank'>More Games</a></p>";
+              // var linksMenu2 = document.createElement("div");
+              // linksMenu2.innerHTML =
+              //   "<p><a href='https://www.facebook.com/littlewargame' target='_blank'>Facebook</a></p>";
+              // linksMenu2.innerHTML +=
+              //   "<p><a href='https://discord.gg/y334eXGQ8J' target='_blank'>Discord</a></p>";
+              // linksMenu2.innerHTML +=
+              //   "<p><a href='http://www.reddit.com/r/Littlewargame' target='_blank'>Subreddit</a></p>";
+              // linksMenu2.innerHTML +=
+              //   "<p><a href='http://littlewargame.gamepedia.com/Little_War_Game_Wiki' target='_blank'>Wiki</a></p>";
+              // linksMenu2.innerHTML +=
+              //   "<p><a href='https://www.youtube.com/user/LittleWarGameRTS' target='_blank'>Youtube</a></p>";
+              // linksMenu2.innerHTML +=
+              //   "<p><a href='https://iogames.space/' target='_blank'>More Games</a></p>";
 
-              linksMenu.domElement.appendChild(linksMenu2);
+              // linksMenu.domElement.appendChild(linksMenu2);
 
               // legalities
-              const legalities = new UIElement(
-                "div",
-                "legalities",
-                () =>
-                  game_state == GAME.LOGIN ||
-                  game_state == GAME.REGISTER ||
-                  game_state == GAME.LOBBY ||
-                  game_state == GAME.RECOVERY
-              );
-              new HTMLBuilder()
-                .add("<a id='imprintLink'>Imprint</a> | ")
-                .addHook(() => $("#imprintLink").click(showImprint))
-                .add("<a id='agbLink'>Terms & Conditions</a> | ")
-                .addHook(() => $("#agbLink").click(showAGB))
-                .add("<a id='dseLink'>Privacy Policy</a>")
-                .addHook(() => $("#dseLink").click(showDSE))
-                .insertInto("#legalities");
+              // const legalities = new UIElement(
+              //   "div",
+              //   "legalities",
+              //   () =>
+              //     game_state == GAME.LOGIN ||
+              //     game_state == GAME.REGISTER ||
+              //     game_state == GAME.LOBBY ||
+              //     game_state == GAME.RECOVERY
+              // );
+              // new HTMLBuilder()
+              //   .add("<a id='imprintLink'>Imprint</a> | ")
+              //   .addHook(() => $("#imprintLink").click(showImprint))
+              //   .add("<a id='agbLink'>Terms & Conditions</a> | ")
+              //   .addHook(() => $("#agbLink").click(showAGB))
+              //   .add("<a id='dseLink'>Privacy Policy</a>")
+              //   .addHook(() => $("#dseLink").click(showDSE))
+              //   .insertInto("#legalities");
 
               // loading window
-              var loadingWindow = document.createElement("div");
-              loadingWindow.id = "loadingWindow";
-              document.body.appendChild(loadingWindow);
+              // var loadingWindow = document.createElement("div");
+              // loadingWindow.id = "loadingWindow";
+              // document.body.appendChild(loadingWindow);
 
               // loading text
-              var loadingText = document.createElement("p");
-              loadingWindow.appendChild(loadingText);
-              loadingText.id = "loadingText";
-              loadingText.innerHTML = "loading...";
+              // var loadingText = document.createElement("p");
+              // loadingWindow.appendChild(loadingText);
+              // loadingText.id = "loadingText";
+              // loadingText.innerHTML = "loading...";
 
               // map preview img
-              var loadingScreenMapImg = document.createElement("img");
-              loadingScreenMapImg.id = "loadingScreenMapImg";
-              loadingWindow.appendChild(loadingScreenMapImg);
+              // var loadingScreenMapImg = document.createElement("img");
+              // loadingScreenMapImg.id = "loadingScreenMapImg";
+              // loadingWindow.appendChild(loadingScreenMapImg);
 
               // map name
-              var mapScreenName = document.createElement("p");
-              mapScreenName.id = "mapScreenName";
-              loadingWindow.appendChild(mapScreenName);
+              // var mapScreenName = document.createElement("p");
+              // mapScreenName.id = "mapScreenName";
+              // loadingWindow.appendChild(mapScreenName);
 
               // players display
-              var playersDisplay = document.createElement("p");
-              playersDisplay.id = "playersDisplay";
-              loadingWindow.appendChild(playersDisplay);
+              // var playersDisplay = document.createElement("p");
+              // playersDisplay.id = "playersDisplay";
+              // loadingWindow.appendChild(playersDisplay);
 
               // dark screen div
-              var darkScreenDiv = document.createElement("div");
-              darkScreenDiv.id = "darkScreenDiv";
-              document.body.appendChild(darkScreenDiv);
+              // var darkScreenDiv = document.createElement("div");
+              // darkScreenDiv.id = "darkScreenDiv";
+              // document.body.appendChild(darkScreenDiv);
 
               // put elements in array
               elements.push(
@@ -34391,12 +34393,8 @@
                 mapEditorInterface,
                 this.quitGameButton,
                 this.optionsPauseButton,
-                versionNumber,
-                linksMenu,
                 achivementsButton,
-                emotesButton,
-                legalities,
-                faqContainer
+                emotesButton
               );
 
               this.onKeyElements = [optionsWindow];
@@ -34494,7 +34492,7 @@
               // Exiting from a test map into the editor
               if (game_state != GAME.EDITOR && mapData) {
                 // Show loading screen
-                uimanager.showLoadingScreen(mapData);
+                // uimanager.showLoadingScreen(mapData);
                 keyManager.resetCommand();
 
                 setTimeout(() => {
@@ -34553,52 +34551,52 @@
               // });
 
               // create riders
-              var riders = document.createElement("div");
-              riders.id = "dataRiders";
+              // var riders = document.createElement("div");
+              // riders.id = "dataRiders";
 
-              riders.appendChild(
-                uimanager.createButton("dataUnitsButton", "Units", function () {
-                  mapEditorData.switchRider(0);
-                  soundManager.playSound(SOUND.CLICK);
-                })
-              );
+              // riders.appendChild(
+              //   uimanager.createButton("dataUnitsButton", "Units", function () {
+              //     mapEditorData.switchRider(0);
+              //     soundManager.playSound(SOUND.CLICK);
+              //   })
+              // );
 
-              riders.appendChild(
-                uimanager.createButton("dataBuildingsButton", "Buildings", function () {
-                  mapEditorData.switchRider(1);
-                  soundManager.playSound(SOUND.CLICK);
-                })
-              );
+              // riders.appendChild(
+              //   uimanager.createButton("dataBuildingsButton", "Buildings", function () {
+              //     mapEditorData.switchRider(1);
+              //     soundManager.playSound(SOUND.CLICK);
+              //   })
+              // );
 
-              riders.appendChild(
-                uimanager.createButton("dataCommandsButton", "Abilities", function () {
-                  mapEditorData.switchRider(2);
-                  soundManager.playSound(SOUND.CLICK);
-                })
-              );
+              // riders.appendChild(
+              //   uimanager.createButton("dataCommandsButton", "Abilities", function () {
+              //     mapEditorData.switchRider(2);
+              //     soundManager.playSound(SOUND.CLICK);
+              //   })
+              // );
 
-              riders.appendChild(
-                uimanager.createButton("dataUpgradesButton", "Upgrades", function () {
-                  mapEditorData.switchRider(3);
-                  soundManager.playSound(SOUND.CLICK);
-                })
-              );
+              // riders.appendChild(
+              //   uimanager.createButton("dataUpgradesButton", "Upgrades", function () {
+              //     mapEditorData.switchRider(3);
+              //     soundManager.playSound(SOUND.CLICK);
+              //   })
+              // );
 
-              riders.appendChild(
-                uimanager.createButton("dataModifiersButton", "Modifiers", function () {
-                  mapEditorData.switchRider(4);
-                  soundManager.playSound(SOUND.CLICK);
-                })
-              );
+              // riders.appendChild(
+              //   uimanager.createButton("dataModifiersButton", "Modifiers", function () {
+              //     mapEditorData.switchRider(4);
+              //     soundManager.playSound(SOUND.CLICK);
+              //   })
+              // );
 
-              riders.appendChild(
-                uimanager.createButton("dataGraphicsButton", "Graphics", function () {
-                  mapEditorData.switchRider(5);
-                  soundManager.playSound(SOUND.CLICK);
-                })
-              );
+              // riders.appendChild(
+              //   uimanager.createButton("dataGraphicsButton", "Graphics", function () {
+              //     mapEditorData.switchRider(5);
+              //     soundManager.playSound(SOUND.CLICK);
+              //   })
+              // );
 
-              $("#mapEditorDataSubDiv").append(riders);
+              // $("#mapEditorDataSubDiv").append(riders);
 
               this.types = [
                 game.unitTypes,
@@ -35731,7 +35729,7 @@
               };
 
               function MapEditorSettings_() {
-                Initialization.onDocumentReady(() => this.init());
+                // Initialization.onDocumentReady(() => this.init());
                 this.__playerSettingsChangeListeners = [];
 
                 const clamp = (jqEl, min, max) => {
@@ -39470,7 +39468,7 @@
             var editor = null;
             var network = new Network();
             var game = null;
-            var uimanager = new UIManager();
+            // var uimanager = new UIManager();
             var env = new Enviroment();
             var mapEditorData = null;
 
@@ -39638,13 +39636,13 @@
 
               // musicManager.draw();
               // uimanager.draw(); // draws the main ui on the home page
-              // UIManagerSingleton.draw(); // no idea what this does
+              UIManagerSingleton.draw(); // no idea what this does
             }
 
             const AccountInfo = (() => {
               function AccountInfo_() {
                 Initialization.onDocumentReady(() => {
-                  this.init();
+                  // this.init();
 
                   Login.registerOnLogout(() => {
                     this.__initializeFields();
@@ -39977,40 +39975,40 @@
               };
 
               Login_.prototype.init = function () {
-                this.__initLoginWindow();
-                this.__initRecoveryWindow();
-                this.__initRegisterWindow();
+                // this.__initLoginWindow();
+                // this.__initRecoveryWindow();
+                // this.__initRegisterWindow();
 
                 /*
                  * AGB accept
                  */
-                const agbAcceptDiv = new UIWindow(
-                  "agbAcceptDiv",
-                  () => game_state == GAME.ACCEPT_AGB,
-                  false,
-                  ""
-                );
-                agbAcceptDiv.addScrollableSubDiv("agbAcceptDivSubDiv");
-                $("#agbAcceptDiv").append(
-                  "<div>You have to read and accept the terms and conditions in order to continue</div>"
-                );
+                // const agbAcceptDiv = new UIWindow(
+                //   "agbAcceptDiv",
+                //   () => game_state == GAME.ACCEPT_AGB,
+                //   false,
+                //   ""
+                // );
+                // agbAcceptDiv.addScrollableSubDiv("agbAcceptDivSubDiv");
+                // $("#agbAcceptDiv").append(
+                //   "<div>You have to read and accept the terms and conditions in order to continue</div>"
+                // );
 
-                $.ajax({
-                  dataType: "text",
-                  url: "game/agb.html",
-                }).done((data) => {
-                  new HTMLBuilder()
-                    .add(`<div style='font-size: 14px'>${data}</div><br />`)
-                    .add(
-                      "<button id='acceptAGBButton'>I have read and accepted the terms and conditions</button>"
-                    )
-                    .addHook(() =>
-                      $("#acceptAGBButton").click(addClickSound(() => network.send("i-accept-agb")))
-                    )
-                    .insertInto("#agbAcceptDivSubDiv");
-                });
+                // $.ajax({
+                //   dataType: "text",
+                //   url: "game/agb.html",
+                // }).done((data) => {
+                //   new HTMLBuilder()
+                //     .add(`<div style='font-size: 14px'>${data}</div><br />`)
+                //     .add(
+                //       "<button id='acceptAGBButton'>I have read and accepted the terms and conditions</button>"
+                //     )
+                //     .addHook(() =>
+                //       $("#acceptAGBButton").click(addClickSound(() => network.send("i-accept-agb")))
+                //     )
+                //     .insertInto("#agbAcceptDivSubDiv");
+                // });
 
-                UIManagerSingleton.registerUIElement(agbAcceptDiv);
+                // UIManagerSingleton.registerUIElement(agbAcceptDiv);
 
                 this.__initNetworkListeners();
               };
@@ -40320,7 +40318,7 @@
 
                 if (!hideFAQ.get()) this.__showFAQ();
 
-                Changelog.tryShow();
+                // Changelog.tryShow();
 
                 const response = JSON.parse(splitMsg[1]);
                 networkPlayerName = response.name;
@@ -40363,7 +40361,7 @@
 
                 if (!hideFAQ.get()) this.__showFAQ();
 
-                Changelog.tryShow();
+                // Changelog.tryShow();
 
                 networkPlayerName = splitMsg[1];
                 AccountInfo.authedAndLogged = false;
@@ -40481,7 +40479,7 @@
               }
 
               PlayersList_.prototype.init = function () {
-                this.__initPlayerWindow();
+                // this.__initPlayerWindow();
 
                 this.__initNetworkListeners();
               };
@@ -40620,31 +40618,28 @@
 
               PlayersList_.prototype.__refreshPlayerWindow = function (searchString = "") {
                 // Show the total player count in the title
-                const playersWindow = UIManagerSingleton.getUIElement("playersWindow");
-                playersWindow.setTitleText(`Â» Players (${_.size(this.players)})`);
-
+                // const playersWindow = UIManagerSingleton.getUIElement("playersWindow");
+                // playersWindow.setTitleText(`Â» Players (${_.size(this.players)})`);
                 // Construct the contents of the window
-                const builder = new HTMLBuilder();
-
+                // const builder = new HTMLBuilder();
                 // Sort the list of players and filter by search string if the user is searching
-                const players = Object.values(alphabetizePlayers(this.players)).filter((player) => {
-                  if (searchString.length > 0)
-                    return player.name.toLowerCase().indexOf(searchString.toLowerCase()) >= 0;
-                  return true;
-                });
-
-                players.forEach((p) => {
-                  builder
-                    .add("<div>")
-                    .add(network.getClanLink(p))
-                    .add(network.getPlayerLink(p, false))
-                    .add(
-                      `<span class='lobbyLabel'>${this.__getLocationString(
-                        p.location
-                      )}</span></div>`
-                    );
-                });
-                builder.insertInto("#playersWindowTextArea");
+                // const players = Object.values(alphabetizePlayers(this.players)).filter((player) => {
+                //   if (searchString.length > 0)
+                //     return player.name.toLowerCase().indexOf(searchString.toLowerCase()) >= 0;
+                //   return true;
+                // });
+                // players.forEach((p) => {
+                //   builder
+                //     .add("<div>")
+                //     .add(network.getClanLink(p))
+                //     .add(network.getPlayerLink(p, false))
+                //     .add(
+                //       `<span class='lobbyLabel'>${this.__getLocationString(
+                //         p.location
+                //       )}</span></div>`
+                //     );
+                // });
+                // builder.insertInto("#playersWindowTextArea");
               };
 
               PlayersList_.prototype.getPlayerLink = function (
@@ -40910,12 +40905,12 @@
               }
 
               GamesList_.prototype.init = function () {
-                const gamesWindow = new UIWindow("gamesWindow", null, false, "Games");
-                gamesWindow.title.title =
-                  "This is the list of all current multiplayer games. " +
-                  "Click on a game that hasn't started yet to join!";
-                gamesWindow.addScrollableSubDiv("gamesWindowTextArea");
-                $("#lobbyDiv").append(gamesWindow.domElement);
+                // const gamesWindow = new UIWindow("gamesWindow", null, false, "Games");
+                // gamesWindow.title.title =
+                //   "This is the list of all current multiplayer games. " +
+                //   "Click on a game that hasn't started yet to join!";
+                // gamesWindow.addScrollableSubDiv("gamesWindowTextArea");
+                // $("#lobbyDiv").append(gamesWindow.domElement);
 
                 network.registerListener(null, "games-list", (splitMsg) => {
                   this.games = {};
@@ -41091,7 +41086,7 @@
                     );
 
                   builder.insertInto("#addScrollableSubDivTextArea");
-                  uimanager.playerInfoWindow.setTitleText("Clans");
+                  // uimanager.playerInfoWindow.setTitleText("Clans");
 
                   $("#clanSearchInput").val(oldSearchTerm);
 
@@ -41279,9 +41274,9 @@
 
                 builder.insertInto("#addScrollableSubDivTextArea");
 
-                uimanager.playerInfoWindow.setTitleText("Your clan");
-                uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
-                uimanager.playerInfoWindow.setRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setTitleText("Your clan");
+                // uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setRider(new HTMLBuilder());
 
                 fadeIn($("#playerInfoWindow"));
               };
@@ -41326,9 +41321,9 @@
 
                 builder.insertInto("#addScrollableSubDivTextArea");
 
-                uimanager.playerInfoWindow.setTitleText("Your clan");
-                uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
-                uimanager.playerInfoWindow.setRider(this.__getClanRiders());
+                // uimanager.playerInfoWindow.setTitleText("Your clan");
+                // uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setRider(this.__getClanRiders());
 
                 fadeIn($("#playerInfoWindow"));
               };
@@ -41494,9 +41489,9 @@
 
                 builder.insertInto("#addScrollableSubDivTextArea");
 
-                uimanager.playerInfoWindow.setTitleText("Your clan");
-                uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
-                uimanager.playerInfoWindow.setRider(this.__getClanRiders());
+                // uimanager.playerInfoWindow.setTitleText("Your clan");
+                // uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setRider(this.__getClanRiders());
 
                 fadeIn($("#playerInfoWindow"));
               };
@@ -41540,9 +41535,9 @@
 
                 fadeIn($("#playerInfoWindow"));
 
-                uimanager.playerInfoWindow.setTitleText(name);
-                uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
-                uimanager.playerInfoWindow.setRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setTitleText(name);
+                // uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setRider(new HTMLBuilder());
               };
 
               Clans_.prototype.__getClanList = function () {
@@ -41664,9 +41659,9 @@
                 builder.insertInto("#addScrollableSubDivTextArea");
 
                 fadeIn($("#playerInfoWindow"));
-                uimanager.playerInfoWindow.setTitleText("Buy item");
-                uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
-                uimanager.playerInfoWindow.setRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setTitleText("Buy item");
+                // uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setRider(new HTMLBuilder());
 
                 $("#buybutton_form").on("submit", onSubmit);
               }
@@ -41790,9 +41785,9 @@
                 builder.insertInto("#addScrollableSubDivTextArea");
 
                 fadeIn($("#playerInfoWindow"));
-                uimanager.playerInfoWindow.setTitleText("Treasure Chest");
-                uimanager.playerInfoWindow.setHeadRider(getBackButton());
-                uimanager.playerInfoWindow.setRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setTitleText("Treasure Chest");
+                // uimanager.playerInfoWindow.setHeadRider(getBackButton());
+                // uimanager.playerInfoWindow.setRider(new HTMLBuilder());
               }
 
               function showPremiumInfo() {
@@ -41840,9 +41835,9 @@
                 builder.insertInto("#addScrollableSubDivTextArea");
 
                 fadeIn($("#playerInfoWindow"));
-                uimanager.playerInfoWindow.setTitleText("Premium Account");
-                uimanager.playerInfoWindow.setHeadRider(getBackButton());
-                uimanager.playerInfoWindow.setRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setTitleText("Premium Account");
+                // uimanager.playerInfoWindow.setHeadRider(getBackButton());
+                // uimanager.playerInfoWindow.setRider(new HTMLBuilder());
               }
 
               function showEmotesInfo(emotesHex32, playerID) {
@@ -41908,9 +41903,9 @@
 
                 fadeIn($("#playerInfoWindow"));
 
-                uimanager.playerInfoWindow.setTitleText("Emotes");
-                uimanager.playerInfoWindow.setHeadRider(getBackButton());
-                uimanager.playerInfoWindow.setRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setTitleText("Emotes");
+                // uimanager.playerInfoWindow.setHeadRider(getBackButton());
+                // uimanager.playerInfoWindow.setRider(new HTMLBuilder());
               }
 
               function showSkinsDancesInfo(playerID, skinsBin, skinsObj, dancesBin) {
@@ -42116,9 +42111,9 @@
                 builder.insertInto("#addScrollableSubDivTextArea");
 
                 fadeIn($("#playerInfoWindow"));
-                uimanager.playerInfoWindow.setTitleText("Skins & Dances");
-                uimanager.playerInfoWindow.setHeadRider(getBackButton());
-                uimanager.playerInfoWindow.setRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setTitleText("Skins & Dances");
+                // uimanager.playerInfoWindow.setHeadRider(getBackButton());
+                // uimanager.playerInfoWindow.setRider(new HTMLBuilder());
               }
 
               // Shows a window that allows the user to purchase gold for money
@@ -42147,9 +42142,9 @@
 
                 builder.insertInto("#addScrollableSubDivTextArea");
 
-                uimanager.playerInfoWindow.setTitleText("Gold");
-                uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
-                uimanager.playerInfoWindow.setRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setTitleText("Gold");
+                // uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setRider(new HTMLBuilder());
                 fadeIn($("#playerInfoWindow"));
                 soundManager.playSound(SOUND.CLICK);
               }
@@ -42192,9 +42187,9 @@
                 builder.insertInto("#addScrollableSubDivTextArea");
 
                 fadeIn($("#playerInfoWindow"));
-                uimanager.playerInfoWindow.setTitleText("Unlockable Items");
-                uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
-                uimanager.playerInfoWindow.setRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setTitleText("Unlockable Items");
+                // uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
+                // uimanager.playerInfoWindow.setRider(new HTMLBuilder());
               }
 
               return {
@@ -42417,16 +42412,16 @@
               };
 
               PlayerInfo_.prototype.__generatePlayerWindow = function (playerName, builder) {
-                uimanager.playerInfoWindow.setTitleText(`Player ${playerName}`);
+                // uimanager.playerInfoWindow.setTitleText(`Player ${playerName}`);
 
                 const addFriendButton =
                   !this.__cachedFriends[playerName] &&
                   playerName != networkPlayerName &&
                   AccountInfo.authedAndLogged;
-                uimanager.playerInfoWindow.setHeadRider(
-                  this.__getPlayerTopRiders(playerName, addFriendButton)
-                );
-                uimanager.playerInfoWindow.setRider(this.__getPlayerNavRiders(playerName));
+                // uimanager.playerInfoWindow.setHeadRider(
+                //   this.__getPlayerTopRiders(playerName, addFriendButton)
+                // );
+                // uimanager.playerInfoWindow.setRider(this.__getPlayerNavRiders(playerName));
 
                 builder.insertInto("#addScrollableSubDivTextArea");
                 fadeIn($("#playerInfoWindow"));
@@ -42435,9 +42430,9 @@
               PlayerInfo_.prototype.showPlayerInfo = function (details) {
                 const builder = new HTMLBuilder();
 
-                uimanager.playerInfoWindow.setTitleTitle(
-                  `Player since: ` + getFriendlyDate(details.timeOfCreation)
-                );
+                // uimanager.playerInfoWindow.setTitleTitle(
+                //   `Player since: ` + getFriendlyDate(details.timeOfCreation)
+                // );
 
                 // Level & Experience
                 builder.add(
@@ -42745,7 +42740,7 @@
                             // TODO: move this to be with map editor code
                             const map = JSON.parse(e.target.result);
                             map.img = getImageFromMap(map);
-                            uimanager.showLoadingScreen(map);
+                            // uimanager.showLoadingScreen(map);
 
                             setTimeout(() => {
                               map.description = map.description ?? "";
