@@ -153,23 +153,23 @@ const replayOutputInterval = setInterval(() => {
 
       if (p1) {
         playerOneBuild += Object.keys(p1).reduce(
-          (prev, curr) => prev + curr + ": " + p1[curr] + ", ",
+          (prev, curr) => prev + unitImage(curr) + ": " + p1[curr] + ", ",
           `${formatTime(Math.floor(tickNumber / TICKS_PER_SECOND))}: `
         );
-        playerOneBuild += "\n";
+        playerOneBuild += "<br>";
       }
 
       if (p2) {
         playerTwoBuild += Object.keys(p2).reduce(
-          (prev, curr) => prev + curr + ": " + p2[curr] + ", ",
+          (prev, curr) => prev + unitImage(curr) + ": " + p2[curr] + ", ",
           `${formatTime(Math.floor(tickNumber / TICKS_PER_SECOND))}: `
         );
-        playerTwoBuild += "\n";
+        playerTwoBuild += "<br>";
       }
     }
 
-    buildOrderPlayerOneDiv.innerText = playerOneBuild;
-    buildOrderPlayerTwoDiv.innerText = playerTwoBuild;
+    buildOrderPlayerOneDiv.innerHTML = playerOneBuild;
+    buildOrderPlayerTwoDiv.innerHTML = playerTwoBuild;
   }
 }, 5_000);
 
@@ -196,4 +196,8 @@ function formatTime(sec) {
   }
 
   return hours + ":" + minutes + ":" + seconds;
+}
+
+function unitImage(unit) {
+  return `<img src="imgs/${"Worker"}.png" />`;
 }
