@@ -2808,8 +2808,8 @@
             var SCROLL_RANGE = 10; // in which distance to the border the cursor starts scrolling
             var FIELD_SIZE = 16 * SCALE_FACTOR;
             var INTERFACE_HEIGHT = 176;
-            var MINIMAP_WIDTH = 300;
-            var MINIMAP_HEIGHT = 300;
+            var MINIMAP_WIDTH = 500;
+            var MINIMAP_HEIGHT = 500;
             var Y_OFFSET = 1 / 8;
             var CLICK_TOLERANCE = 0.25; // click tolerance when selecting a unit, in fields
             var TICKS_DELAY = 6; // delay in multiplayer game. Too low delay can lead to slow running game if connection is bad; is dynamically changed while playing
@@ -21306,13 +21306,13 @@
 
             // when window gets resized, this is calld
             function resize() {
-              WIDTH = window.innerWidth / 4; // chanage to / 2 to make game window smaller
-              HEIGHT = window.innerHeight / 4; // change to / 2 to make game window smaller
+              WIDTH = Math.floor(window.innerHeight / 4);
+              HEIGHT = Math.floor(window.innerHeight / 4); // change to / 2 to make game window smaller
               canvas.width = WIDTH;
-              canvas.height = HEIGHT;
+              canvas.height = HEIGHT; // make canvas always square, DOESN'T WORK
 
-              MINIMAP_WIDTH = canvas.width;
-              MINIMAP_HEIGHT = canvas.height;
+              MINIMAP_WIDTH = WIDTH;
+              MINIMAP_HEIGHT = HEIGHT;
 
               // Settings
               c.mozImageSmoothingEnabled = false;
@@ -26073,10 +26073,10 @@
             };
 
             // IE9, Chrome, Safari, Opera
-            canvas.addEventListener("mousewheel", MouseWheelHandler, false);
+            canvas.addEventListener("mousewheel", MouseWheelHandler, false); // TODO REPLAY
 
             // Firefox
-            canvas.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
+            canvas.addEventListener("DOMMouseScroll", MouseWheelHandler, false); // TODO REPLAY
 
             function MouseWheelHandler(e) {
               // set zoom level
@@ -26463,15 +26463,15 @@
               false
             );
             // this prevents the context menu when shift right clicking (at least for some browsers)
-            document.onclick = function (e) {
-              var b = keyManager.getKeyCode(e);
+            // document.onclick = function (e) {
+            //   var b = keyManager.getKeyCode(e);
 
-              if ((b == 2 || b == 3) && (game_state == GAME.PLAYING || game_state == GAME.EDITOR)) {
-                e.preventDefault();
-                e.stopPropagation();
-                return false;
-              }
-            };
+            //   if ((b == 2 || b == 3) && (game_state == GAME.PLAYING || game_state == GAME.EDITOR)) {
+            //     e.preventDefault();
+            //     e.stopPropagation();
+            //     return false;
+            //   }
+            // };
 
             // replace the cursor with tho normal one
             KeyManager.prototype.resetCommand = function () {
@@ -26636,41 +26636,41 @@
             };
 
             // when mouse is moved, store position
-            document.onmousemove = function (e) {
-              // Calculate pageX/Y if missing and clientX/Y available
-              if (e.pageX == null && e.clientX != null) {
-                var doc = document.documentElement;
-                var body = document.body;
-                e.pageX =
-                  e.clientX +
-                  ((doc && doc.scrollLeft) || (body && body.scrollLeft) || 0) -
-                  ((doc && doc.clientLeft) || (body && body.clientLeft) || 0);
-                e.pageY =
-                  e.clientY +
-                  ((doc && doc.scrollTop) || (body && body.scrollTop) || 0) -
-                  ((doc && doc.clientTop) || (body && body.clientTop) || 0);
-              }
+            // document.onmousemove = function (e) {
+            //   // Calculate pageX/Y if missing and clientX/Y available
+            //   if (e.pageX == null && e.clientX != null) {
+            //     var doc = document.documentElement;
+            //     var body = document.body;
+            //     e.pageX =
+            //       e.clientX +
+            //       ((doc && doc.scrollLeft) || (body && body.scrollLeft) || 0) -
+            //       ((doc && doc.clientLeft) || (body && body.clientLeft) || 0);
+            //     e.pageY =
+            //       e.clientY +
+            //       ((doc && doc.scrollTop) || (body && body.scrollTop) || 0) -
+            //       ((doc && doc.clientTop) || (body && body.clientTop) || 0);
+            //   }
 
-              // if middlemouse is pressed, scroll
-              if (
-                keyManager.middleMouse &&
-                game &&
-                (!game_paused || PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR)
-              ) {
-                game.cameraX +=
-                  (keyManager.x - e.pageX) * 1.5 * (keyManager.mmScrollInvert.get() ? -1 : 1);
-                game.cameraY +=
-                  (keyManager.y - e.pageY) * 1.5 * (keyManager.mmScrollInvert.get() ? -1 : 1);
-              }
+            //   // if middlemouse is pressed, scroll
+            //   if (
+            //     keyManager.middleMouse &&
+            //     game &&
+            //     (!game_paused || PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR)
+            //   ) {
+            //     game.cameraX +=
+            //       (keyManager.x - e.pageX) * 1.5 * (keyManager.mmScrollInvert.get() ? -1 : 1);
+            //     game.cameraY +=
+            //       (keyManager.y - e.pageY) * 1.5 * (keyManager.mmScrollInvert.get() ? -1 : 1);
+            //   }
 
-              keyManager.x = e.pageX;
-              keyManager.y = e.pageY;
+            //   keyManager.x = e.pageX;
+            //   keyManager.y = e.pageY;
 
-              // fix shift bug that sometimes happens (special thanks to pox)
-              if (!e) e = document.event;
+            //   // fix shift bug that sometimes happens (special thanks to pox)
+            //   if (!e) e = document.event;
 
-              if (!e.shiftKey) keyManager.keys[KEY.SHIFT] = false;
-            };
+            //   if (!e.shiftKey) keyManager.keys[KEY.SHIFT] = false;
+            // };
 
             KeyManager.prototype.getKeyCode = function (e) {
               return e.which || e.keyCode;
@@ -33364,9 +33364,9 @@
               $("#scrollSpeedButton").slider({
                 change: (event, ui) => interface_.scrollSpeed.set(ui.value * 50),
               });
-              Initialization.onDocumentReady(() =>
-                $("#scrollSpeedButton").slider("value", interface_.scrollSpeed.get() / 50)
-              );
+              // Initialization.onDocumentReady(() =>
+              //   $("#scrollSpeedButton").slider("value", interface_.scrollSpeed.get() / 50)
+              // );
 
               // Setting for when messages can pop up
               const popupMsgsBuilder = new HTMLBuilder();
@@ -33403,9 +33403,9 @@
               scrollCheckbox.onclick = addClickSound(() =>
                 interface_.mouseScrollWhenWindowed.set(scrollCheckbox.checked)
               );
-              Initialization.onDocumentReady(
-                () => (scrollCheckbox.checked = interface_.mouseScrollWhenWindowed.get())
-              );
+              // Initialization.onDocumentReady(
+              //   () => (scrollCheckbox.checked = interface_.mouseScrollWhenWindowed.get())
+              // );
               $("#scrollLabel").append(scrollCheckbox);
 
               // Middle Mouse invert scroll
@@ -33422,10 +33422,10 @@
               mmCheckbox.onclick = addClickSound(() =>
                 keyManager.mmScrollInvert.set(mmCheckbox.checked)
               );
-              Initialization.onDocumentReady(
-                () => (mmCheckbox.checked = keyManager.mmScrollInvert.get())
-              );
-              $("#mmLabel").append(mmCheckbox);
+              // Initialization.onDocumentReady(
+              //   () => (mmCheckbox.checked = keyManager.mmScrollInvert.get())
+              // );
+              // $("#mmLabel").append(mmCheckbox);
 
               // HP bars only when not full hp
               var hpBarsLabel = document.createElement("p");
@@ -34404,17 +34404,17 @@
               this.onKeyElements = [optionsWindow];
 
               // add hover sound events to all buttons
-              $("button").mouseenter(function () {
-                soundManager.playSound(SOUND.ZIP, false, 0.3);
-              });
+              // $("button").mouseenter(function () {
+              //   soundManager.playSound(SOUND.ZIP, false, 0.3);
+              // });
 
-              Initialization.onDocumentReady(() => {
-                // make windows draggable (with jquery ui)
-                $(".draggable").draggable({
-                  drag: onDrag,
-                  cancel: "p, input, select, textarea, button, #personalTextDiv, .nodrag",
-                });
-              }, Initialization.Stage.UI_GENERATED);
+              // Initialization.onDocumentReady(() => {
+              //   // make windows draggable (with jquery ui)
+              //   $(".draggable").draggable({
+              //     drag: onDrag,
+              //     cancel: "p, input, select, textarea, button, #personalTextDiv, .nodrag",
+              //   });
+              // }, Initialization.Stage.UI_GENERATED);
             }
 
             // is called every frame, checks for all elements if they should be drawn and saves the number of active elements (that block canvas input)
@@ -39500,9 +39500,9 @@
             var mapEditorData = null;
 
             // custom jquery ui tooltip styling
-            $(function () {
-              $(document).tooltip({});
-            });
+            // $(function () {
+            //   $(document).tooltip({});
+            // });
 
             // prompt before closing when ingame
             window.onbeforeunload = function () {
@@ -40745,7 +40745,7 @@
               const MAX_FRIENDS = 100;
 
               function FriendsList_() {
-                Initialization.onDocumentReady(() => this.init());
+                // Initialization.onDocumentReady(() => this.init());
                 Login.registerOnLogout(() => (this.__friends = {}));
                 PlayersList.onChange(() => this.__refreshUI());
 
