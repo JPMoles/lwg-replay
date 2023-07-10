@@ -2808,8 +2808,8 @@
             var SCROLL_RANGE = 10; // in which distance to the border the cursor starts scrolling
             var FIELD_SIZE = 16 * SCALE_FACTOR;
             var INTERFACE_HEIGHT = 176;
-            var MINIMAP_WIDTH = 192;
-            var MINIMAP_HEIGHT = 192;
+            var MINIMAP_WIDTH = 300;
+            var MINIMAP_HEIGHT = 300;
             var Y_OFFSET = 1 / 8;
             var CLICK_TOLERANCE = 0.25; // click tolerance when selecting a unit, in fields
             var TICKS_DELAY = 6; // delay in multiplayer game. Too low delay can lead to slow running game if connection is bad; is dynamically changed while playing
@@ -3106,6 +3106,13 @@
               // }
             }
 
+            // Create custom loadImage function so we don't load all the games' assets, when we only need the minimap?
+            // function loadImage(imgFile) {
+            //   // ressourceLoaded() - gets called before mainLoop so we don't need to
+
+            //   return null;
+            // }
+
             // decreses the ressourcesToLoad counter and and starts the game if all ress are loaded
             function ressourceLoaded(img) {
               // if not loaded, try again
@@ -3146,7 +3153,7 @@
                     colorsImgData[i * 4 + 2],
                   ];
 
-                // create images for units for the other players by transforming colors from original image
+                // // create images for units for the other players by transforming colors from original image
                 createColorTransformedUnitImages();
 
                 // load tile imgs from spritesheet
@@ -3217,27 +3224,27 @@
                 };
 
                 // Button should be loaded before this script runs
-                if (!window.replayLoaded && false) {
-                  // Only add event listener one time on initialization
-                  if (!window.uploadButtonEventListenerAdded) {
-                    const uploadReplayButton = document.getElementById("uploadReplayButton");
-                    window.uploadReplay = () => {
-                      setTimeout(async () => {
-                        console.log("Requesting the replay file");
-                        const replayFileData = await fetch(
-                          "/test-replays/Cladorhiza_v_glaba_on_Xenos.json"
-                        );
-                        const replayFileInstant = await replayFileData.json();
-                        replayFile = replayFileInstant;
-                        console.log(replayFileInstant);
-                        network.send(`get-map-for-replay<<$${replayFileInstant.map}`);
-                      }, 2_000);
-                    };
-                    uploadReplayButton.addEventListener("click", window.uploadReplay, false);
-                    window.uploadButtonEventListenerAdded = true;
-                  }
-                  window.replayLoaded = true;
-                }
+                // if (!window.replayLoaded && false) {
+                //   // Only add event listener one time on initialization
+                //   if (!window.uploadButtonEventListenerAdded) {
+                //     const uploadReplayButton = document.getElementById("uploadReplayButton");
+                //     window.uploadReplay = () => {
+                //       setTimeout(async () => {
+                //         console.log("Requesting the replay file");
+                //         const replayFileData = await fetch(
+                //           "/test-replays/Cladorhiza_v_glaba_on_Xenos.json"
+                //         );
+                //         const replayFileInstant = await replayFileData.json();
+                //         replayFile = replayFileInstant;
+                //         console.log(replayFileInstant);
+                //         network.send(`get-map-for-replay<<$${replayFileInstant.map}`);
+                //       }, 2_000);
+                //     };
+                //     uploadReplayButton.addEventListener("click", window.uploadReplay, false);
+                //     window.uploadButtonEventListenerAdded = true;
+                //   }
+                //   window.replayLoaded = true;
+                // }
 
                 // start Main Loop
                 requestAnimationFrame(mainLoop);
@@ -20779,110 +20786,103 @@
             }
 
             function createExplosion(x, y, size) {
-              var pos = new Field(x, y);
-
-              for (var i = 0; i < 15; i++)
-                new Sprite({
-                  from: pos.add2(Math.random() * Math.PI * 2, Math.random()),
-                  img: imgs.particle.img,
-                  scaleFunction:
-                    i < 10
-                      ? function () {
-                          return 4;
-                        }
-                      : function () {
-                          return 6;
-                        },
-                  age: 1.3 + Math.random(),
-                  r1: Math.random() * 0.4,
-                  r2: Math.random() * 5 - 3,
-                  r3: Math.random() * 5 - 3,
-                  zFunction: function (age) {
-                    return Math.min(Math.pow(age * 1.6 - 1.5 + this.r1, 2) - 2.2, 0);
-                  },
-                  xFunction: function (age) {
-                    return Math.sqrt(age) * this.r2;
-                  },
-                  yFunction: function (age) {
-                    return Math.sqrt(age) * this.r3;
-                  },
-                });
-
-              new Dust({
-                from: pos,
-                scale: size + Math.random(),
-                ageScale: 2 + Math.random(),
-              });
-
-              for (var i = 0; i <= 2; i++)
-                new Dust({
-                  from: pos.add3(Math.random() - 0.5, 0),
-                  scale: size + Math.random(),
-                  ageScale: 2 + Math.random(),
-                  height: Math.random(),
-                });
-
-              // create big fire and smoke effects
-              for (var i = 0; i <= 2; i++) {
-                setTimeout(function () {
-                  new Sprite({
-                    from: new Field(x, y, true).add2(
-                      Math.random() * Math.PI * 2,
-                      Math.random() * 0.5
-                    ),
-                    img: imgs["fire" + (Math.floor(Math.random() * 4) + 1)],
-                    scaleFunction: function (age) {
-                      return (1 / (age + 0.25) + age - 4) * -2 + this.r1;
-                    },
-                    r1: 1 + Math.random() * 2,
-                    zFunction: function (age) {
-                      return -age * 2;
-                    },
-                  });
-                }, i * 317);
-
-                setTimeout(function () {
-                  for (var k = 0; k <= 1; k++)
-                    new Dust({
-                      from: pos.add3(Math.random() - 0.5, 0),
-                      scale: size + Math.random(),
-                      ageScale: 2 + Math.random(),
-                      height: Math.random() - 0.5,
-                    });
-                }, i * 333);
-              }
-
-              // create side smoke effects (big dust clouds that go sideways)
-              for (var i = 0; i < Math.PI * 2; i += Math.random() * 1.5)
-                new Dust({
-                  from: pos,
-                  scale: Math.random() * 7 + 1.5,
-                  ageScale: 2,
-                  vz: 0.01,
-                  xFunction: function (age) {
-                    return (-1 / (age + 0.3) + 3) * this.x_;
-                  },
-                  yFunction: function (age) {
-                    return (-1 / (age + 0.3) + 3) * this.y_;
-                  },
-                  x_: Math.cos(i),
-                  y_: Math.sin(i),
-                });
-
-              // create soot
-              game.groundTilesCanvas
-                .getContext("2d")
-                .drawImage(
-                  miscSheet[0],
-                  imgs.soot.img.x,
-                  imgs.soot.img.y,
-                  imgs.soot.img.w,
-                  imgs.soot.img.h,
-                  (x * FIELD_SIZE) / SCALE_FACTOR - imgs.soot.img.w / 2,
-                  ((y + 2) * FIELD_SIZE) / SCALE_FACTOR - imgs.soot.img.h / 2,
-                  imgs.soot.img.w,
-                  imgs.soot.img.h
-                );
+              // var pos = new Field(x, y);
+              // for (var i = 0; i < 15; i++)
+              //   new Sprite({
+              //     from: pos.add2(Math.random() * Math.PI * 2, Math.random()),
+              //     img: imgs.particle.img,
+              //     scaleFunction:
+              //       i < 10
+              //         ? function () {
+              //             return 4;
+              //           }
+              //         : function () {
+              //             return 6;
+              //           },
+              //     age: 1.3 + Math.random(),
+              //     r1: Math.random() * 0.4,
+              //     r2: Math.random() * 5 - 3,
+              //     r3: Math.random() * 5 - 3,
+              //     zFunction: function (age) {
+              //       return Math.min(Math.pow(age * 1.6 - 1.5 + this.r1, 2) - 2.2, 0);
+              //     },
+              //     xFunction: function (age) {
+              //       return Math.sqrt(age) * this.r2;
+              //     },
+              //     yFunction: function (age) {
+              //       return Math.sqrt(age) * this.r3;
+              //     },
+              //   });
+              // new Dust({
+              //   from: pos,
+              //   scale: size + Math.random(),
+              //   ageScale: 2 + Math.random(),
+              // });
+              // for (var i = 0; i <= 2; i++)
+              //   new Dust({
+              //     from: pos.add3(Math.random() - 0.5, 0),
+              //     scale: size + Math.random(),
+              //     ageScale: 2 + Math.random(),
+              //     height: Math.random(),
+              //   });
+              // // create big fire and smoke effects
+              // for (var i = 0; i <= 2; i++) {
+              //   setTimeout(function () {
+              //     new Sprite({
+              //       from: new Field(x, y, true).add2(
+              //         Math.random() * Math.PI * 2,
+              //         Math.random() * 0.5
+              //       ),
+              //       img: imgs["fire" + (Math.floor(Math.random() * 4) + 1)],
+              //       scaleFunction: function (age) {
+              //         return (1 / (age + 0.25) + age - 4) * -2 + this.r1;
+              //       },
+              //       r1: 1 + Math.random() * 2,
+              //       zFunction: function (age) {
+              //         return -age * 2;
+              //       },
+              //     });
+              //   }, i * 317);
+              //   setTimeout(function () {
+              //     for (var k = 0; k <= 1; k++)
+              //       new Dust({
+              //         from: pos.add3(Math.random() - 0.5, 0),
+              //         scale: size + Math.random(),
+              //         ageScale: 2 + Math.random(),
+              //         height: Math.random() - 0.5,
+              //       });
+              //   }, i * 333);
+              // }
+              // // create side smoke effects (big dust clouds that go sideways)
+              // for (var i = 0; i < Math.PI * 2; i += Math.random() * 1.5)
+              //   new Dust({
+              //     from: pos,
+              //     scale: Math.random() * 7 + 1.5,
+              //     ageScale: 2,
+              //     vz: 0.01,
+              //     xFunction: function (age) {
+              //       return (-1 / (age + 0.3) + 3) * this.x_;
+              //     },
+              //     yFunction: function (age) {
+              //       return (-1 / (age + 0.3) + 3) * this.y_;
+              //     },
+              //     x_: Math.cos(i),
+              //     y_: Math.sin(i),
+              //   });
+              // // create soot
+              // game.groundTilesCanvas
+              //   .getContext("2d")
+              //   .drawImage(
+              //     miscSheet[0],
+              //     imgs.soot.img.x,
+              //     imgs.soot.img.y,
+              //     imgs.soot.img.w,
+              //     imgs.soot.img.h,
+              //     (x * FIELD_SIZE) / SCALE_FACTOR - imgs.soot.img.w / 2,
+              //     ((y + 2) * FIELD_SIZE) / SCALE_FACTOR - imgs.soot.img.h / 2,
+              //     imgs.soot.img.w,
+              //     imgs.soot.img.h
+              //   );
             }
 
             function realTimeCompile(htmlElID) {
@@ -21310,6 +21310,9 @@
               HEIGHT = window.innerHeight / 4; // change to / 2 to make game window smaller
               canvas.width = WIDTH;
               canvas.height = HEIGHT;
+
+              MINIMAP_WIDTH = canvas.width;
+              MINIMAP_HEIGHT = canvas.height;
 
               // Settings
               c.mozImageSmoothingEnabled = false;
@@ -24868,627 +24871,627 @@
               }
 
               // unselected units
-              if (game_state == GAME.PLAYING)
-                for (var i = 0; i < this.selectedUnits.length; i++)
-                  if (
-                    !PLAYING_PLAYER.team.canSeeUnit(this.selectedUnits[i], true) ||
-                    !(
-                      PLAYING_PLAYER.team.canSeeUnitInvisible(this.selectedUnits[i]) ||
-                      PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR
-                    )
-                  ) {
-                    this.selectedUnits.splice(i, 1);
-                    i--;
-                  }
+              // if (game_state == GAME.PLAYING)
+              //   for (var i = 0; i < this.selectedUnits.length; i++)
+              //     if (
+              //       !PLAYING_PLAYER.team.canSeeUnit(this.selectedUnits[i], true) ||
+              //       !(
+              //         PLAYING_PLAYER.team.canSeeUnitInvisible(this.selectedUnits[i]) ||
+              //         PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR
+              //       )
+              //     ) {
+              //       this.selectedUnits.splice(i, 1);
+              //       i--;
+              //     }
 
-              var unitsBuildings = this.buildings2.concat(this.units);
+              // var unitsBuildings = this.buildings2.concat(this.units);
 
-              var hoverUnit = null;
+              // var hoverUnit = null;
 
               // clear screen
               c.fillStyle = "black";
               c.fillRect(0, 0, WIDTH, HEIGHT);
 
               // draw GroundTiles canvas
-              var drawW = Math.min(WIDTH, this.groundTilesCanvas.width * SCALE_FACTOR);
-              var drawH = Math.min(
-                HEIGHT - (game_state == GAME.EDITOR ? MINIMAP_HEIGHT : INTERFACE_HEIGHT),
-                this.groundTilesCanvas.height * SCALE_FACTOR
-              );
-              c.drawImage(
-                this.groundTilesCanvas,
-                this.cameraX / SCALE_FACTOR,
-                (this.cameraY + 2 * FIELD_SIZE) / SCALE_FACTOR,
-                drawW / SCALE_FACTOR,
-                drawH / SCALE_FACTOR,
-                0,
-                0,
-                drawW,
-                drawH
-              );
+              // var drawW = Math.min(WIDTH, this.groundTilesCanvas.width * SCALE_FACTOR);
+              // var drawH = Math.min(
+              //   HEIGHT - (game_state == GAME.EDITOR ? MINIMAP_HEIGHT : INTERFACE_HEIGHT),
+              //   this.groundTilesCanvas.height * SCALE_FACTOR
+              // );
+              // c.drawImage(
+              //   this.groundTilesCanvas,
+              //   this.cameraX / SCALE_FACTOR,
+              //   (this.cameraY + 2 * FIELD_SIZE) / SCALE_FACTOR,
+              //   drawW / SCALE_FACTOR,
+              //   drawH / SCALE_FACTOR,
+              //   0,
+              //   0,
+              //   drawW,
+              //   drawH
+              // );
 
               // calculate gameplay screen coords
-              var x1 = this.cameraX / FIELD_SIZE;
-              var y1 = this.cameraY / FIELD_SIZE;
-              var x2 = (this.cameraX + WIDTH) / FIELD_SIZE;
-              var y2 = (this.cameraY + HEIGHT) / FIELD_SIZE;
+              // var x1 = this.cameraX / FIELD_SIZE;
+              // var y1 = this.cameraY / FIELD_SIZE;
+              // var x2 = (this.cameraX + WIDTH) / FIELD_SIZE;
+              // var y2 = (this.cameraY + HEIGHT) / FIELD_SIZE;
 
               // editor grid
-              if (game_state == GAME.EDITOR && $("#showGridCheckbox")[0].checked) {
-                c.lineWidth = 1;
-                c.strokeStyle =
-                  "rgba(" +
-                  this.theme.line_red +
-                  ", " +
-                  this.theme.line_green +
-                  ", " +
-                  this.theme.line_blue +
-                  ", 0.7)";
-                c.beginPath();
+              // if (game_state == GAME.EDITOR && $("#showGridCheckbox")[0].checked) {
+              //   c.lineWidth = 1;
+              //   c.strokeStyle =
+              //     "rgba(" +
+              //     this.theme.line_red +
+              //     ", " +
+              //     this.theme.line_green +
+              //     ", " +
+              //     this.theme.line_blue +
+              //     ", 0.7)";
+              //   c.beginPath();
 
-                var y_ = Math.ceil(y1) * FIELD_SIZE - this.cameraY + 0.5;
+              //   var y_ = Math.ceil(y1) * FIELD_SIZE - this.cameraY + 0.5;
 
-                while (y_ < HEIGHT - INTERFACE_HEIGHT) {
-                  c.moveTo(0, y_);
-                  c.lineTo(WIDTH, y_);
+              //   while (y_ < HEIGHT - INTERFACE_HEIGHT) {
+              //     c.moveTo(0, y_);
+              //     c.lineTo(WIDTH, y_);
 
-                  y_ += FIELD_SIZE;
-                }
+              //     y_ += FIELD_SIZE;
+              //   }
 
-                var x_ = Math.ceil(x1) * FIELD_SIZE - this.cameraX + 0.5;
+              //   var x_ = Math.ceil(x1) * FIELD_SIZE - this.cameraX + 0.5;
 
-                while (x_ < WIDTH) {
-                  c.moveTo(x_, 0);
-                  c.lineTo(x_, HEIGHT - INTERFACE_HEIGHT);
+              //   while (x_ < WIDTH) {
+              //     c.moveTo(x_, 0);
+              //     c.lineTo(x_, HEIGHT - INTERFACE_HEIGHT);
 
-                  x_ += FIELD_SIZE;
-                }
+              //     x_ += FIELD_SIZE;
+              //   }
 
-                c.stroke();
-                c.closePath();
+              //   c.stroke();
+              //   c.closePath();
 
-                // make middle lines red
-                if (this.x / 2 > x1 && this.x / 2 < x2 && this.x % 2 == 0) {
-                  var x2_ = (this.x / 2) * FIELD_SIZE - this.cameraX + 0.5;
+              //   // make middle lines red
+              //   if (this.x / 2 > x1 && this.x / 2 < x2 && this.x % 2 == 0) {
+              //     var x2_ = (this.x / 2) * FIELD_SIZE - this.cameraX + 0.5;
 
-                  c.strokeStyle = "rgba(255, 0, 0, 0.9)";
-                  c.beginPath();
-                  c.moveTo(x2_, 0);
-                  c.lineTo(x2_, HEIGHT - INTERFACE_HEIGHT);
-                  c.stroke();
-                  c.closePath();
-                }
+              //     c.strokeStyle = "rgba(255, 0, 0, 0.9)";
+              //     c.beginPath();
+              //     c.moveTo(x2_, 0);
+              //     c.lineTo(x2_, HEIGHT - INTERFACE_HEIGHT);
+              //     c.stroke();
+              //     c.closePath();
+              //   }
 
-                // make middle lines red
-                if (this.y / 2 > y1 && this.y / 2 < y2 && this.y % 2 == 0) {
-                  var y2_ = (this.y / 2) * FIELD_SIZE - this.cameraY + 0.5;
+              //   // make middle lines red
+              //   if (this.y / 2 > y1 && this.y / 2 < y2 && this.y % 2 == 0) {
+              //     var y2_ = (this.y / 2) * FIELD_SIZE - this.cameraY + 0.5;
 
-                  c.strokeStyle = "rgba(255, 0, 0, 0.9)";
-                  c.beginPath();
-                  c.moveTo(0, y2_);
-                  c.lineTo(WIDTH, y2_);
-                  c.stroke();
-                  c.closePath();
-                }
-              }
+              //     c.strokeStyle = "rgba(255, 0, 0, 0.9)";
+              //     c.beginPath();
+              //     c.moveTo(0, y2_);
+              //     c.lineTo(WIDTH, y2_);
+              //     c.stroke();
+              //     c.closePath();
+              //   }
+              // }
 
               // calculate exact drawing positions (interpolate between real positions)
-              for (var i = 0; i < this.units.length; i++) this.units[i].updateDrawPosition();
+              // for (var i = 0; i < this.units.length; i++) this.units[i].updateDrawPosition();
 
               // mark selected units
-              for (var i = 0; i < this.selectedUnits.length; i++)
-                this.selectedUnits[i].lastSelectionTime = timestamp;
+              // for (var i = 0; i < this.selectedUnits.length; i++)
+              //   this.selectedUnits[i].lastSelectionTime = timestamp;
 
               // mark hover units
-              if (keyManager.drawBox) {
-                var x1n = (Math.min(keyManager.x, keyManager.startX) + this.cameraX) / FIELD_SIZE;
-                var x2n = (Math.max(keyManager.x, keyManager.startX) + this.cameraX) / FIELD_SIZE;
-                var y1n = (Math.min(keyManager.y, keyManager.startY) + this.cameraY) / FIELD_SIZE;
-                var y2n = (Math.max(keyManager.y, keyManager.startY) + this.cameraY) / FIELD_SIZE;
+              // if (keyManager.drawBox) {
+              //   var x1n = (Math.min(keyManager.x, keyManager.startX) + this.cameraX) / FIELD_SIZE;
+              //   var x2n = (Math.max(keyManager.x, keyManager.startX) + this.cameraX) / FIELD_SIZE;
+              //   var y1n = (Math.min(keyManager.y, keyManager.startY) + this.cameraY) / FIELD_SIZE;
+              //   var y2n = (Math.max(keyManager.y, keyManager.startY) + this.cameraY) / FIELD_SIZE;
 
-                for (var i = 0; i < unitsBuildings.length; i++) {
-                  var u = unitsBuildings[i];
+              //   for (var i = 0; i < unitsBuildings.length; i++) {
+              //     var u = unitsBuildings[i];
 
-                  if (
-                    u.isAlive &&
-                    u.isInBox(
-                      x1n,
-                      y1n + u.type.selectionOffsetY,
-                      x2n,
-                      y2n + u.type.selectionOffsetY
-                    ) &&
-                    PLAYING_PLAYER.team.canSeeUnit(u, true) &&
-                    (PLAYING_PLAYER.team.canSeeUnitInvisible(u) ||
-                      PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR)
-                  )
-                    u.lastHoverTime = timestamp;
-                }
-              }
+              //     if (
+              //       u.isAlive &&
+              //       u.isInBox(
+              //         x1n,
+              //         y1n + u.type.selectionOffsetY,
+              //         x2n,
+              //         y2n + u.type.selectionOffsetY
+              //       ) &&
+              //       PLAYING_PLAYER.team.canSeeUnit(u, true) &&
+              //       (PLAYING_PLAYER.team.canSeeUnitInvisible(u) ||
+              //         PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR)
+              //     )
+              //       u.lastHoverTime = timestamp;
+              //   }
+              // }
 
               // mark curser hovering unit
-              else if (!keyManager.command || keyManager.command.targetIsUnit) {
-                hoverUnit = this.getUnitAtPosition(
-                  (keyManager.x + this.cameraX) / FIELD_SIZE,
-                  (keyManager.y + this.cameraY) / FIELD_SIZE
-                );
-                hoverUnit =
-                  hoverUnit && PLAYING_PLAYER.team.canSeeUnit(hoverUnit, true) ? hoverUnit : null;
+              // else if (!keyManager.command || keyManager.command.targetIsUnit) {
+              //   hoverUnit = this.getUnitAtPosition(
+              //     (keyManager.x + this.cameraX) / FIELD_SIZE,
+              //     (keyManager.y + this.cameraY) / FIELD_SIZE
+              //   );
+              //   hoverUnit =
+              //     hoverUnit && PLAYING_PLAYER.team.canSeeUnit(hoverUnit, true) ? hoverUnit : null;
 
-                if (
-                  hoverUnit &&
-                  (PLAYING_PLAYER.team.canSeeUnitInvisible(hoverUnit) ||
-                    PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR)
-                )
-                  hoverUnit.lastHoverTime = timestamp;
-              }
+              //   if (
+              //     hoverUnit &&
+              //     (PLAYING_PLAYER.team.canSeeUnitInvisible(hoverUnit) ||
+              //       PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR)
+              //   )
+              //     hoverUnit.lastHoverTime = timestamp;
+              // }
 
               // selection circcles of tiles (if editor)
-              if (game_state == GAME.EDITOR)
-                for (var i = 0; i < this.selectedUnits.length; i++)
-                  if (this.selectedUnits[i].type.isTile)
-                    drawCircle(
-                      this.selectedUnits[i].drawPos.px * FIELD_SIZE - this.cameraX,
-                      (this.selectedUnits[i].drawPos.py +
-                        this.selectedUnits[i].getValue("circleOffset")) *
-                        FIELD_SIZE -
-                        this.cameraY,
-                      this.selectedUnits[i].getValue("circleSize") * FIELD_SIZE,
-                      this.selectedUnits[i].owner.getAllyColor()
-                    );
+              // if (game_state == GAME.EDITOR)
+              //   for (var i = 0; i < this.selectedUnits.length; i++)
+              //     if (this.selectedUnits[i].type.isTile)
+              //       drawCircle(
+              //         this.selectedUnits[i].drawPos.px * FIELD_SIZE - this.cameraX,
+              //         (this.selectedUnits[i].drawPos.py +
+              //           this.selectedUnits[i].getValue("circleOffset")) *
+              //           FIELD_SIZE -
+              //           this.cameraY,
+              //         this.selectedUnits[i].getValue("circleSize") * FIELD_SIZE,
+              //         this.selectedUnits[i].owner.getAllyColor()
+              //       );
 
               // draw all objects
-              var objectsToDraw = this.objectsToDraw.slice();
-              for (var i = 0; i < objectsToDraw.length; i++) {
-                var u = objectsToDraw[i];
+              // var objectsToDraw = this.objectsToDraw.slice();
+              // for (var i = 0; i < objectsToDraw.length; i++) {
+              //   var u = objectsToDraw[i];
 
-                if (u.isInBoxVisible(x1, y1, x2, y2)) {
-                  // selection circles or blinking circles
-                  if (u.lastSelectionTime == timestamp && u.isThrowedUntil < ticksCounter)
-                    drawCircle(
-                      u.drawPos.px * FIELD_SIZE - this.cameraX,
-                      (u.drawPos.py + u.getValue("circleOffset")) * FIELD_SIZE - this.cameraY,
-                      u.getValue("circleSize") * FIELD_SIZE,
-                      u.owner.getAllyColor()
-                    );
+              //   if (u.isInBoxVisible(x1, y1, x2, y2)) {
+              //     // selection circles or blinking circles
+              //     if (u.lastSelectionTime == timestamp && u.isThrowedUntil < ticksCounter)
+              //       drawCircle(
+              //         u.drawPos.px * FIELD_SIZE - this.cameraX,
+              //         (u.drawPos.py + u.getValue("circleOffset")) * FIELD_SIZE - this.cameraY,
+              //         u.getValue("circleSize") * FIELD_SIZE,
+              //         u.owner.getAllyColor()
+              //       );
 
-                  // hover circles
-                  if (
-                    u.isThrowedUntil < ticksCounter &&
-                    ((u.lastBlinkStart &&
-                      u.lastBlinkStart + 1000 > timestamp &&
-                      (timestamp - u.lastBlinkStart) % 200 < 100) ||
-                      (u.lastHoverTime == timestamp &&
-                        (!u.lastBlinkStart || u.lastBlinkStart + 1000 <= timestamp)))
-                  )
-                    drawCircle(
-                      u.drawPos.px * FIELD_SIZE - this.cameraX,
-                      (u.drawPos.py + u.getValue("circleOffset")) * FIELD_SIZE - this.cameraY,
-                      u.getValue("circleSize") * FIELD_SIZE,
-                      u.owner.getAllyColor(),
-                      u.owner.getAllyColor(0.4)
-                    );
+              //     // hover circles
+              //     if (
+              //       u.isThrowedUntil < ticksCounter &&
+              //       ((u.lastBlinkStart &&
+              //         u.lastBlinkStart + 1000 > timestamp &&
+              //         (timestamp - u.lastBlinkStart) % 200 < 100) ||
+              //         (u.lastHoverTime == timestamp &&
+              //           (!u.lastBlinkStart || u.lastBlinkStart + 1000 <= timestamp)))
+              //     )
+              //       drawCircle(
+              //         u.drawPos.px * FIELD_SIZE - this.cameraX,
+              //         (u.drawPos.py + u.getValue("circleOffset")) * FIELD_SIZE - this.cameraY,
+              //         u.getValue("circleSize") * FIELD_SIZE,
+              //         u.owner.getAllyColor(),
+              //         u.owner.getAllyColor(0.4)
+              //       );
 
-                  u.draw(x1, x2, y1, y2);
-                }
+              //     u.draw(x1, x2, y1, y2);
+              //   }
 
-                if (u.isEffect && u.isExpired()) this.objectsToDraw.erease(u);
-              }
+              //   if (u.isEffect && u.isExpired()) this.objectsToDraw.erease(u);
+              // }
 
               // draw health bars
-              for (var i = 0; i < unitsBuildings.length; i++) {
-                var unit = unitsBuildings[i];
+              // for (var i = 0; i < unitsBuildings.length; i++) {
+              //   var unit = unitsBuildings[i];
 
-                if (
-                  PLAYING_PLAYER.team.canSeeUnit(unit, true) &&
-                  (PLAYING_PLAYER.team.canSeeUnitInvisible(unit) ||
-                    PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR) &&
-                  unit.isAlive &&
-                  unit.isInBoxVisible(x1, y1, x2, y2)
-                ) {
-                  var x =
-                    (unit.drawPos.px - unit.type.healthbarWidth / 2) * FIELD_SIZE - game.cameraX;
-                  var y = (unit.drawPos.py - unit.type.healthbarOffset) * FIELD_SIZE - game.cameraY;
+              //   if (
+              //     PLAYING_PLAYER.team.canSeeUnit(unit, true) &&
+              //     (PLAYING_PLAYER.team.canSeeUnitInvisible(unit) ||
+              //       PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR) &&
+              //     unit.isAlive &&
+              //     unit.isInBoxVisible(x1, y1, x2, y2)
+              //   ) {
+              //     var x =
+              //       (unit.drawPos.px - unit.type.healthbarWidth / 2) * FIELD_SIZE - game.cameraX;
+              //     var y = (unit.drawPos.py - unit.type.healthbarOffset) * FIELD_SIZE - game.cameraY;
 
-                  if (
-                    !unit.type.isInvincible &&
-                    (interface_.showFullHPBars.get() || unit.hp < unit.getValue("hp"))
-                  ) {
-                    unit.drawHealthbar(
-                      x,
-                      y,
-                      unit.type.healthbarWidth * FIELD_SIZE,
-                      0.125 * FIELD_SIZE,
-                      SCALE_FACTOR / 2
-                    );
-                    y -= FIELD_SIZE * 0.16;
-                  }
+              //     if (
+              //       !unit.type.isInvincible &&
+              //       (interface_.showFullHPBars.get() || unit.hp < unit.getValue("hp"))
+              //     ) {
+              //       unit.drawHealthbar(
+              //         x,
+              //         y,
+              //         unit.type.healthbarWidth * FIELD_SIZE,
+              //         0.125 * FIELD_SIZE,
+              //         SCALE_FACTOR / 2
+              //       );
+              //       y -= FIELD_SIZE * 0.16;
+              //     }
 
-                  if (unit.type.mana) {
-                    unit.drawManabar(
-                      x,
-                      y,
-                      unit.type.healthbarWidth * FIELD_SIZE,
-                      0.125 * FIELD_SIZE,
-                      SCALE_FACTOR / 2
-                    );
-                    y -= FIELD_SIZE * 0.16;
-                  }
+              //     if (unit.type.mana) {
+              //       unit.drawManabar(
+              //         x,
+              //         y,
+              //         unit.type.healthbarWidth * FIELD_SIZE,
+              //         0.125 * FIELD_SIZE,
+              //         SCALE_FACTOR / 2
+              //       );
+              //       y -= FIELD_SIZE * 0.16;
+              //     }
 
-                  if (unit.type.lifetime) {
-                    unit.drawLifetimebar(
-                      x,
-                      y,
-                      unit.type.healthbarWidth * FIELD_SIZE,
-                      0.125 * FIELD_SIZE,
-                      SCALE_FACTOR / 2
-                    );
-                    y -= FIELD_SIZE * 0.16;
-                  }
+              //     if (unit.type.lifetime) {
+              //       unit.drawLifetimebar(
+              //         x,
+              //         y,
+              //         unit.type.healthbarWidth * FIELD_SIZE,
+              //         0.125 * FIELD_SIZE,
+              //         SCALE_FACTOR / 2
+              //       );
+              //       y -= FIELD_SIZE * 0.16;
+              //     }
 
-                  if (unit.owner == PLAYING_PLAYER && unit.cargo && unit.cargo.length > 0) {
-                    unit.drawLoadbar(
-                      x,
-                      y,
-                      unit.type.healthbarWidth * FIELD_SIZE,
-                      0.125 * FIELD_SIZE,
-                      SCALE_FACTOR / 2
-                    );
-                    y -= FIELD_SIZE * 0.16;
-                  }
+              //     if (unit.owner == PLAYING_PLAYER && unit.cargo && unit.cargo.length > 0) {
+              //       unit.drawLoadbar(
+              //         x,
+              //         y,
+              //         unit.type.healthbarWidth * FIELD_SIZE,
+              //         0.125 * FIELD_SIZE,
+              //         SCALE_FACTOR / 2
+              //       );
+              //       y -= FIELD_SIZE * 0.16;
+              //     }
 
-                  if (
-                    (unit.owner == PLAYING_PLAYER ||
-                      PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR) &&
-                    unit.queue[0]
-                  )
-                    unit.drawProgressBar(
-                      x,
-                      y,
-                      unit.type.healthbarWidth * FIELD_SIZE,
-                      0.125 * FIELD_SIZE,
-                      SCALE_FACTOR / 2
-                    );
-                }
+              //     if (
+              //       (unit.owner == PLAYING_PLAYER ||
+              //         PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR) &&
+              //       unit.queue[0]
+              //     )
+              //       unit.drawProgressBar(
+              //         x,
+              //         y,
+              //         unit.type.healthbarWidth * FIELD_SIZE,
+              //         0.125 * FIELD_SIZE,
+              //         SCALE_FACTOR / 2
+              //       );
+              //   }
 
-                // draw workload
-                if (unit.gold && unit.type.startGold && unit.countWorkingWorkers > 0) {
-                  var workload = unit.getWorkload();
+              //   // draw workload
+              //   if (unit.gold && unit.type.startGold && unit.countWorkingWorkers > 0) {
+              //     var workload = unit.getWorkload();
 
-                  drawText(
-                    c,
-                    "Workload",
-                    "white",
-                    "bold " + SCALE_FACTOR * 6 + "px LCDSolid",
-                    unit.drawPos.px * FIELD_SIZE - this.cameraX,
-                    (unit.drawPos.py - unit.type.healthbarOffset * 0.3) * FIELD_SIZE - this.cameraY,
-                    999,
-                    "center",
-                    null,
-                    "rgba(0, 0, 0, 0.5)",
-                    null,
-                    SCALE_FACTOR * 6
-                  );
-                  drawText(
-                    c,
-                    workload + " %",
-                    "white",
-                    "bold " + SCALE_FACTOR * 6 + "px LCDSolid",
-                    unit.drawPos.px * FIELD_SIZE - this.cameraX,
-                    (unit.drawPos.py - unit.type.healthbarOffset * 0.1) * FIELD_SIZE - this.cameraY,
-                    999,
-                    "center",
-                    null,
-                    "rgba(0, 0, 0, 0.5)",
-                    null,
-                    SCALE_FACTOR * 6
-                  );
+              //     drawText(
+              //       c,
+              //       "Workload",
+              //       "white",
+              //       "bold " + SCALE_FACTOR * 6 + "px LCDSolid",
+              //       unit.drawPos.px * FIELD_SIZE - this.cameraX,
+              //       (unit.drawPos.py - unit.type.healthbarOffset * 0.3) * FIELD_SIZE - this.cameraY,
+              //       999,
+              //       "center",
+              //       null,
+              //       "rgba(0, 0, 0, 0.5)",
+              //       null,
+              //       SCALE_FACTOR * 6
+              //     );
+              //     drawText(
+              //       c,
+              //       workload + " %",
+              //       "white",
+              //       "bold " + SCALE_FACTOR * 6 + "px LCDSolid",
+              //       unit.drawPos.px * FIELD_SIZE - this.cameraX,
+              //       (unit.drawPos.py - unit.type.healthbarOffset * 0.1) * FIELD_SIZE - this.cameraY,
+              //       999,
+              //       "center",
+              //       null,
+              //       "rgba(0, 0, 0, 0.5)",
+              //       null,
+              //       SCALE_FACTOR * 6
+              //     );
 
-                  c.strokeStyle = "white";
-                  c.fillStyle = "white";
-                  c.strokeRect(
-                    unit.drawPos.px * FIELD_SIZE - this.cameraX - FIELD_SIZE * 1.1,
-                    (unit.drawPos.py + unit.type.healthbarOffset * 0.0) * FIELD_SIZE - this.cameraY,
-                    FIELD_SIZE * 2.2,
-                    FIELD_SIZE * 0.3
-                  );
-                  c.fillRect(
-                    unit.drawPos.px * FIELD_SIZE - this.cameraX - FIELD_SIZE * 1.05,
-                    (unit.drawPos.py + unit.type.healthbarOffset * 0.0 + 0.05) * FIELD_SIZE -
-                      this.cameraY,
-                    FIELD_SIZE * 2.1 * (workload / 100),
-                    FIELD_SIZE * 0.2
-                  );
-                }
-              }
+              //     c.strokeStyle = "white";
+              //     c.fillStyle = "white";
+              //     c.strokeRect(
+              //       unit.drawPos.px * FIELD_SIZE - this.cameraX - FIELD_SIZE * 1.1,
+              //       (unit.drawPos.py + unit.type.healthbarOffset * 0.0) * FIELD_SIZE - this.cameraY,
+              //       FIELD_SIZE * 2.2,
+              //       FIELD_SIZE * 0.3
+              //     );
+              //     c.fillRect(
+              //       unit.drawPos.px * FIELD_SIZE - this.cameraX - FIELD_SIZE * 1.05,
+              //       (unit.drawPos.py + unit.type.healthbarOffset * 0.0 + 0.05) * FIELD_SIZE -
+              //         this.cameraY,
+              //       FIELD_SIZE * 2.1 * (workload / 100),
+              //       FIELD_SIZE * 0.2
+              //     );
+              //   }
+              // }
 
               // draw waypoints
-              if (
-                this.humanUnitsSelected() ||
-                PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR ||
-                game_state == GAME.EDITOR
-              ) {
-                c.lineWidth = 2;
+              // if (
+              //   this.humanUnitsSelected() ||
+              //   PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR ||
+              //   game_state == GAME.EDITOR
+              // ) {
+              //   c.lineWidth = 2;
 
-                for (var i = 0; i < this.selectedUnits.length; i++) {
-                  var unit = this.selectedUnits[i];
+              //   for (var i = 0; i < this.selectedUnits.length; i++) {
+              //     var unit = this.selectedUnits[i];
 
-                  if (unit.waypoint && (unit.type.isBuilding || unit.queue[0]))
-                    for (var k = 0; k < unit.waypoint.length; k++) {
-                      c.strokeStyle =
-                        "rgba(" +
-                        this.theme.line_red +
-                        ", " +
-                        this.theme.line_green +
-                        ", " +
-                        this.theme.line_blue +
-                        ", " +
-                        (1 - ((timestamp / 1000) % 0.8) * 0.8) +
-                        ")";
+              //     if (unit.waypoint && (unit.type.isBuilding || unit.queue[0]))
+              //       for (var k = 0; k < unit.waypoint.length; k++) {
+              //         c.strokeStyle =
+              //           "rgba(" +
+              //           this.theme.line_red +
+              //           ", " +
+              //           this.theme.line_green +
+              //           ", " +
+              //           this.theme.line_blue +
+              //           ", " +
+              //           (1 - ((timestamp / 1000) % 0.8) * 0.8) +
+              //           ")";
 
-                      var point0 =
-                        k > 0
-                          ? unit.waypoint[k - 1].pos
-                            ? unit.waypoint[k - 1].pos
-                            : unit.waypoint[k - 1]
-                          : unit.pos;
-                      point0 = point0.add3(0, -this.getHMValue3(point0) * CLIFF_HEIGHT);
+              //         var point0 =
+              //           k > 0
+              //             ? unit.waypoint[k - 1].pos
+              //               ? unit.waypoint[k - 1].pos
+              //               : unit.waypoint[k - 1]
+              //             : unit.pos;
+              //         point0 = point0.add3(0, -this.getHMValue3(point0) * CLIFF_HEIGHT);
 
-                      var point = unit.waypoint[k].pos ? unit.waypoint[k].pos : unit.waypoint[k];
-                      point = point.add3(0, -this.getHMValue3(point) * CLIFF_HEIGHT);
+              //         var point = unit.waypoint[k].pos ? unit.waypoint[k].pos : unit.waypoint[k];
+              //         point = point.add3(0, -this.getHMValue3(point) * CLIFF_HEIGHT);
 
-                      c.beginPath();
-                      c.moveTo(
-                        point0.px * FIELD_SIZE - game.cameraX,
-                        (point0.py + (k == 0 ? unit.getValue("circleOffset") / 2 : -Y_OFFSET)) *
-                          FIELD_SIZE -
-                          game.cameraY
-                      );
-                      c.lineTo(
-                        point.px * FIELD_SIZE - game.cameraX,
-                        (point.py - Y_OFFSET) * FIELD_SIZE - game.cameraY
-                      );
-                      c.stroke();
+              //         c.beginPath();
+              //         c.moveTo(
+              //           point0.px * FIELD_SIZE - game.cameraX,
+              //           (point0.py + (k == 0 ? unit.getValue("circleOffset") / 2 : -Y_OFFSET)) *
+              //             FIELD_SIZE -
+              //             game.cameraY
+              //         );
+              //         c.lineTo(
+              //           point.px * FIELD_SIZE - game.cameraX,
+              //           (point.py - Y_OFFSET) * FIELD_SIZE - game.cameraY
+              //         );
+              //         c.stroke();
 
-                      // circle effect
-                      if (
-                        k == unit.waypoint.length - 1 &&
-                        ticksCounter % 8 == 0 &&
-                        unit.lastTickCircleEffect != ticksCounter
-                      ) {
-                        new GroundOrder({
-                          from: point.add3(0, -Y_OFFSET),
-                        });
-                        unit.lastTickCircleEffect = ticksCounter;
-                      }
-                    }
+              //         // circle effect
+              //         if (
+              //           k == unit.waypoint.length - 1 &&
+              //           ticksCounter % 8 == 0 &&
+              //           unit.lastTickCircleEffect != ticksCounter
+              //         ) {
+              //           new GroundOrder({
+              //             from: point.add3(0, -Y_OFFSET),
+              //           });
+              //           unit.lastTickCircleEffect = ticksCounter;
+              //         }
+              //       }
 
-                  if (unit.targetsQueue && unit.targetsQueue.length > 0 && unit.targetUnit) {
-                    c.strokeStyle =
-                      "rgba(164, 0, 0, " + (1 - ((timestamp / 1000) % 0.8) * 0.8) + ")";
+              //     if (unit.targetsQueue && unit.targetsQueue.length > 0 && unit.targetUnit) {
+              //       c.strokeStyle =
+              //         "rgba(164, 0, 0, " + (1 - ((timestamp / 1000) % 0.8) * 0.8) + ")";
 
-                    var targetsArray = [unit.targetUnit.drawPos];
-                    for (var k = 0; k < unit.targetsQueue.length; k++)
-                      targetsArray.push(unit.targetsQueue[k].drawPos);
+              //       var targetsArray = [unit.targetUnit.drawPos];
+              //       for (var k = 0; k < unit.targetsQueue.length; k++)
+              //         targetsArray.push(unit.targetsQueue[k].drawPos);
 
-                    c.beginPath();
-                    c.moveTo(
-                      unit.drawPos.px * FIELD_SIZE - game.cameraX,
-                      (unit.drawPos.py + unit.getValue("circleOffset") / 2) * FIELD_SIZE -
-                        game.cameraY
-                    );
-                    for (var k = 0; k < targetsArray.length; k++)
-                      c.lineTo(
-                        targetsArray[k].px * FIELD_SIZE - game.cameraX,
-                        (targetsArray[k].py + Y_OFFSET) * FIELD_SIZE - game.cameraY
-                      );
-                    c.stroke();
-                  }
-                }
-              }
+              //       c.beginPath();
+              //       c.moveTo(
+              //         unit.drawPos.px * FIELD_SIZE - game.cameraX,
+              //         (unit.drawPos.py + unit.getValue("circleOffset") / 2) * FIELD_SIZE -
+              //           game.cameraY
+              //       );
+              //       for (var k = 0; k < targetsArray.length; k++)
+              //         c.lineTo(
+              //           targetsArray[k].px * FIELD_SIZE - game.cameraX,
+              //           (targetsArray[k].py + Y_OFFSET) * FIELD_SIZE - game.cameraY
+              //         );
+              //       c.stroke();
+              //     }
+              //   }
+              // }
 
               // queued paths
-              if (this.humanUnitsSelected() && this.selectedUnits[0].type.isUnit) {
-                c.strokeStyle =
-                  "rgba(" +
-                  this.theme.line_red +
-                  ", " +
-                  this.theme.line_green +
-                  ", " +
-                  this.theme.line_blue +
-                  ", 0.5)";
+              // if (this.humanUnitsSelected() && this.selectedUnits[0].type.isUnit) {
+              //   c.strokeStyle =
+              //     "rgba(" +
+              //     this.theme.line_red +
+              //     ", " +
+              //     this.theme.line_green +
+              //     ", " +
+              //     this.theme.line_blue +
+              //     ", 0.5)";
 
-                for (var i = 0; i < this.selectedUnits.length; i++)
-                  if (
-                    this.selectedUnits[i].queueOrder &&
-                    this.selectedUnits[i].queueOrder.length > 0
-                  ) {
-                    var unit = this.selectedUnits[i];
+              //   for (var i = 0; i < this.selectedUnits.length; i++)
+              //     if (
+              //       this.selectedUnits[i].queueOrder &&
+              //       this.selectedUnits[i].queueOrder.length > 0
+              //     ) {
+              //       var unit = this.selectedUnits[i];
 
-                    var targetsArray = [unit.drawPos];
-                    if (unit.hasPath())
-                      targetsArray.push(
-                        unit.path.add3(0, -this.getHMValue3(unit.path) * CLIFF_HEIGHT)
-                      );
+              //       var targetsArray = [unit.drawPos];
+              //       if (unit.hasPath())
+              //         targetsArray.push(
+              //           unit.path.add3(0, -this.getHMValue3(unit.path) * CLIFF_HEIGHT)
+              //         );
 
-                    for (var k = 0; k < unit.queueOrder.length; k++) {
-                      var target = unit.queueTarget[k];
+              //       for (var k = 0; k < unit.queueOrder.length; k++) {
+              //         var target = unit.queueTarget[k];
 
-                      if (target && target.isField)
-                        targetsArray.push(target.add3(0, -this.getHMValue3(target) * CLIFF_HEIGHT));
+              //         if (target && target.isField)
+              //           targetsArray.push(target.add3(0, -this.getHMValue3(target) * CLIFF_HEIGHT));
 
-                      if (target && target.pos) targetsArray.push(target.drawPos);
-                    }
+              //         if (target && target.pos) targetsArray.push(target.drawPos);
+              //       }
 
-                    for (var k = 1; k < targetsArray.length; k++) {
-                      c.beginPath();
-                      c.moveTo(
-                        targetsArray[k - 1].px * FIELD_SIZE - game.cameraX,
-                        targetsArray[k - 1].py * FIELD_SIZE - game.cameraY
-                      );
-                      c.lineTo(
-                        targetsArray[k].px * FIELD_SIZE - game.cameraX,
-                        targetsArray[k].py * FIELD_SIZE - game.cameraY
-                      );
-                      c.stroke();
-                    }
+              //       for (var k = 1; k < targetsArray.length; k++) {
+              //         c.beginPath();
+              //         c.moveTo(
+              //           targetsArray[k - 1].px * FIELD_SIZE - game.cameraX,
+              //           targetsArray[k - 1].py * FIELD_SIZE - game.cameraY
+              //         );
+              //         c.lineTo(
+              //           targetsArray[k].px * FIELD_SIZE - game.cameraX,
+              //           targetsArray[k].py * FIELD_SIZE - game.cameraY
+              //         );
+              //         c.stroke();
+              //       }
 
-                    // circle effect
-                    if (ticksCounter % 8 == 0 && unit.lastTickCircleEffect != ticksCounter) {
-                      new GroundOrder({
-                        from: targetsArray[targetsArray.length - 1].add3(0, 0),
-                      });
-                      unit.lastTickCircleEffect = ticksCounter;
-                    }
-                  }
-              }
+              //       // circle effect
+              //       if (ticksCounter % 8 == 0 && unit.lastTickCircleEffect != ticksCounter) {
+              //         new GroundOrder({
+              //           from: targetsArray[targetsArray.length - 1].add3(0, 0),
+              //         });
+              //         unit.lastTickCircleEffect = ticksCounter;
+              //       }
+              //     }
+              // }
 
               // map pings
-              for (var i = 0; i < this.minimap.mapPings.length; i++) {
-                var ping = this.minimap.mapPings[i];
+              // for (var i = 0; i < this.minimap.mapPings.length; i++) {
+              //   var ping = this.minimap.mapPings[i];
 
-                var age = Date.now() - ping.time;
+              //   var age = Date.now() - ping.time;
 
-                if (age > 7000) {
-                  //ping is too old, kill it
-                  this.minimap.mapPings.splice(i, 1);
-                  i--;
-                } else {
-                  var drawX = (ping.field.x - 0.5) * FIELD_SIZE - this.cameraX;
-                  var drawY = (ping.field.y - 0.5) * FIELD_SIZE - this.cameraY;
+              //   if (age > 7000) {
+              //     //ping is too old, kill it
+              //     this.minimap.mapPings.splice(i, 1);
+              //     i--;
+              //   } else {
+              //     var drawX = (ping.field.x - 0.5) * FIELD_SIZE - this.cameraX;
+              //     var drawY = (ping.field.y - 0.5) * FIELD_SIZE - this.cameraY;
 
-                  c.strokeStyle =
-                    "rgba(255, 255, 0, " +
-                    (age < 6000 ? 0.9 : Math.max((7000 - age) / 1000, 0)) +
-                    ")";
-                  c.lineWidth = 1.5 * SCALE_FACTOR;
+              //     c.strokeStyle =
+              //       "rgba(255, 255, 0, " +
+              //       (age < 6000 ? 0.9 : Math.max((7000 - age) / 1000, 0)) +
+              //       ")";
+              //     c.lineWidth = 1.5 * SCALE_FACTOR;
 
-                  var radius =
-                    (FIELD_SIZE * 0.3 * Math.max(Math.sin((Math.PI * age) / 250) + 1.5)) / 2.5;
-                  var radius2 =
-                    (FIELD_SIZE *
-                      0.3 *
-                      Math.max(Math.sin((Math.PI * age) / 250 + 3.14 / 2) + 1.5)) /
-                    2.5;
+              //     var radius =
+              //       (FIELD_SIZE * 0.3 * Math.max(Math.sin((Math.PI * age) / 250) + 1.5)) / 2.5;
+              //     var radius2 =
+              //       (FIELD_SIZE *
+              //         0.3 *
+              //         Math.max(Math.sin((Math.PI * age) / 250 + 3.14 / 2) + 1.5)) /
+              //       2.5;
 
-                  c.beginPath();
-                  c.strokeRect(drawX - radius, drawY - radius, 2 * radius, 2 * radius);
-                  c.strokeRect(drawX - radius2, drawY - radius2, 2 * radius2, 2 * radius2);
-                  c.stroke();
+              //     c.beginPath();
+              //     c.strokeRect(drawX - radius, drawY - radius, 2 * radius, 2 * radius);
+              //     c.strokeRect(drawX - radius2, drawY - radius2, 2 * radius2, 2 * radius2);
+              //     c.stroke();
 
-                  var angles = [0, 90, 180, 270];
+              //     var angles = [0, 90, 180, 270];
 
-                  var sin = angles.map(function (s) {
-                    return Math.sin((s / 180) * Math.PI + (age / 5000) * Math.PI * 3);
-                  });
-                  var cos = angles.map(function (s) {
-                    return Math.cos((s / 180) * Math.PI + (age / 5000) * Math.PI * 3);
-                  });
+              //     var sin = angles.map(function (s) {
+              //       return Math.sin((s / 180) * Math.PI + (age / 5000) * Math.PI * 3);
+              //     });
+              //     var cos = angles.map(function (s) {
+              //       return Math.cos((s / 180) * Math.PI + (age / 5000) * Math.PI * 3);
+              //     });
 
-                  var xs = [FIELD_SIZE, FIELD_SIZE, FIELD_SIZE / 2];
-                  var ys = [-FIELD_SIZE / 3, FIELD_SIZE / 3, 0];
+              //     var xs = [FIELD_SIZE, FIELD_SIZE, FIELD_SIZE / 2];
+              //     var ys = [-FIELD_SIZE / 3, FIELD_SIZE / 3, 0];
 
-                  for (var j = 0; j < 4; j++) {
-                    c.beginPath();
+              //     for (var j = 0; j < 4; j++) {
+              //       c.beginPath();
 
-                    c.moveTo(
-                      drawX + xs[0] * cos[j] - ys[0] * sin[j],
-                      drawY + ys[0] * cos[j] + xs[0] * sin[j]
-                    );
-                    c.lineTo(
-                      drawX + xs[1] * cos[j] - ys[1] * sin[j],
-                      drawY + ys[1] * cos[j] + xs[1] * sin[j]
-                    );
-                    c.lineTo(
-                      drawX + xs[2] * cos[j] - ys[2] * sin[j],
-                      drawY + ys[2] * cos[j] + xs[2] * sin[j]
-                    );
+              //       c.moveTo(
+              //         drawX + xs[0] * cos[j] - ys[0] * sin[j],
+              //         drawY + ys[0] * cos[j] + xs[0] * sin[j]
+              //       );
+              //       c.lineTo(
+              //         drawX + xs[1] * cos[j] - ys[1] * sin[j],
+              //         drawY + ys[1] * cos[j] + xs[1] * sin[j]
+              //       );
+              //       c.lineTo(
+              //         drawX + xs[2] * cos[j] - ys[2] * sin[j],
+              //         drawY + ys[2] * cos[j] + xs[2] * sin[j]
+              //       );
 
-                    c.closePath();
-                    c.stroke();
-                  }
-                }
-              }
+              //       c.closePath();
+              //       c.stroke();
+              //     }
+              //   }
+              // }
 
               // REPLAY: REMOVE DUST PARTICLES ON MAP
-              if (game_state == GAME.PLAYING) {
-                // this.env.draw();
-                // this.rain.draw();
-              }
+              // if (game_state == GAME.PLAYING) {
+              //   // this.env.draw();
+              //   // this.rain.draw();
+              // }
 
               // draw fog
-              c.drawImage(
-                game_state == GAME.PLAYING ? this.minimap.screenCanvas : this.minimap.editorCanvas,
-                this.cameraX / SCALE_FACTOR,
-                this.cameraY / SCALE_FACTOR,
-                drawW / SCALE_FACTOR,
-                drawH / SCALE_FACTOR,
-                0,
-                0,
-                drawW,
-                drawH
-              );
+              // c.drawImage(
+              //   game_state == GAME.PLAYING ? this.minimap.screenCanvas : this.minimap.editorCanvas,
+              //   this.cameraX / SCALE_FACTOR,
+              //   this.cameraY / SCALE_FACTOR,
+              //   drawW / SCALE_FACTOR,
+              //   drawH / SCALE_FACTOR,
+              //   0,
+              //   0,
+              //   drawW,
+              //   drawH
+              // );
 
               // if cursor is hovering a unit, draw the units owners name (if not playing player)
-              if (
-                hoverUnit &&
-                ((hoverUnit.owner != PLAYING_PLAYER && hoverUnit.owner.number > 0) ||
-                  (hoverUnit.type.hoverText && hoverUnit.type.hoverText.length > 0))
-              ) {
-                var y = hoverUnit.drawPos.py * FIELD_SIZE - this.cameraY;
-                y += hoverUnit.type.isUnit
-                  ? FIELD_SIZE
-                  : (hoverUnit.type.sizeY / 2 + 0.7) * FIELD_SIZE;
+              // if (
+              //   hoverUnit &&
+              //   ((hoverUnit.owner != PLAYING_PLAYER && hoverUnit.owner.number > 0) ||
+              //     (hoverUnit.type.hoverText && hoverUnit.type.hoverText.length > 0))
+              // ) {
+              //   var y = hoverUnit.drawPos.py * FIELD_SIZE - this.cameraY;
+              //   y += hoverUnit.type.isUnit
+              //     ? FIELD_SIZE
+              //     : (hoverUnit.type.sizeY / 2 + 0.7) * FIELD_SIZE;
 
-                var text =
-                  hoverUnit.type.hoverText && hoverUnit.type.hoverText.length > 0
-                    ? hoverUnit.type.hoverText
-                    : hoverUnit.owner.name;
+              //   var text =
+              //     hoverUnit.type.hoverText && hoverUnit.type.hoverText.length > 0
+              //       ? hoverUnit.type.hoverText
+              //       : hoverUnit.owner.name;
 
-                if (game_state == GAME.EDITOR)
-                  text =
-                    hoverUnit.type.name +
-                    " (x: " +
-                    parseInt(hoverUnit.pos.px * 100) / 100 +
-                    ", y: " +
-                    parseInt(hoverUnit.pos.py * 100) / 100 +
-                    ")";
+              //   if (game_state == GAME.EDITOR)
+              //     text =
+              //       hoverUnit.type.name +
+              //       " (x: " +
+              //       parseInt(hoverUnit.pos.px * 100) / 100 +
+              //       ", y: " +
+              //       parseInt(hoverUnit.pos.py * 100) / 100 +
+              //       ")";
 
-                drawText(
-                  c,
-                  text,
-                  "white",
-                  "bold " + 4 * 6 + "px LCDSolid",
-                  hoverUnit.drawPos.px * FIELD_SIZE - this.cameraX,
-                  y,
-                  300,
-                  "center",
-                  1,
-                  "rgba(0, 0, 0, 0.5)",
-                  null,
-                  4 * 6
-                );
-              }
+              //   drawText(
+              //     c,
+              //     text,
+              //     "white",
+              //     "bold " + 4 * 6 + "px LCDSolid",
+              //     hoverUnit.drawPos.px * FIELD_SIZE - this.cameraX,
+              //     y,
+              //     300,
+              //     "center",
+              //     1,
+              //     "rgba(0, 0, 0, 0.5)",
+              //     null,
+              //     4 * 6
+              //   );
+              // }
 
               // if game paused, draw black screen with opac
-              if (game_paused) {
-                c.fillStyle = "rgba(0, 0, 0, 0.5)";
-                c.fillRect(0, 0, WIDTH, HEIGHT);
-              }
+              // if (game_paused) {
+              //   c.fillStyle = "rgba(0, 0, 0, 0.5)";
+              //   c.fillRect(0, 0, WIDTH, HEIGHT);
+              // }
 
               // print path
-              if (path2Print)
-                for (var i = 1; i < path2Print.length; i++) {
-                  c.beginPath();
-                  c.moveTo(
-                    path2Print[i - 1].px * FIELD_SIZE - game.cameraX,
-                    path2Print[i - 1].py * FIELD_SIZE - game.cameraY
-                  );
-                  c.lineTo(
-                    path2Print[i].px * FIELD_SIZE - game.cameraX,
-                    path2Print[i].py * FIELD_SIZE - game.cameraY
-                  );
-                  c.stroke();
-                }
+              // if (path2Print)
+              //   for (var i = 1; i < path2Print.length; i++) {
+              //     c.beginPath();
+              //     c.moveTo(
+              //       path2Print[i - 1].px * FIELD_SIZE - game.cameraX,
+              //       path2Print[i - 1].py * FIELD_SIZE - game.cameraY
+              //     );
+              //     c.lineTo(
+              //       path2Print[i].px * FIELD_SIZE - game.cameraX,
+              //       path2Print[i].py * FIELD_SIZE - game.cameraY
+              //     );
+              //     c.stroke();
+              //   }
 
               /*
     for(var x = parseInt(x1); x < x2; x++)
@@ -29012,12 +29015,12 @@
                     !this.game.buildings2[i].type.startGold
                       ? "rgba(77, 166, 174, 0.9)"
                       : this.game.buildings2[i].owner.getAllyColor();
-                  // c.fillRect(
-                  //   x + this.x,
-                  //   y + y_start,
-                  //   this.x_scale * this.game.buildings2[i].type.size,
-                  //   this.y_scale * this.game.buildings2[i].type.size
-                  // );
+                  c.fillRect(
+                    x + this.x,
+                    y + y_start,
+                    this.x_scale * this.game.buildings2[i].type.size,
+                    this.y_scale * this.game.buildings2[i].type.size
+                  );
                 }
 
               // units
@@ -29143,25 +29146,25 @@
               var y2 = (this.y_scale * (game.cameraY + HEIGHT)) / FIELD_SIZE;
               y2 -= y2 % this.y_scale;
 
-              c.strokeRect(
-                x1 + this.x,
-                Math.max(y1, 0) + y_start,
-                Math.min(x2 - x1, MINIMAP_WIDTH),
-                Math.min(y2 - y1, MINIMAP_HEIGHT)
-              );
+              // c.strokeRect(
+              //   x1 + this.x,
+              //   Math.max(y1, 0) + y_start,
+              //   Math.min(x2 - x1, MINIMAP_WIDTH),
+              //   Math.min(y2 - y1, MINIMAP_HEIGHT)
+              // );
 
-              if (game_state == GAME.EDITOR)
-                c.drawImage(
-                  miscSheet[0],
-                  imgs.interfaceMapBorder.img.x,
-                  imgs.interfaceMapBorder.img.y,
-                  imgs.interfaceMapBorder.img.w,
-                  imgs.interfaceMapBorder.img.h,
-                  -16,
-                  HEIGHT - 200,
-                  imgs.interfaceMapBorder.img.w * 2,
-                  imgs.interfaceMapBorder.img.h * 2
-                );
+              // if (game_state == GAME.EDITOR)
+              //   c.drawImage(
+              //     miscSheet[0],
+              //     imgs.interfaceMapBorder.img.x,
+              //     imgs.interfaceMapBorder.img.y,
+              //     imgs.interfaceMapBorder.img.w,
+              //     imgs.interfaceMapBorder.img.h,
+              //     -16,
+              //     HEIGHT - 200,
+              //     imgs.interfaceMapBorder.img.w * 2,
+              //     imgs.interfaceMapBorder.img.h * 2
+              //   );
             };
 
             // true: fog, false: no fog
@@ -36187,8 +36190,8 @@
                     $("#noMessagesP").css("display", "inline-block");
                   };
 
-                  Login.registerOnLogin(clearChats);
-                  Login.registerOnLogout(clearChats);
+                  // Login.registerOnLogin(clearChats);
+                  // Login.registerOnLogout(clearChats);
                 });
 
                 this.POPUP_CHATS = Object.freeze({
@@ -39617,7 +39620,7 @@
                     setTimeout(() => {
                       exitGame();
                       // Reset all stats and settings for replay playback:
-                      window.replayStats = [];
+                      window.replayStats = {};
                       window.lwgReplayStarted = false;
                       window.replayLoaded = false;
                       window.finishedReplay = false;
