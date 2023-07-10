@@ -82,6 +82,9 @@ const replayOutputInterval = setInterval(() => {
     });
     div.replaceChildren(unusedGoldPlot);
 
+    const plotTimerOne = performance.now() - statsTimer;
+    statsTimer = performance.now();
+
     // Total Supply Chart
     const totalSupplyPlot = Plot.plot({
       grid: true,
@@ -96,6 +99,9 @@ const replayOutputInterval = setInterval(() => {
       ],
     });
     totalSupplyDiv.replaceChildren(totalSupplyPlot);
+
+    const plotTimerTwo = performance.now() - statsTimer;
+    statsTimer = performance.now();
 
     // Units Killed Plot
     const unitsLostPlot = Plot.plot({
@@ -112,6 +118,9 @@ const replayOutputInterval = setInterval(() => {
     });
     unitsLostDiv.replaceChildren(unitsLostPlot);
 
+    const plotTimerThree = performance.now() - statsTimer;
+    statsTimer = performance.now();
+
     // Workers Supply Plot
     const workerSupplyPlot = Plot.plot({
       grid: true,
@@ -126,6 +135,9 @@ const replayOutputInterval = setInterval(() => {
       ],
     });
     workerSupplyDiv.replaceChildren(workerSupplyPlot);
+
+    const plotTimerFour = performance.now() - statsTimer;
+    statsTimer = performance.now();
 
     // Army Supply Plot
     const armySupplyPlot = Plot.plot({
@@ -142,7 +154,18 @@ const replayOutputInterval = setInterval(() => {
     });
     armySupplyDiv.replaceChildren(armySupplyPlot);
 
-    console.log("Time to process plots: ", performance.now() - statsTimer);
+    const plotTimerFive = performance.now() - statsTimer;
+    statsTimer = performance.now();
+
+    console.log(
+      "Individual plots: ",
+      plotTimerOne,
+      plotTimerTwo,
+      plotTimerThree,
+      plotTimerFour,
+      plotTimerFive
+    );
+    // console.log("Time to process plots: ", performance.now() - statsTimer);
 
     statsTimer = performance.now();
 
