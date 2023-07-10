@@ -39573,31 +39573,32 @@
                 // interface_.draw(); // Draws the in-game canvas interface (gold, units, minimap box, wood elements, ect.)
 
                 if (!window.lwgReplayStarted) {
-                  // Set interval to print time on window
-                  window.replayTimeInterval = setInterval(() => {
-                    let sec_total = Math.floor((ticksCounter * 50) / 1000);
-                    let min = Math.floor(sec_total / 60);
-                    let sec = sec_total % 60;
-                    sec = sec < 10 ? "0" + sec : sec;
-                    console.log("Time: ", min + ":" + sec, " Current TicK: ", ticksCounter);
-                  }, 5_000);
+                  // Print Current Game Time
+                  // window.replayTimeInterval = setInterval(() => {
+                  //   let sec_total = Math.floor((ticksCounter * 50) / 1000);
+                  //   let min = Math.floor(sec_total / 60);
+                  //   let sec = sec_total % 60;
+                  //   sec = sec < 10 ? "0" + sec : sec;
+                  //   console.log("Time: ", min + ":" + sec, " Current TicK: ", ticksCounter);
+                  // }, 5_000);
 
-                  window.replayGoldInterval = setInterval(() => {
-                    if (game.players) {
-                      const realPlayers = game.players.filter(
-                        (p) => p && p.name !== "Neutral" && !p.name.startsWith("guest_")
-                      );
-                      for (let i = 0; i < realPlayers.length; i++) {
-                        console.log(
-                          "Player ",
-                          realPlayers[i].number,
-                          " has ",
-                          realPlayers[i].gold,
-                          " gold!"
-                        );
-                      }
-                    }
-                  }, 1_000);
+                  // Print Players gold
+                  // window.replayGoldInterval = setInterval(() => {
+                  //   if (game.players) {
+                  //     const realPlayers = game.players.filter(
+                  //       (p) => p && p.name !== "Neutral" && !p.name.startsWith("guest_")
+                  //     );
+                  //     for (let i = 0; i < realPlayers.length; i++) {
+                  //       console.log(
+                  //         "Player ",
+                  //         realPlayers[i].number,
+                  //         " has ",
+                  //         realPlayers[i].gold,
+                  //         " gold!"
+                  //       );
+                  //     }
+                  //   }
+                  // }, 1_000);
 
                   window.lwgReplayStarted = true;
                 } else {
@@ -39605,9 +39606,9 @@
                     console.log("Will no longer print the replay time!");
                     console.log("Replay game data generated should be good to use now!");
                     // Stop printing the time
-                    clearInterval(window.replayTimeInterval);
+                    // clearInterval(window.replayTimeInterval);
                     // Stop printing the gold
-                    clearInterval(window.replayGoldInterval);
+                    // clearInterval(window.replayGoldInterval);
 
                     // Should indicate to the outside that the replay is finished and no more data should be generated
                     window.finishedReplay = true;
