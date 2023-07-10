@@ -1,12 +1,5 @@
 console.log("The graph script was ran!");
 
-// function testLoop() {
-//   console.log("Test Loop!");
-//   setTimeout(testLoop, 3_000);
-// }
-
-// testLoop();
-
 const TICKS_PER_SECOND = 20;
 
 const buildOrderPlayerOneDiv = document.getElementById("buildOrderP1");
@@ -35,6 +28,14 @@ armySupplyDiv.append(plot5);
 
 const replayOutputDataDiv = document.getElementById("replayOutputData");
 
+const playerOneData = [];
+const playerTwoData = [];
+const playerOneBuildUnits = [];
+let p1UnitsIndex = 0;
+const playerTwoBuildUnits = [];
+let p2UnitsIndex = 0;
+let lastTickProcessed = -1;
+
 const replayOutputInterval = setInterval(() => {
   // Check if the replay is over every 5 seconds
   if (window.replayStats && Object.keys(window.replayStats).length > 0) {
@@ -44,19 +45,21 @@ const replayOutputInterval = setInterval(() => {
       // clearInterval(replayOutputInterval);
     }
 
-    // Output the data in string form to a div
-    // replayOutputDataDiv.innerText = JSON.stringify(window.replayStats);
+    // Player 1
+    // window.replayStats[tickNumber][0]
+    // Player 2
+    // window.replayStats[tickNumber][1]
 
-    // Format data for graph
-    // We want an array of objects, where each array is only data on one player ideally
-    const playerOneData = [];
-    const playerTwoData = [];
-
+    // Current game tick
     const currentTick = window.currentGameTick;
-    for (let i = 0; i <= currentTick; i++) {
+
+    for (let i = lastTickProcessed + 1; i <= currentTick; i++) {
       if (window.replayStats[i][0].number) playerOneData.push(window.replayStats[i][0]); // get player 1
       if (window.replayStats[i][1].number) playerTwoData.push(window.replayStats[i][1]); // get player 2
+      if (window.replayStats[i][0].unitsCreated) playerOneBuildUnits.push(window.replayStats[i][0]); // get player 1
+      if (window.replayStats[i][1].unitsCreated) playerTwoBuildUnits.push(window.replayStats[i][1]); // get player 2
     }
+    lastTickProcessed = currentTick;
 
     // Unused Gold Plot
     const unusedGoldPlot = Plot.plot({
@@ -134,39 +137,37 @@ const replayOutputInterval = setInterval(() => {
     armySupplyDiv.replaceChildren(armySupplyPlot);
 
     // Update build order
-
-    // Player 1
-    // window.replayStats[tickNumber][0]
-    // Player 2
-    // window.replayStats[tickNumber][1]
-
     let playerOneBuild = "";
     let playerTwoBuild = "";
 
-    for (const tickNumber in window.replayStats) {
-      const tickArray = window.replayStats[tickNumber];
-      const p1 = tickArray[0].unitsCreated;
-      const p2 = tickArray[1].unitsCreated;
-
-      if (p1) {
-        playerOneBuild += Object.keys(p1).reduce(
-          (prev, curr) => prev + unitImage(curr) + ": " + p1[curr] + ", ",
-          `${formatTime(Math.floor(tickNumber / TICKS_PER_SECOND))}: `
-        );
-        playerOneBuild += "<br>";
-      }
-
-      if (p2) {
-        playerTwoBuild += Object.keys(p2).reduce(
-          (prev, curr) => prev + unitImage(curr) + ": " + p2[curr] + ", ",
-          `${formatTime(Math.floor(tickNumber / TICKS_PER_SECOND))}: `
-        );
-        playerTwoBuild += "<br>";
-      }
+    for (let i = p1UnitsIndex; i < playerOneBuildUnits.length; i++) {
+      // unitsCreated has to contain something to be here
+      const unitsCreated = playerOneBuildUnits[i].unitsCreated;
+      if (!unitsCreated) console.log(playerOneBuildUnits[i]);
+      playerOneBuild += Object.keys(unitsCreated).reduce(
+        (prev, curr) => prev + unitImage(curr) + ": " + unitsCreated[curr] + ", ",
+        `${formatTime(Math.floor(playerOneBuildUnits[i].tick / TICKS_PER_SECOND))}: `
+      );
+      playerOneBuild += "<br>";
     }
+    // Set next index to length of current array
+    p1UnitsIndex = playerOneBuildUnits.length;
 
-    buildOrderPlayerOneDiv.innerHTML = playerOneBuild;
-    buildOrderPlayerTwoDiv.innerHTML = playerTwoBuild;
+    for (let i = p2UnitsIndex; i < playerTwoBuildUnits.length; i++) {
+      const unitsCreated = playerTwoBuildUnits[i].unitsCreated;
+      if (!unitsCreated) console.log(playerTwoBuildUnits[i]);
+      playerTwoBuild += Object.keys(unitsCreated).reduce(
+        (prev, curr) => prev + unitImage(curr) + ": " + unitsCreated[curr] + ", ",
+        `${formatTime(Math.floor(playerTwoBuildUnits[i].tick / TICKS_PER_SECOND))}: `
+      );
+      playerTwoBuild += "<br>";
+    }
+    // Set next index to length of current array
+    p2UnitsIndex = playerTwoBuildUnits.length;
+
+    // Append both players units built in last 5 seconds
+    buildOrderPlayerOneDiv.innerHTML += playerOneBuild;
+    buildOrderPlayerTwoDiv.innerHTML += playerTwoBuild;
   }
 }, 5_000);
 
