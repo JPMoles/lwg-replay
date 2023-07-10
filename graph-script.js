@@ -199,5 +199,5 @@ function formatTime(sec) {
 }
 
 function unitImage(unit) {
-  return `<img src="imgs/${"Worker"}.png" />`;
+  return `<img src="imgs/${unit}.png" /> (${unit})`;
 }

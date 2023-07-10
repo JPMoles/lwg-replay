@@ -39628,6 +39628,7 @@
                   }
                 }
 
+                // Add replay stats to window object
                 window.replayStats[ticksCounter] = game.players
                   .filter(
                     (player) => player.name !== "Neutral" && !player.name.startsWith("guest_")
@@ -39648,6 +39649,14 @@
                         ) - (player.units["worker"] ?? 0),
                     };
                   });
+
+                // Update replay progress timer
+                // Timer is now current time / total time
+                const gameProgressTimeDiv = document.getElementById("gameProgressTime");
+                gameProgressTimeDiv.innerText =
+                  formatTime(Math.ceil(ticksCounter / 20)) +
+                  " " +
+                  gameProgressTimeDiv.innerText.substring(5);
               } else if (game_state == GAME.EDITOR) {
                 gameTimeDiff = 0;
                 editor.draw();
@@ -39661,6 +39670,31 @@
               // musicManager.draw();
               // uimanager.draw(); // draws the main ui on the home page
               UIManagerSingleton.draw(); // no idea what this does
+            }
+
+            function formatTime(sec) {
+              var sec_num = sec;
+              var hours = Math.floor(sec_num / 3600);
+              var minutes = Math.floor((sec_num - hours * 3600) / 60);
+              var seconds = sec_num - hours * 3600 - minutes * 60;
+
+              if (seconds < 10) {
+                seconds = "0" + seconds;
+              }
+
+              if (minutes < 10) {
+                minutes = "0" + minutes;
+              }
+
+              if (hours < 1) {
+                return minutes + ":" + seconds;
+              }
+
+              if (hours < 10) {
+                hours = "0" + hours;
+              }
+
+              return hours + ":" + minutes + ":" + seconds;
             }
 
             const AccountInfo = (() => {
