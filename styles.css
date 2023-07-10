@@ -97,6 +97,11 @@ footer {
   background-color: white;
 }
 
+/* Make plot legend names readable */
+#plotDivs span {
+  color: black;
+}
+
 #uploadReplayButton {
   width: 600px;
   height: 400px;
