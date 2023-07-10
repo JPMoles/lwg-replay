@@ -50,19 +50,16 @@ const replayOutputInterval = setInterval(() => {
     // Format data for graph
     // We want an array of objects, where each array is only data on one player ideally
     const playerOneData = [];
-    for (const key in window.replayStats) {
-      const player1 = window.replayStats[key][0]; // get player 1
-      playerOneData.push(player1);
-    }
-
     const playerTwoData = [];
-    for (const key in window.replayStats) {
-      const player2 = window.replayStats[key][1]; // get player 1
-      playerTwoData.push(player2);
+
+    const currentTick = window.currentGameTick;
+    for (let i = 0; i <= currentTick; i++) {
+      if (window.replayStats[i][0].number) playerOneData.push(window.replayStats[i][0]); // get player 1
+      if (window.replayStats[i][1].number) playerTwoData.push(window.replayStats[i][1]); // get player 2
     }
 
     // Unused Gold Plot
-    plot = Plot.plot({
+    const unusedGoldPlot = Plot.plot({
       grid: true,
       color: { legend: true },
       y: {
@@ -74,7 +71,7 @@ const replayOutputInterval = setInterval(() => {
         Plot.lineY(playerTwoData, { x: "tick", y: "gold", stroke: "name" }),
       ],
     });
-    div.replaceChildren(plot);
+    div.replaceChildren(unusedGoldPlot);
 
     // Total Supply Chart
     const totalSupplyPlot = Plot.plot({

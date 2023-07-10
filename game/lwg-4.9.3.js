@@ -31010,12 +31010,29 @@
                   map.img = getImageFromMap(map);
                   // uimanager.showLoadingScreen(map, p);
 
+                  window.replayStats = {};
+
+                  // Get players (not spectators or neutral)
+                  const realPlayers = p.filter(
+                    (p) => p && p.name !== "Neutral" && p.controller !== CONTROLLER.SPECTATOR
+                  );
+
+                  // Initialize replayStats with all ticks: array of players, each player has name and tick number
+                  for (let i = 0; i <= replayFile.ticksCounter; i++) {
+                    window.replayStats[i] = new Array(realPlayers.length);
+                    for (let j = 0; j < realPlayers.length; j++) {
+                      window.replayStats[i][j] = {
+                        tick: i,
+                        name: realPlayers[j].name,
+                      };
+                    }
+                  }
+
                   setTimeout(() => {
                     game_state = GAME.PLAYING;
 
                     game = new Game();
                     window.game = game;
-                    window.replayStats = {};
 
                     game.loadMap(
                       map,
@@ -38593,28 +38610,32 @@
                       owner: game.players[msg[4]],
                     });
 
-                    // Add units created to current tick
-                    let currentReplayStats;
-                    if ((currentReplayStats = window.replayStats[ticksCounter])) {
-                      // current tick object already exists
-                      // window.replayStats[tickCounter][playerNumber].unitsCreated = { "the units created?" }
-                      // TODO: DETERMINE PLAYER NUMBER WITHOUT SUBTRACTING 1
-                      const currentReplayStatsPlayer = currentReplayStats[parseInt(msg[4]) - 1]; // for specific player
-                      if ("unitsCreated" in currentReplayStatsPlayer) {
-                        // if unitsCreated object already exists either add new unit, or increment for same unit
-                        currentReplayStatsPlayer.unitsCreated[msg[1]] = currentReplayStatsPlayer
-                          .unitsCreated[msg[1]]
-                          ? currentReplayStatsPlayer.unitsCreated[msg[1]] + 1
-                          : 1;
-                      } else {
-                        // Create new unitsCreated object on replay stats object and set unit type to 1
-                        currentReplayStatsPlayer.unitsCreated = {};
-                        currentReplayStatsPlayer.unitsCreated[msg[1]] = 1;
-                      }
+                    // Add unit created to player object for the current tick
+                    const currentReplayStatsPlayer =
+                      window.replayStats[ticksCounter][parseInt(msg[4]) - 1];
+                    if ("unitsCreated" in currentReplayStatsPlayer) {
+                      // if unitsCreated object already exists either add new unit, or increment for same unit
+                      currentReplayStatsPlayer.unitsCreated[msg[1]] = currentReplayStatsPlayer
+                        .unitsCreated[msg[1]]
+                        ? currentReplayStatsPlayer.unitsCreated[msg[1]] + 1
+                        : 1;
                     } else {
-                      // To test and see how often this happens
-                      console.log("Not created yet for this tick...");
+                      // Create new unitsCreated object on replay stats object and set unit type to 1
+                      currentReplayStatsPlayer.unitsCreated = {};
+                      currentReplayStatsPlayer.unitsCreated[msg[1]] = 1;
                     }
+
+                    // // Add units created to current tick
+                    // let currentReplayStats;
+                    // if ((currentReplayStats = window.replayStats[ticksCounter])) { // THIS IS NOT NEEDED NOW
+                    //   // current tick object already exists
+                    //   // TODO: DETERMINE PLAYER NUMBER WITHOUT SUBTRACTING 1
+                    //   const currentReplayStatsPlayer = currentReplayStats[parseInt(msg[4]) - 1]; // for specific player
+                    // old stuff here...
+                    // } else {
+                    //   // To test and see how often this happens
+                    //   console.log("Not created yet for this tick...");
+                    // }
                   } else if (msg[0] == "creaB")
                     new Building({
                       x: parseInt(msg[2]),
@@ -39517,6 +39538,8 @@
             function mainLoop(newTime) {
               requestAnimationFrame(mainLoop);
 
+              // console.log("Tick: ", ticksCounter);
+
               // time stuff and fps output
               timeDiff = newTime - timestamp;
 
@@ -39543,6 +39566,8 @@
               }
 
               if (game_state == GAME.PLAYING) {
+                // console.log("Tick: ", ticksCounter);
+
                 var oldPercentageOfCurrentTickPassed = percentageOfCurrentTickPassed;
                 percentageOfCurrentTickPassed = Math.min(
                   (Date.now() - timeOfLastUpdate) / TICK_TIME,
@@ -39563,12 +39588,12 @@
                 tickDiff = ticksCounter - lastFramesTick;
                 lastFramesTick = ticksCounter;
 
-                if (
-                  PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR &&
-                  tickDiff > 0 &&
-                  ticksCounter % 10 == 1
-                )
-                  game.refreshSpectatorTab();
+                // if (
+                //   PLAYING_PLAYER.controller == CONTROLLER.SPECTATOR &&
+                //   tickDiff > 0 &&
+                //   ticksCounter % 10 == 1
+                // )
+                //   game.refreshSpectatorTab();
 
                 // draw everything
                 game.draw();
@@ -39632,27 +39657,63 @@
                   }
                 }
 
+                // console.log("Tick: ", ticksCounter);
+
                 // Add replay stats to window object
-                window.replayStats[ticksCounter] = game.players
-                  .filter(
-                    (player) => player.name !== "Neutral" && !player.name.startsWith("guest_")
-                  )
-                  .map((player) => {
-                    return {
-                      tick: ticksCounter,
-                      name: player.name,
-                      gold: player.gold,
-                      number: player.number,
-                      totalSupply: player.supply, // Includes units being made?
-                      unitsLost: player.unitDeaths,
-                      workerSupply: player.units["worker"] ?? 0,
-                      armySupply:
-                        Object.keys(player.units).reduce(
-                          (prev, curr) => prev + player.units[curr],
-                          0
-                        ) - (player.units["worker"] ?? 0),
-                    };
-                  });
+                window.currentGameTick = ticksCounter;
+                const currentTick = ticksCounter;
+                // Get real players -> create player stats objects -> add values to replay stats
+                const realPlayers = game.players.filter(
+                  (player) =>
+                    player &&
+                    player.name !== "Neutral" &&
+                    player.controller !== CONTROLLER.SPECTATOR
+                );
+                const playerStats = realPlayers.map((player) => {
+                  return {
+                    tick: currentTick,
+                    name: player.name,
+                    gold: player.gold,
+                    number: player.number,
+                    totalSupply: player.supply, // Includes units being made?
+                    unitsLost: player.unitDeaths,
+                    workerSupply: player.units["worker"] ?? 0,
+                    armySupply:
+                      Object.keys(player.units).reduce(
+                        (prev, curr) => prev + player.units[curr],
+                        0
+                      ) - (player.units["worker"] ?? 0),
+                  };
+                });
+
+                for (let count = 0; count < playerStats.length; count++) {
+                  Object.assign(window.replayStats[currentTick][count], playerStats[count]);
+                }
+
+                // playerStats.forEach((playerStatsObj, index) =>
+                //   Object.assign(window.replayStats[currentTick][index], playerStatsObj)
+                // );
+
+                // window.replayStats[ticksCounter] = game.players
+                //   .filter(
+                //     (player) => player.name !== "Neutral" && !player.name.startsWith("guest_")
+                //   )
+                //   .map((player) => {
+                //     return {
+                //       tick: ticksCounter,
+                //       name: player.name,
+                //       gold: player.gold,
+                //       number: player.number,
+                //       totalSupply: player.supply, // Includes units being made?
+                //       unitsLost: player.unitDeaths,
+                //       workerSupply: player.units["worker"] ?? 0,
+                //       armySupply:
+                //         Object.keys(player.units).reduce(
+                //           (prev, curr) => prev + player.units[curr],
+                //           0
+                //         ) - (player.units["worker"] ?? 0),
+                //     };
+                //   });
 
                 // Update replay progress timer
                 // Timer is now current time / total time
@@ -39673,7 +39734,7 @@
 
               // musicManager.draw();
               // uimanager.draw(); // draws the main ui on the home page
-              UIManagerSingleton.draw(); // no idea what this does
+              // UIManagerSingleton.draw(); // no idea what this does
             }
 
             function formatTime(sec) {

@@ -338,16 +338,24 @@ async function setupReplay(fileList) {
   // Get the json data from the file object
   const data = JSON.parse(await fileList[0].text());
 
-  // Update div to show time progress of current game
-  const gameProgressTimeDiv = document.getElementById("gameProgressTime");
-  // Maybe should use Math.floor here?
-  gameProgressTimeDiv.innerText =
-    "0:00 / " + formatTime(Math.ceil(data["ticksCounter"] / TICKS_PER_SECOND));
-
-  const gameProgressDiv = document.getElementById("gameProgress");
-  gameProgressDiv.style.display = "block";
-
   if (validateReplayFile(data)) {
+    // Display static game info
+
+    // Update div to show time progress of current game
+    const gameProgressTimeDiv = document.getElementById("gameProgressTime");
+    // Maybe should use Math.floor here?
+    gameProgressTimeDiv.innerText =
+      "0:00 / " + formatTime(Math.ceil(data["ticksCounter"] / TICKS_PER_SECOND));
+
+    const gameProgressDiv = document.getElementById("gameProgress");
+    gameProgressDiv.style.display = "block";
+
+    // Assign names to build order section
+    const playerOneNameDiv = document.getElementById("playerOneName");
+    const playerTwoNameDiv = document.getElementById("playerTwoName");
+    playerOneNameDiv.innerText = data.players[0].name;
+    playerTwoNameDiv.innerText = data.players[1].name;
+
     window.receiveReplayFile(data);
   }
 }
