@@ -50,6 +50,8 @@ const replayOutputInterval = setInterval(() => {
     // Player 2
     // window.replayStats[tickNumber][1]
 
+    let statsTimer = performance.now();
+
     // Current game tick
     const currentTick = window.currentGameTick;
 
@@ -60,6 +62,10 @@ const replayOutputInterval = setInterval(() => {
       if (window.replayStats[i][1].unitsCreated) playerTwoBuildUnits.push(window.replayStats[i][1]); // get player 2
     }
     lastTickProcessed = currentTick;
+
+    console.log("Time to process all player data: ", performance.now() - statsTimer);
+
+    statsTimer = performance.now();
 
     // Unused Gold Plot
     const unusedGoldPlot = Plot.plot({
@@ -136,6 +142,10 @@ const replayOutputInterval = setInterval(() => {
     });
     armySupplyDiv.replaceChildren(armySupplyPlot);
 
+    console.log("Time to process plots: ", performance.now() - statsTimer);
+
+    statsTimer = performance.now();
+
     // Update build order
     let playerOneBuild = "";
     let playerTwoBuild = "";
@@ -168,6 +178,8 @@ const replayOutputInterval = setInterval(() => {
     // Append both players units built in last 5 seconds
     buildOrderPlayerOneDiv.innerHTML += playerOneBuild;
     buildOrderPlayerTwoDiv.innerHTML += playerTwoBuild;
+
+    console.log("Time to render build order: ", performance.now() - statsTimer);
   }
 }, 5_000);
 
