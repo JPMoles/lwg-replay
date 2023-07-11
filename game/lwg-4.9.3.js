@@ -38624,18 +38624,6 @@
                       currentReplayStatsPlayer.unitsCreated = {};
                       currentReplayStatsPlayer.unitsCreated[msg[1]] = 1;
                     }
-
-                    // // Add units created to current tick
-                    // let currentReplayStats;
-                    // if ((currentReplayStats = window.replayStats[ticksCounter])) { // THIS IS NOT NEEDED NOW
-                    //   // current tick object already exists
-                    //   // TODO: DETERMINE PLAYER NUMBER WITHOUT SUBTRACTING 1
-                    //   const currentReplayStatsPlayer = currentReplayStats[parseInt(msg[4]) - 1]; // for specific player
-                    // old stuff here...
-                    // } else {
-                    //   // To test and see how often this happens
-                    //   console.log("Not created yet for this tick...");
-                    // }
                   } else if (msg[0] == "creaB")
                     new Building({
                       x: parseInt(msg[2]),
