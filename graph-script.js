@@ -4,6 +4,10 @@ const TICKS_PER_SECOND = 20;
 
 const buildOrderPlayerOneDiv = document.getElementById("buildOrderP1");
 const buildOrderPlayerTwoDiv = document.getElementById("buildOrderP2");
+
+const buildOrderBuildingsPlayerOneDiv = document.getElementById("buildOrderBuildingsP1");
+const buildOrderBuildingsPlayerTwoDiv = document.getElementById("buildOrderBuildingsP2");
+
 let lastTickChecked = 0;
 
 let plot = Plot.rectY({ length: 10000 }, Plot.binX({ y: "count" }, { x: Math.random })).plot();
@@ -28,12 +32,22 @@ armySupplyDiv.append(plot5);
 
 const replayOutputDataDiv = document.getElementById("replayOutputData");
 
+// All player 1 & player 2 data
 const playerOneData = [];
 const playerTwoData = [];
+
+// Player 1 & 2 units (and tick data)
 const playerOneBuildUnits = [];
 let p1UnitsIndex = 0;
 const playerTwoBuildUnits = [];
 let p2UnitsIndex = 0;
+
+// Player 1 & 2 buildings (and tick data)
+const playerOneBuildBuildings = [];
+let p1BuildingsIndex = 0;
+const playerTwoBuildBuildings = [];
+let p2BuildingsIndex = 0;
+
 let lastTickProcessed = -1;
 
 const replayOutputInterval = setInterval(() => {
@@ -50,7 +64,7 @@ const replayOutputInterval = setInterval(() => {
     // Player 2
     // window.replayStats[tickNumber][1]
 
-    let statsTimer = performance.now();
+    // let statsTimer = performance.now();
 
     // Current game tick
     const currentTick = window.currentGameTick;
@@ -60,12 +74,16 @@ const replayOutputInterval = setInterval(() => {
       if (window.replayStats[i][1].number) playerTwoData.push(window.replayStats[i][1]); // get player 2
       if (window.replayStats[i][0].unitsCreated) playerOneBuildUnits.push(window.replayStats[i][0]); // get player 1
       if (window.replayStats[i][1].unitsCreated) playerTwoBuildUnits.push(window.replayStats[i][1]); // get player 2
+      if (window.replayStats[i][0].buildingsFinished)
+        playerOneBuildBuildings.push(window.replayStats[i][0]);
+      if (window.replayStats[i][1].buildingsFinished)
+        playerTwoBuildBuildings.push(window.replayStats[i][1]);
     }
     lastTickProcessed = currentTick;
 
-    console.log("Time to process all player data: ", performance.now() - statsTimer);
+    // console.log("Time to process all player data: ", performance.now() - statsTimer);
 
-    statsTimer = performance.now();
+    // statsTimer = performance.now();
 
     // Unused Gold Plot
     const unusedGoldPlot = Plot.plot({
@@ -82,8 +100,8 @@ const replayOutputInterval = setInterval(() => {
     });
     div.replaceChildren(unusedGoldPlot);
 
-    const plotTimerOne = performance.now() - statsTimer;
-    statsTimer = performance.now();
+    // const plotTimerOne = performance.now() - statsTimer;
+    // statsTimer = performance.now();
 
     // Total Supply Chart
     const totalSupplyPlot = Plot.plot({
@@ -100,8 +118,8 @@ const replayOutputInterval = setInterval(() => {
     });
     totalSupplyDiv.replaceChildren(totalSupplyPlot);
 
-    const plotTimerTwo = performance.now() - statsTimer;
-    statsTimer = performance.now();
+    // const plotTimerTwo = performance.now() - statsTimer;
+    // statsTimer = performance.now();
 
     // Units Killed Plot
     const unitsLostPlot = Plot.plot({
@@ -118,8 +136,8 @@ const replayOutputInterval = setInterval(() => {
     });
     unitsLostDiv.replaceChildren(unitsLostPlot);
 
-    const plotTimerThree = performance.now() - statsTimer;
-    statsTimer = performance.now();
+    // const plotTimerThree = performance.now() - statsTimer;
+    // statsTimer = performance.now();
 
     // Workers Supply Plot
     const workerSupplyPlot = Plot.plot({
@@ -136,8 +154,8 @@ const replayOutputInterval = setInterval(() => {
     });
     workerSupplyDiv.replaceChildren(workerSupplyPlot);
 
-    const plotTimerFour = performance.now() - statsTimer;
-    statsTimer = performance.now();
+    // const plotTimerFour = performance.now() - statsTimer;
+    // statsTimer = performance.now();
 
     // Army Supply Plot
     const armySupplyPlot = Plot.plot({
@@ -154,20 +172,20 @@ const replayOutputInterval = setInterval(() => {
     });
     armySupplyDiv.replaceChildren(armySupplyPlot);
 
-    const plotTimerFive = performance.now() - statsTimer;
-    statsTimer = performance.now();
+    // const plotTimerFive = performance.now() - statsTimer;
+    // statsTimer = performance.now();
 
-    console.log(
-      "Individual plots: ",
-      plotTimerOne,
-      plotTimerTwo,
-      plotTimerThree,
-      plotTimerFour,
-      plotTimerFive
-    );
+    // console.log(
+    //   "Individual plots: ",
+    //   plotTimerOne,
+    //   plotTimerTwo,
+    //   plotTimerThree,
+    //   plotTimerFour,
+    //   plotTimerFive
+    // );
     // console.log("Time to process plots: ", performance.now() - statsTimer);
 
-    statsTimer = performance.now();
+    // statsTimer = performance.now();
 
     // Update build order
     let playerOneBuild = "";
@@ -202,7 +220,45 @@ const replayOutputInterval = setInterval(() => {
     buildOrderPlayerOneDiv.innerHTML += playerOneBuild;
     buildOrderPlayerTwoDiv.innerHTML += playerTwoBuild;
 
-    console.log("Time to render build order: ", performance.now() - statsTimer);
+    // Append both players buildings built in last 5 seconds
+
+    // statsObject.buildingsFinished = { "Castle": 1, "House": 1, ... }
+
+    let playerOneBuildingBuild = "";
+    let playerTwoBuildingBuild = "";
+
+    // Player 1 buildings
+    for (let i = p1BuildingsIndex; i < playerOneBuildBuildings.length; i++) {
+      // unitsCreated has to contain something to be here
+      const buildingsFinished = playerOneBuildBuildings[i].buildingsFinished;
+      if (!buildingsFinished) console.log(playerOneBuildBuildings[i]);
+      playerOneBuildingBuild += Object.keys(buildingsFinished).reduce(
+        (prev, curr) => prev + buildingImage(curr) + ": " + buildingsFinished[curr] + ", ",
+        `${formatTime(Math.floor(playerOneBuildBuildings[i].tick / TICKS_PER_SECOND))}: `
+      );
+      playerOneBuildingBuild += "<br>";
+    }
+    // Set next index to length of current array
+    p1BuildingsIndex = playerOneBuildBuildings.length;
+
+    // Player 2 buildings
+    for (let i = p2BuildingsIndex; i < playerTwoBuildBuildings.length; i++) {
+      // unitsCreated has to contain something to be here
+      const buildingsFinished = playerTwoBuildBuildings[i].buildingsFinished;
+      if (!buildingsFinished) console.log(playerTwoBuildBuildings[i]);
+      playerTwoBuildingBuild += Object.keys(buildingsFinished).reduce(
+        (prev, curr) => prev + buildingImage(curr) + ": " + buildingsFinished[curr] + ", ",
+        `${formatTime(Math.floor(playerTwoBuildBuildings[i].tick / TICKS_PER_SECOND))}: `
+      );
+      playerTwoBuildingBuild += "<br>";
+    }
+    // Set next index to length of current array
+    p2BuildingsIndex = playerTwoBuildBuildings.length;
+
+    buildOrderBuildingsPlayerOneDiv.innerHTML += playerOneBuildingBuild;
+    buildOrderBuildingsPlayerTwoDiv.innerHTML += playerTwoBuildingBuild;
+
+    // console.log("Time to render build order: ", performance.now() - statsTimer);
   }
 }, 5_000);
 
@@ -232,5 +288,9 @@ function formatTime(sec) {
 }
 
 function unitImage(unit) {
-  return `<img src="imgs/${unit}.png" width="32" height="32" /> (${unit})`;
+  return `<img src="imgs/units/${unit}.png" width="32" height="32" /> (${unit})`;
+}
+
+function buildingImage(building) {
+  return `<img src="imgs/buildings/${building}.png" width="32" height="32" /> (${building})`;
 }

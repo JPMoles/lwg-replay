@@ -38636,6 +38636,23 @@
                   else if (msg[0] == "cclB") {
                     var b = game.getUnitById(msg[1]);
                     if (b && b.owner) b.owner.killProduction(b.type, b);
+
+                    // Save building finishing for REPLAY
+                    if (b && b.owner && b.buildTicksLeft === 0) {
+                      // ticksCounter -> current tick, b.owner.number -> player number (subtract 1 for index in replayStats)
+                      const statsObject = window.replayStats[ticksCounter][b.owner.number - 1];
+                      if ("buildingsFinished" in statsObject) {
+                        statsObject.buildingsFinished[b.type.name] = statsObject.buildingsFinished[
+                          b.type.name
+                        ]
+                          ? statsObject.buildingsFinished[b.type.name] + 1
+                          : 1;
+                      } else {
+                        // Create buildingsFinished and append building to list
+                        statsObject.buildingsFinished = {};
+                        statsObject.buildingsFinished[b.type.name] = 1;
+                      }
+                    }
                   } else if (msg[0] == "strtThr") {
                     var u = game.getUnitById(msg[1]);
                     var to = new Field(parseFloat(msg[2]), parseFloat(msg[3]), true);

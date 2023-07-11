@@ -185,11 +185,20 @@ footer {
 }
 
 #buildOrderPlayers > div {
-  width: 400px;
+  width: 500px;
   min-height: 200px;
   text-align: center;
   border-style: solid;
   border-width: 4px;
   border-color: rgb(154, 199, 255);
   padding: 8px;
+}
+
+.buildOrderBox {
+  display: flex;
+  flex-direction: row;
+}
+
+.buildOrderBox > div {
+  flex-grow: 1;
 }
