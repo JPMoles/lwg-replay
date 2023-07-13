@@ -30620,8 +30620,8 @@
               this.volume = LocalConfig.registerValue("music_volume", 0.8);
               this.noMainMenuMusic = LocalConfig.registerValue("no_main_menu_music", false);
 
-              soundManager.volume.onChange((volume) => this.setSoundVolume(volume));
-              this.volume.onChange((volume) => this.setMusicVolume(volume));
+              // soundManager.volume.onChange((volume) => this.setSoundVolume(volume));
+              // this.volume.onChange((volume) => this.setMusicVolume(volume));
 
               this.ingameMusic = [
                 new Audio("game/sounds/ingame1.ogg"),
@@ -30647,9 +30647,10 @@
               this.currentMusic = null;
               this.lastGameState = null;
               this.isMusicPlaying = false;
-              this.bindEvents();
+              // this.bindEvents();
             }
 
+            // Not called anywhere
             MusicManager.prototype.bindEvents = function () {
               _.each([this.ingameMusic, this.defeatMusic, this.menuMusic], function (musics) {
                 for (var i = 0; i < musics.length; i++) {
@@ -30671,21 +30672,24 @@
               this.ambient[0].loop = true;
             };
 
+            // Not called anywhere
             MusicManager.prototype.setMusicVolume = function (volume) {
               _.each([this.ingameMusic, this.defeatMusic, this.menuMusic], function (musics) {
                 for (var i = 0; i < musics.length; i++) musics[i].volume = 0.7 * volume;
               });
             };
 
+            // Not called anywhere
             MusicManager.prototype.setSoundVolume = function (volume) {
               this.ambient[0].volume = 0.4 * volume;
             };
 
+            // Not called anywhere
             // start playing a song; checks which song has to be played and plays it; gets called on game start or when music is turned on
             MusicManager.prototype.playMusic = function () {
               if (!(this.volume.get() > 0)) return;
 
-              var music = this.getMusicFromGameState();
+              var music = null; // this.getMusicFromGameState();
 
               if (!music) return;
 
@@ -30710,6 +30714,7 @@
               }
             };
 
+            // Not called anywhere
             // stop playing music (called when music is turned off)
             MusicManager.prototype.stopMusic = function () {
               _.each(
@@ -30723,6 +30728,7 @@
               this.isMusicPlaying = false;
             };
 
+            // Not called anywhere
             // return the array which holds the music that is to be played, depending on the current game state
             MusicManager.prototype.getMusicFromGameState = function () {
               if (
@@ -30745,10 +30751,11 @@
               return this.ingameMusic;
             };
 
+            // Not called anywhere
             // is called every frame, doesnt really "draw" anythiing, but checks if music has to be switched
             MusicManager.prototype.draw = function () {
               // get state of game (regarding the music)
-              var newMusic = this.getMusicFromGameState();
+              // var newMusic = this.getMusicFromGameState();
 
               var gameStateHasChangedAndItsIngameMusic =
                 game_state != this.lastGameState && newMusic == this.ingameMusic;
@@ -30775,12 +30782,12 @@
 
               // if game state has changed, music has to change
               if (newMusic != this.currentMusic || gameStateHasChangedAndItsIngameMusic) {
-                this.stopMusic();
-
-                if (newMusic) this.playMusic();
+                // this.stopMusic();
+                // if (newMusic) this.playMusic();
               }
             };
 
+            // Music Manager is no longer used anywhere :)
             // const musicManager = new MusicManager();
 
             function Network() {
