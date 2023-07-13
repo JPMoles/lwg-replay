@@ -17684,11 +17684,11 @@
                 game.lastReadySound + 20 < ticksCounter &&
                 this.owner == PLAYING_PLAYER
               ) {
-                soundManager.playSound(
-                  this.type.readySound,
-                  this.drawPos,
-                  this.type.readySoundVolume
-                );
+                // soundManager.playSound(
+                //   this.type.readySound,
+                //   this.drawPos,
+                //   this.type.readySoundVolume
+                // );
                 game.lastReadySound = ticksCounter;
                 game.lastYesSound = ticksCounter;
               }
@@ -18006,10 +18006,10 @@
                     });
 
                   // play hit ground sound
-                  soundManager.playSound(
-                    this.type.slamSound ? this.type.slamSound : SOUND.FALL,
-                    this.pos
-                  );
+                  // soundManager.playSound(
+                  //   this.type.slamSound ? this.type.slamSound : SOUND.FALL,
+                  //   this.pos
+                  // );
                 }
 
                 // fading out
@@ -18390,7 +18390,7 @@
 
                 if (PLAYING_PLAYER.team.canSeeUnit(this)) {
                   this.massSmoke();
-                  soundManager.playSound(SOUND.BUILD, this.pos, 0.5);
+                  // soundManager.playSound(SOUND.BUILD, this.pos, 0.5);
                 }
 
                 this.owner.startProduction(this.type, this);
@@ -19174,14 +19174,14 @@
             function addClickSound(callback) {
               return () => {
                 callback();
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
               };
             }
 
             function addZipSound(callback) {
               return () => {
                 callback();
-                soundManager.playSound(SOUND.ZIP, false, 0.3);
+                // soundManager.playSound(SOUND.ZIP, false, 0.3);
               };
             }
 
@@ -19216,7 +19216,7 @@
                 const chatID = uniqueID("chat");
                 $(chatWindowSelector).append(`<span id='${chatID}'></span>`);
                 p.insertInto(`#${chatID}`);
-                if (LobbyPlayerManager.active) soundManager.playSound(SOUND.ZIP3, false, 0.7);
+                // if (LobbyPlayerManager.active) soundManager.playSound(SOUND.ZIP3, false, 0.7);
               } else {
                 $(chatWindowSelector)[0].appendChild(p);
               }
@@ -19342,7 +19342,7 @@
                   "yellow",
                   imgs.attentionmarkYellow
                 );
-                soundManager.playSound(SOUND.POSITIVE);
+                // soundManager.playSound(SOUND.POSITIVE);
                 worker.postMessage({ what: "setPause", val: game_paused });
               } else network.send("request-pause");
             }
@@ -20231,7 +20231,7 @@
                 var a = storedAchievements.splice(0, 1)[0];
                 // TODO: deprecate text member of storedAchievements
                 displayInfoMsgDarkBG(a.builder || a.text);
-                soundManager.playSound(a.sound);
+                // soundManager.playSound(a.sound);
               }
             }
 
@@ -20304,7 +20304,7 @@
             }
 
             function showImprint() {
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
               $("#addScrollableSubDivTextArea2").html(
                 "<br /><br /><div style='margin-left: 30px;'>littlewargame.com<br /><br />Owner:<br />Addicting Games, Inc.<br />15332 Antioch Street Los Angeles<br /> Suite 200<br /> California 90272<br /> USA</br>email: chris@addictinggames.com</div>"
               );
@@ -20411,7 +20411,7 @@
             }
 
             function killFaqMsg0() {
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
               displayConfirmPrompt(
                 "Hide this message? You will still be able to read the FAQs by clicking the FAQ button in the options window.",
                 killFaqMsg,
@@ -20422,7 +20422,7 @@
             // TODO: remove this
             const hideFAQ = LocalConfig.registerValue("hide_faq", false);
             function killFaqMsg() {
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
               $("#faqContainer").remove();
               hideFAQ.set(true);
               fadeOut($("#infoWindow"));
@@ -20430,7 +20430,7 @@
 
             const hideTutorials = LocalConfig.registerValue("hide_tutorials", false);
             function killTutorialButton() {
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
               $("#tutorialButtonSpan").remove();
               hideTutorials.set(true);
             }
@@ -20532,12 +20532,12 @@
             }
 
             function getPlNfo(player) {
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
               network.send("get-player-info<<$" + player);
             }
 
             function getLgNfo(nr) {
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
               network.send("get-league<<$" + nr);
             }
 
@@ -20579,7 +20579,7 @@
             function bingMsg(msg, noSound) {
               if (game_state == GAME.PLAYING) return;
 
-              if (!noSound) soundManager.playSound(SOUND.BING2, null, 0.65);
+              // if (!noSound) soundManager.playSound(SOUND.BING2, null, 0.65);
 
               // $("#bingMessageWindow").html("<p>" + msg + "</p>");
               // $("#bingMessageWindow").fadeIn(1000);
@@ -20612,7 +20612,7 @@
                 b.html("edit");
               }
 
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
             }
 
             function importGraphic() {
@@ -20647,7 +20647,7 @@
                 }
               };
 
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
             }
 
             function refreshCustomImgs() {
@@ -20708,7 +20708,7 @@
               }
 
               fadeOut($("#customGraphicsWindow"));
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
             }
 
             function killCustomImg(key) {
@@ -20721,11 +20721,11 @@
 
               refreshCustomImgs();
 
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
             }
 
             function reallyBan(player) {
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
               displayInfoMsg(
                 new HTMLBuilder()
                   .add(`Ban ${player} for how many hours? (0 is permanent)<br><br>`)
@@ -20925,7 +20925,7 @@
               fadeIn($("#infoWindow2"));
               if (msg instanceof HTMLBuilder) msg.insertInto("#infoWindowTextArea2");
               else $("#infoWindowTextArea2").html(msg);
-              soundManager.playSound(arch_sound ? SOUND.ARCHIVEMENT : SOUND.OPEN_WINDOW, null, 0.7);
+              // soundManager.playSound(arch_sound ? SOUND.ARCHIVEMENT : SOUND.OPEN_WINDOW, null, 0.7);
             }
 
             function displayConfirmPrompt(msg, yesCallback, noCallback) {
@@ -24668,7 +24668,7 @@
 
               if (units.length == 0) {
                 interface_.addMessage("Cooldown not ready", "red", imgs.attentionmark);
-                soundManager.playSound(SOUND.NEGATIVE);
+                // soundManager.playSound(SOUND.NEGATIVE);
                 return;
               }
 
@@ -24681,7 +24681,7 @@
                     "red",
                     imgs.attentionmark
                   );
-                  soundManager.playSound(SOUND.NEGATIVE);
+                  // soundManager.playSound(SOUND.NEGATIVE);
                 }
 
                 return;
@@ -24696,7 +24696,7 @@
                 // if drawing, show alert
                 if (units[0].owner == PLAYING_PLAYER) {
                   interface_.addMessage(requirement_text, "red", imgs.attentionmark);
-                  soundManager.playSound(SOUND.NEGATIVE);
+                  // soundManager.playSound(SOUND.NEGATIVE);
                 }
 
                 return;
@@ -25538,7 +25538,7 @@
                 this.closeButton = closeButton;
                 closeButton.parent_ = this;
                 closeButton.onclick = function () {
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                   this.parent_.active = false;
                   fadeOut($(this.parent_.domElement));
                   if (onClose) onClose();
@@ -25551,7 +25551,7 @@
                 this.domElement.parent_ = this;
                 this.domElement.onkeydown = function (e) {
                   if (keyManager.getKeyCode(e) == KEY.ESC) {
-                    soundManager.playSound(SOUND.CLICK);
+                    // soundManager.playSound(SOUND.CLICK);
                     this.parent_.active = false;
                     fadeOut($(this.parent_.domElement));
 
@@ -25882,7 +25882,7 @@
                     network.send("map-ping<<$" + f.x + "<<$" + f.y);
                   } else if (game.minimap.mapPings.length < 3) {
                     game.minimap.mapPings.push({ field: f, time: Date.now() });
-                    soundManager.playSound(SOUND.BING2);
+                    // soundManager.playSound(SOUND.BING2);
                   }
                 }
               }
@@ -26055,21 +26055,21 @@
                 }
               }
 
-              if (
-                game.selectedUnits[0] &&
-                game.selectedUnits[0].owner == PLAYING_PLAYER &&
-                game.selectedUnits[0].type.clickSound
-              )
-                soundManager.playSound(
-                  game.selectedUnits[0].isUnderConstruction
-                    ? SOUND.BUILD
-                    : game.selectedUnits[0].type.clickSound,
-                  null,
-                  game.selectedUnits[0].isUnderConstruction
-                    ? 0.5
-                    : game.selectedUnits[0].type.clickSoundVolume,
-                  true
-                );
+              // if (
+              //   game.selectedUnits[0] &&
+              //   game.selectedUnits[0].owner == PLAYING_PLAYER &&
+              //   game.selectedUnits[0].type.clickSound
+              // )
+              //   soundManager.playSound(
+              //     game.selectedUnits[0].isUnderConstruction
+              //       ? SOUND.BUILD
+              //       : game.selectedUnits[0].type.clickSound,
+              //     null,
+              //     game.selectedUnits[0].isUnderConstruction
+              //       ? 0.5
+              //       : game.selectedUnits[0].type.clickSoundVolume,
+              //     true
+              //   );
             };
 
             // IE9, Chrome, Safari, Opera
@@ -26271,10 +26271,10 @@
                           if (!keyManager.interfaceHotkeyPressed("queue"))
                             keyManager.resetCommand();
 
-                          soundManager.playSound(SOUND.PLACE);
+                          // soundManager.playSound(SOUND.PLACE);
                         } else {
                           interface_.addMessage("not enough supply", "red", imgs.attentionmark);
-                          soundManager.playSound(SOUND.NEGATIVE);
+                          // soundManager.playSound(SOUND.NEGATIVE);
                         }
                       } else {
                         interface_.addMessage(
@@ -26282,14 +26282,14 @@
                           "red",
                           imgs.attentionmark
                         );
-                        soundManager.playSound(SOUND.NEGATIVE);
+                        // soundManager.playSound(SOUND.NEGATIVE);
                       }
                     }
 
                     // if no space for building at this position, display warning msg and play sound
                     else {
                       interface_.addMessage("no space", "red", imgs.attentionmark);
-                      soundManager.playSound(SOUND.NEGATIVE);
+                      // soundManager.playSound(SOUND.NEGATIVE);
                     }
                   }
 
@@ -26368,7 +26368,7 @@
                       targetUnit.owner != game.selectedUnits[0].owner
                     ) {
                       interface_.addMessage("can only target own units", "red", imgs.attentionmark);
-                      soundManager.playSound(SOUND.NEGATIVE);
+                      // soundManager.playSound(SOUND.NEGATIVE);
                     } else if (targetUnit) {
                       game.issueOrderToUnits(
                         game.selectedUnits,
@@ -26380,7 +26380,7 @@
                       keyManager.resetCommand();
                     } else {
                       interface_.addMessage("must target unit", "red", imgs.attentionmark);
-                      soundManager.playSound(SOUND.NEGATIVE);
+                      // soundManager.playSound(SOUND.NEGATIVE);
                     }
                   }
                 }
@@ -26524,14 +26524,14 @@
                     "red",
                     imgs.attentionmark
                   );
-                  soundManager.playSound(SOUND.NEGATIVE);
+                  // soundManager.playSound(SOUND.NEGATIVE);
                 } else if (
                   cmd.type == COMMAND.MAKEBUILDING &&
                   cmd.unitType.supply &&
                   cmd.unitType.supply > PLAYING_PLAYER.maxSupply - PLAYING_PLAYER.supply
                 ) {
                   interface_.addMessage("not enough supply", "red", imgs.attentionmark);
-                  soundManager.playSound(SOUND.NEGATIVE);
+                  // soundManager.playSound(SOUND.NEGATIVE);
                 } else this.command = cmd;
               }
             };
@@ -26788,7 +26788,7 @@
 
               this.addMessage(msg, color, null, color == "black");
 
-              if (!noSound) soundManager.playSound(SOUND.POSITIVE);
+              // if (!noSound) soundManager.playSound(SOUND.POSITIVE);
             };
 
             Interface.prototype.draw = function () {
@@ -28121,7 +28121,7 @@
                   b.command.hasAutocast
                 ) {
                   if (game.humanUnitsSelected()) {
-                    soundManager.playSound(SOUND.INGAMECLICK);
+                    // soundManager.playSound(SOUND.INGAMECLICK);
                     game.issueOrderToUnits(
                       game.selectedUnits,
                       b.command,
@@ -28172,7 +28172,7 @@
                   this.unitsTab = 0;
                 }
 
-                soundManager.playSound(SOUND.INGAMECLICK);
+                // soundManager.playSound(SOUND.INGAMECLICK);
 
                 while (this.unitsTab * 27 + 1 > game.selectedUnits.length && this.unitsTab > 0)
                   this.unitsTab--;
@@ -28188,7 +28188,7 @@
                     keyManager.y < _y + 20
                   ) {
                     this.unitsTab = i;
-                    soundManager.playSound(SOUND.INGAMECLICK);
+                    // soundManager.playSound(SOUND.INGAMECLICK);
                   }
                 }
 
@@ -28206,10 +28206,10 @@
                   // if requirements of the corresponding command are met
                   if (!requirement_text) {
                     keyManager.order(b.command, b.learn);
-                    soundManager.playSound(SOUND.INGAMECLICK, null, 0.7);
+                    // soundManager.playSound(SOUND.INGAMECLICK, null, 0.7);
                     return true;
                   } else {
-                    soundManager.playSound(SOUND.NEGATIVE, null, 0.6);
+                    // soundManager.playSound(SOUND.NEGATIVE, null, 0.6);
                     this.addMessage(requirement_text, "red", imgs.attentionmark);
                     return true;
                   }
@@ -28266,7 +28266,7 @@
                 }
 
                 // play sound
-                soundManager.playSound(SOUND.CLICK2);
+                // soundManager.playSound(SOUND.CLICK2);
 
                 return true;
               }
@@ -28303,7 +28303,7 @@
                       for (var k = 0; k < game.selectedUnits[0].cargo.length; k++)
                         if (game.selectedUnits[0].cargo[k] == sortedCargo[i]) {
                           game.issueOrderToUnits(game.selectedUnits, lists.types.directunload, k);
-                          soundManager.playSound(SOUND.CLICK2);
+                          // soundManager.playSound(SOUND.CLICK2);
                           return true;
                         }
 
@@ -28369,9 +28369,9 @@
 
                   if (!requirement_text) {
                     keyManager.order(cmd);
-                    soundManager.playSound(SOUND.INGAMECLICK, null, 0.7);
+                    // soundManager.playSound(SOUND.INGAMECLICK, null, 0.7);
                   } else {
-                    soundManager.playSound(SOUND.NEGATIVE, null, 0.6);
+                    // soundManager.playSound(SOUND.NEGATIVE, null, 0.6);
                     this.addMessage(requirement_text, "red", imgs.attentionmark);
                   }
                 }
@@ -28989,7 +28989,7 @@
 
                 // message
                 interface_.addMessage("We are under attack", "red", imgs.underAttack);
-                soundManager.playSound(SOUND.UNDER_ATTACK);
+                // soundManager.playSound(SOUND.UNDER_ATTACK);
               }
             };
 
@@ -29225,367 +29225,369 @@
                 this.screenCanvas.getContext("2d").fillRect(x_, y_, 16, h_);
               }
             };
+
             // plays and manages all the sounds
             function SoundManager() {
               this.volume = LocalConfig.registerValue("sound_volume", 0.8);
 
               this.sounds = [];
 
-              this.sounds[SOUND.FLESH] = this.loadSound([
-                "game/sounds/hit05.ogg",
-                "game/sounds/hit08.ogg",
-                "game/sounds/hit13.ogg",
-                "game/sounds/hit14.ogg",
-              ]);
-
-              this.sounds[SOUND.LADDER_START] = this.loadSound(["game/sounds/ladder-start.ogg"]);
-
-              this.sounds[SOUND.ARCHIVEMENT] = this.loadSound(["game/sounds/archivement.ogg"]);
-
-              this.sounds[SOUND.ARCHIVEMENT2] = this.loadSound(["game/sounds/archivement2.ogg"]);
+              // this.sounds[SOUND.FLESH] = this.loadSound([
+              //   "game/sounds/hit05.ogg",
+              //   "game/sounds/hit08.ogg",
+              //   "game/sounds/hit13.ogg",
+              //   "game/sounds/hit14.ogg",
+              // ]);
+
+              // this.sounds[SOUND.LADDER_START] = this.loadSound(["game/sounds/ladder-start.ogg"]);
+
+              // this.sounds[SOUND.ARCHIVEMENT] = this.loadSound(["game/sounds/archivement.ogg"]);
+
+              // this.sounds[SOUND.ARCHIVEMENT2] = this.loadSound(["game/sounds/archivement2.ogg"]);
 
-              this.sounds[SOUND.ARCHIVEMENT3] = this.loadSound(["game/sounds/archivement3.ogg"]);
-
-              this.sounds[SOUND.WARP] = this.loadSound([
-                "game/sounds/warp-totem.ogg",
-                "game/sounds/warp-totem.ogg",
-              ]);
-
-              this.sounds[SOUND.OPEN_WINDOW] = this.loadSound(["game/sounds/zip-new.ogg"]);
-
-              this.sounds[SOUND.PAIN] = this.loadSound([
-                "game/sounds/pain1.ogg",
-                "game/sounds/pain2.ogg",
-                "game/sounds/pain5.ogg",
-                "game/sounds/pain1.ogg",
-              ]);
-
-              this.sounds[SOUND.WOLF_PAIN] = this.loadSound([
-                "game/sounds/wolf-pain.ogg",
-                "game/sounds/wolf-pain-2.ogg",
-                "game/sounds/wolf-pain.ogg",
-                "game/sounds/wolf-pain-2.ogg",
-              ]);
-
-              this.sounds[SOUND.BIRD_SPAWN] = this.loadSound(["game/sounds/bird1.ogg"]);
-
-              this.sounds[SOUND.BIRD_YES] = this.loadSound(["game/sounds/bird2.ogg"]);
+              // this.sounds[SOUND.ARCHIVEMENT3] = this.loadSound(["game/sounds/archivement3.ogg"]);
+
+              // this.sounds[SOUND.WARP] = this.loadSound([
+              //   "game/sounds/warp-totem.ogg",
+              //   "game/sounds/warp-totem.ogg",
+              // ]);
+
+              // this.sounds[SOUND.OPEN_WINDOW] = this.loadSound(["game/sounds/zip-new.ogg"]);
+
+              // this.sounds[SOUND.PAIN] = this.loadSound([
+              //   "game/sounds/pain1.ogg",
+              //   "game/sounds/pain2.ogg",
+              //   "game/sounds/pain5.ogg",
+              //   "game/sounds/pain1.ogg",
+              // ]);
+
+              // this.sounds[SOUND.WOLF_PAIN] = this.loadSound([
+              //   "game/sounds/wolf-pain.ogg",
+              //   "game/sounds/wolf-pain-2.ogg",
+              //   "game/sounds/wolf-pain.ogg",
+              //   "game/sounds/wolf-pain-2.ogg",
+              // ]);
+
+              // this.sounds[SOUND.BIRD_SPAWN] = this.loadSound(["game/sounds/bird1.ogg"]);
+
+              // this.sounds[SOUND.BIRD_YES] = this.loadSound(["game/sounds/bird2.ogg"]);
 
-              this.sounds[SOUND.BIRD_DEATH] = this.loadSound(["game/sounds/bird3.ogg"]);
-
-              this.sounds[SOUND.BIRD_SLAM] = this.loadSound(["game/sounds/bird-slam.ogg"]);
-
-              this.sounds[SOUND.DEATH] = this.loadSound([
-                "game/sounds/die1.ogg",
-                "game/sounds/die2.ogg",
-                "game/sounds/die1.ogg",
-              ]);
-
-              this.sounds[SOUND.WOLF_DEATH] = this.loadSound([
-                "game/sounds/wolf-die.ogg",
-                "game/sounds/wolf-die-2.ogg",
-              ]);
-
-              this.sounds[SOUND.WOLF_HIT] = this.loadSound([
-                "game/sounds/wolf-hit.ogg",
-                "game/sounds/wolf-hit-2.ogg",
-                "game/sounds/wolf-hit.ogg",
-              ]);
-
-              this.sounds[SOUND.SWING] = this.loadSound([
-                "game/sounds/swing.ogg",
-                "game/sounds/swing2.ogg",
-                "game/sounds/swing4.ogg",
-              ]);
-
-              this.sounds[SOUND.READY] = this.loadSound([
-                "game/sounds/ready1.ogg",
-                "game/sounds/ready2.ogg",
-                "game/sounds/ready3.ogg",
-                "game/sounds/ready4.ogg",
-                "game/sounds/ready5.ogg",
-                "game/sounds/ready7.ogg",
-                "game/sounds/ready8.ogg",
-              ]);
-
-              this.sounds[SOUND.YES] = this.loadSound([
-                "game/sounds/yes1.ogg",
-                "game/sounds/yes2.ogg",
-                "game/sounds/yes3.ogg",
-                "game/sounds/yes4.ogg",
-                "game/sounds/yes5.ogg",
-              ]);
-
-              this.sounds[SOUND.WOLF_YES] = this.loadSound([
-                "game/sounds/wolf-yes.ogg",
-                "game/sounds/wolf-yes-2.ogg",
-              ]);
-
-              this.sounds[SOUND.WOLF_READY] = this.loadSound(["game/sounds/wolf-spawn.ogg"]);
-
-              this.sounds[SOUND.SWORD] = this.loadSound([
-                "game/sounds/sword.ogg",
-                "game/sounds/sword.ogg",
-                "game/sounds/sword.ogg",
-                "game/sounds/sword.ogg",
-              ]);
-
-              this.sounds[SOUND.PLACE] = this.loadSound(["game/sounds/clic02.ogg"]);
-
-              this.sounds[SOUND.NEGATIVE] = this.loadSound(["game/sounds/negative_2.ogg"]);
-
-              this.sounds[SOUND.POSITIVE] = this.loadSound(["game/sounds/misc_menu.ogg"]);
-
-              this.sounds[SOUND.CLICK] = this.loadSound(["game/sounds/click1.ogg"]);
-
-              this.sounds[SOUND.CLICK2] = this.loadSound(["game/sounds/click.ogg"]);
-
-              this.sounds[SOUND.BUILD] = this.loadSound(["game/sounds/build.ogg"]);
-
-              this.sounds[SOUND.BUILDING_DEATH] = this.loadSound([
-                "game/sounds/building_destroy.ogg",
-                "game/sounds/building_destroy.ogg",
-                "game/sounds/building_destroy.ogg",
-              ]);
+              // this.sounds[SOUND.BIRD_DEATH] = this.loadSound(["game/sounds/bird3.ogg"]);
+
+              // this.sounds[SOUND.BIRD_SLAM] = this.loadSound(["game/sounds/bird-slam.ogg"]);
+
+              // this.sounds[SOUND.DEATH] = this.loadSound([
+              //   "game/sounds/die1.ogg",
+              //   "game/sounds/die2.ogg",
+              //   "game/sounds/die1.ogg",
+              // ]);
+
+              // this.sounds[SOUND.WOLF_DEATH] = this.loadSound([
+              //   "game/sounds/wolf-die.ogg",
+              //   "game/sounds/wolf-die-2.ogg",
+              // ]);
+
+              // this.sounds[SOUND.WOLF_HIT] = this.loadSound([
+              //   "game/sounds/wolf-hit.ogg",
+              //   "game/sounds/wolf-hit-2.ogg",
+              //   "game/sounds/wolf-hit.ogg",
+              // ]);
+
+              // this.sounds[SOUND.SWING] = this.loadSound([
+              //   "game/sounds/swing.ogg",
+              //   "game/sounds/swing2.ogg",
+              //   "game/sounds/swing4.ogg",
+              // ]);
+
+              // this.sounds[SOUND.READY] = this.loadSound([
+              //   "game/sounds/ready1.ogg",
+              //   "game/sounds/ready2.ogg",
+              //   "game/sounds/ready3.ogg",
+              //   "game/sounds/ready4.ogg",
+              //   "game/sounds/ready5.ogg",
+              //   "game/sounds/ready7.ogg",
+              //   "game/sounds/ready8.ogg",
+              // ]);
+
+              // this.sounds[SOUND.YES] = this.loadSound([
+              //   "game/sounds/yes1.ogg",
+              //   "game/sounds/yes2.ogg",
+              //   "game/sounds/yes3.ogg",
+              //   "game/sounds/yes4.ogg",
+              //   "game/sounds/yes5.ogg",
+              // ]);
+
+              // this.sounds[SOUND.WOLF_YES] = this.loadSound([
+              //   "game/sounds/wolf-yes.ogg",
+              //   "game/sounds/wolf-yes-2.ogg",
+              // ]);
+
+              // this.sounds[SOUND.WOLF_READY] = this.loadSound(["game/sounds/wolf-spawn.ogg"]);
+
+              // this.sounds[SOUND.SWORD] = this.loadSound([
+              //   "game/sounds/sword.ogg",
+              //   "game/sounds/sword.ogg",
+              //   "game/sounds/sword.ogg",
+              //   "game/sounds/sword.ogg",
+              // ]);
+
+              // this.sounds[SOUND.PLACE] = this.loadSound(["game/sounds/clic02.ogg"]);
+
+              // this.sounds[SOUND.NEGATIVE] = this.loadSound(["game/sounds/negative_2.ogg"]);
+
+              // this.sounds[SOUND.POSITIVE] = this.loadSound(["game/sounds/misc_menu.ogg"]);
+
+              // this.sounds[SOUND.CLICK] = this.loadSound(["game/sounds/click1.ogg"]);
+
+              // this.sounds[SOUND.CLICK2] = this.loadSound(["game/sounds/click.ogg"]);
+
+              // this.sounds[SOUND.BUILD] = this.loadSound(["game/sounds/build.ogg"]);
+
+              // this.sounds[SOUND.BUILDING_DEATH] = this.loadSound([
+              //   "game/sounds/building_destroy.ogg",
+              //   "game/sounds/building_destroy.ogg",
+              //   "game/sounds/building_destroy.ogg",
+              // ]);
 
-              this.sounds[SOUND.REPAIR] = this.loadSound([
-                "game/sounds/hammer1.ogg",
-                "game/sounds/hammer2.ogg",
-                "game/sounds/hammer3.ogg",
-                "game/sounds/hammer1.ogg",
-                "game/sounds/hammer2.ogg",
-              ]);
+              // this.sounds[SOUND.REPAIR] = this.loadSound([
+              //   "game/sounds/hammer1.ogg",
+              //   "game/sounds/hammer2.ogg",
+              //   "game/sounds/hammer3.ogg",
+              //   "game/sounds/hammer1.ogg",
+              //   "game/sounds/hammer2.ogg",
+              // ]);
 
-              this.sounds[SOUND.INGAMECLICK] = this.loadSound(["game/sounds/mouseclick1.ogg"]);
+              // this.sounds[SOUND.INGAMECLICK] = this.loadSound(["game/sounds/mouseclick1.ogg"]);
 
-              this.sounds[SOUND.BUILDING_FINISHED] = this.loadSound([
-                "game/sounds/building_finished.ogg",
-                "game/sounds/building_finished.ogg",
-              ]);
+              // this.sounds[SOUND.BUILDING_FINISHED] = this.loadSound([
+              //   "game/sounds/building_finished.ogg",
+              //   "game/sounds/building_finished.ogg",
+              // ]);
 
-              this.sounds[SOUND.UNDER_ATTACK] = this.loadSound(["game/sounds/under-attack.ogg"]);
-
-              this.sounds[SOUND.VICTORY] = this.loadSound(["game/sounds/yeah.ogg"]);
-
-              this.sounds[SOUND.DEFEAT] = this.loadSound(["game/sounds/defeat.ogg"]);
-
-              this.sounds[SOUND.FLAMESTRIKE_LAUNCH] = this.loadSound([
-                "game/sounds/flamestrike-throw.ogg",
-                "game/sounds/flamestrike-throw.ogg",
-                "game/sounds/flamestrike-throw.ogg",
-              ]);
-
-              this.sounds[SOUND.FLAMESTRIKE_IMPACT] = this.loadSound([
-                "game/sounds/flamestrike-impact.ogg",
-                "game/sounds/flamestrike-impact.ogg",
-                "game/sounds/flamestrike-impact.ogg",
-              ]);
-
-              this.sounds[SOUND.MAGE_IMPACT] = this.loadSound([
-                "game/sounds/mage-impact.ogg",
-                "game/sounds/mage-impact.ogg",
-                "game/sounds/mage-impact.ogg",
-              ]);
-
-              this.sounds[SOUND.MAGE_ATTACK] = this.loadSound([
-                "game/sounds/mage-attack.ogg",
-                "game/sounds/mage-attack.ogg",
-                "game/sounds/mage-attack.ogg",
-              ]);
-
-              this.sounds[SOUND.GUN] = this.loadSound([
-                "game/sounds/gun.ogg",
-                "game/sounds/gun.ogg",
-              ]);
-
-              this.sounds[SOUND.CATA_HIT] = this.loadSound([
-                "game/sounds/cata-hit.ogg",
-                "game/sounds/cata-hit.ogg",
-              ]);
-
-              this.sounds[SOUND.CATA_LAUNCH] = this.loadSound([
-                "game/sounds/catapult-launch.ogg",
-                "game/sounds/catapult-launch-2.ogg",
-                "game/sounds/catapult-launch.ogg",
-                "game/sounds/catapult-launch-2.ogg",
-              ]);
-
-              this.sounds[SOUND.CATA_IMPACT] = this.loadSound([
-                "game/sounds/catapult-impact.ogg",
-                "game/sounds/catapult-impact-2.ogg",
-                "game/sounds/catapult-impact-3.ogg",
-                "game/sounds/catapult-impact-4.ogg",
-              ]);
-
-              this.sounds[SOUND.BUILDING_PAIN] = this.loadSound([
-                "game/sounds/building-hit.ogg",
-                "game/sounds/building-hit-3.ogg",
-                "game/sounds/building-hit.ogg",
-                "game/sounds/building-hit-3.ogg",
-              ]);
-
-              this.sounds[SOUND.CATA_DEATH] = this.loadSound([
-                "game/sounds/catapult_death.ogg",
-                "game/sounds/catapult_death.ogg",
-              ]);
-
-              this.sounds[SOUND.GAME_START] = this.loadSound(["game/sounds/gamestart.ogg"]);
-
-              this.sounds[SOUND.HEAL] = this.loadSound([
-                "game/sounds/heal.ogg",
-                "game/sounds/heal.ogg",
-              ]);
-
-              this.sounds[SOUND.BING] = this.loadSound(["game/sounds/bing2.ogg"]);
-
-              this.sounds[SOUND.BING2] = this.loadSound(["game/sounds/bing.ogg"]);
-
-              this.sounds[SOUND.SWITCH] = this.loadSound(["game/sounds/switch.ogg"]);
-
-              this.sounds[SOUND.ZIP] = this.loadSound(["game/sounds/zip.ogg"]);
-
-              this.sounds[SOUND.ZIP3] = this.loadSound(["game/sounds/zip3.ogg"]);
-
-              this.sounds[SOUND.SPELL] = this.loadSound([
-                "game/sounds/spell.ogg",
-                "game/sounds/spell.ogg",
-              ]);
-
-              this.sounds[SOUND.DRAGON_SPAWN] = this.loadSound([
-                "game/sounds/dragon_spawn.ogg",
-                "game/sounds/dragon_spawn.ogg",
-              ]);
-
-              this.sounds[SOUND.DRAGON_DEATH] = this.loadSound([
-                "game/sounds/dragon_death.ogg",
-                "game/sounds/dragon_death.ogg",
-              ]);
-
-              this.sounds[SOUND.DRAGON_YES] = this.loadSound([
-                "game/sounds/dragon_yes_1.ogg",
-                "game/sounds/dragon_yes_2.ogg",
-                "game/sounds/dragon_yes_3.ogg",
-              ]);
-
-              this.sounds[SOUND.FALL] = this.loadSound([
-                "game/sounds/fall.ogg",
-                "game/sounds/fall.ogg",
-              ]);
-
-              this.sounds[SOUND.DRAGON_FIRE] = this.loadSound([
-                "game/sounds/dragon_fire_1.ogg",
-                "game/sounds/dragon_fire_2.ogg",
-                "game/sounds/dragon_fire_1.ogg",
-                "game/sounds/dragon_fire_2.ogg",
-              ]);
-
-              this.sounds[SOUND.MINE] = this.loadSound([
-                "game/sounds/mine1.ogg",
-                "game/sounds/mine2.ogg",
-                "game/sounds/mine3.ogg",
-                "game/sounds/mine1.ogg",
-                "game/sounds/mine2.ogg",
-              ]);
+              // this.sounds[SOUND.UNDER_ATTACK] = this.loadSound(["game/sounds/under-attack.ogg"]);
+
+              // this.sounds[SOUND.VICTORY] = this.loadSound(["game/sounds/yeah.ogg"]);
+
+              // this.sounds[SOUND.DEFEAT] = this.loadSound(["game/sounds/defeat.ogg"]);
+
+              // this.sounds[SOUND.FLAMESTRIKE_LAUNCH] = this.loadSound([
+              //   "game/sounds/flamestrike-throw.ogg",
+              //   "game/sounds/flamestrike-throw.ogg",
+              //   "game/sounds/flamestrike-throw.ogg",
+              // ]);
+
+              // this.sounds[SOUND.FLAMESTRIKE_IMPACT] = this.loadSound([
+              //   "game/sounds/flamestrike-impact.ogg",
+              //   "game/sounds/flamestrike-impact.ogg",
+              //   "game/sounds/flamestrike-impact.ogg",
+              // ]);
+
+              // this.sounds[SOUND.MAGE_IMPACT] = this.loadSound([
+              //   "game/sounds/mage-impact.ogg",
+              //   "game/sounds/mage-impact.ogg",
+              //   "game/sounds/mage-impact.ogg",
+              // ]);
+
+              // this.sounds[SOUND.MAGE_ATTACK] = this.loadSound([
+              //   "game/sounds/mage-attack.ogg",
+              //   "game/sounds/mage-attack.ogg",
+              //   "game/sounds/mage-attack.ogg",
+              // ]);
+
+              // this.sounds[SOUND.GUN] = this.loadSound([
+              //   "game/sounds/gun.ogg",
+              //   "game/sounds/gun.ogg",
+              // ]);
+
+              // this.sounds[SOUND.CATA_HIT] = this.loadSound([
+              //   "game/sounds/cata-hit.ogg",
+              //   "game/sounds/cata-hit.ogg",
+              // ]);
+
+              // this.sounds[SOUND.CATA_LAUNCH] = this.loadSound([
+              //   "game/sounds/catapult-launch.ogg",
+              //   "game/sounds/catapult-launch-2.ogg",
+              //   "game/sounds/catapult-launch.ogg",
+              //   "game/sounds/catapult-launch-2.ogg",
+              // ]);
+
+              // this.sounds[SOUND.CATA_IMPACT] = this.loadSound([
+              //   "game/sounds/catapult-impact.ogg",
+              //   "game/sounds/catapult-impact-2.ogg",
+              //   "game/sounds/catapult-impact-3.ogg",
+              //   "game/sounds/catapult-impact-4.ogg",
+              // ]);
+
+              // this.sounds[SOUND.BUILDING_PAIN] = this.loadSound([
+              //   "game/sounds/building-hit.ogg",
+              //   "game/sounds/building-hit-3.ogg",
+              //   "game/sounds/building-hit.ogg",
+              //   "game/sounds/building-hit-3.ogg",
+              // ]);
+
+              // this.sounds[SOUND.CATA_DEATH] = this.loadSound([
+              //   "game/sounds/catapult_death.ogg",
+              //   "game/sounds/catapult_death.ogg",
+              // ]);
+
+              // this.sounds[SOUND.GAME_START] = this.loadSound(["game/sounds/gamestart.ogg"]);
+
+              // this.sounds[SOUND.HEAL] = this.loadSound([
+              //   "game/sounds/heal.ogg",
+              //   "game/sounds/heal.ogg",
+              // ]);
+
+              // this.sounds[SOUND.BING] = this.loadSound(["game/sounds/bing2.ogg"]);
+
+              // this.sounds[SOUND.BING2] = this.loadSound(["game/sounds/bing.ogg"]);
+
+              // this.sounds[SOUND.SWITCH] = this.loadSound(["game/sounds/switch.ogg"]);
+
+              // this.sounds[SOUND.ZIP] = this.loadSound(["game/sounds/zip.ogg"]);
+
+              // this.sounds[SOUND.ZIP3] = this.loadSound(["game/sounds/zip3.ogg"]);
+
+              // this.sounds[SOUND.SPELL] = this.loadSound([
+              //   "game/sounds/spell.ogg",
+              //   "game/sounds/spell.ogg",
+              // ]);
+
+              // this.sounds[SOUND.DRAGON_SPAWN] = this.loadSound([
+              //   "game/sounds/dragon_spawn.ogg",
+              //   "game/sounds/dragon_spawn.ogg",
+              // ]);
+
+              // this.sounds[SOUND.DRAGON_DEATH] = this.loadSound([
+              //   "game/sounds/dragon_death.ogg",
+              //   "game/sounds/dragon_death.ogg",
+              // ]);
+
+              // this.sounds[SOUND.DRAGON_YES] = this.loadSound([
+              //   "game/sounds/dragon_yes_1.ogg",
+              //   "game/sounds/dragon_yes_2.ogg",
+              //   "game/sounds/dragon_yes_3.ogg",
+              // ]);
+
+              // this.sounds[SOUND.FALL] = this.loadSound([
+              //   "game/sounds/fall.ogg",
+              //   "game/sounds/fall.ogg",
+              // ]);
+
+              // this.sounds[SOUND.DRAGON_FIRE] = this.loadSound([
+              //   "game/sounds/dragon_fire_1.ogg",
+              //   "game/sounds/dragon_fire_2.ogg",
+              //   "game/sounds/dragon_fire_1.ogg",
+              //   "game/sounds/dragon_fire_2.ogg",
+              // ]);
+
+              // this.sounds[SOUND.MINE] = this.loadSound([
+              //   "game/sounds/mine1.ogg",
+              //   "game/sounds/mine2.ogg",
+              //   "game/sounds/mine3.ogg",
+              //   "game/sounds/mine1.ogg",
+              //   "game/sounds/mine2.ogg",
+              // ]);
 
-              this.sounds[SOUND.ROUNDHOUSE] = this.loadSound([
-                "game/sounds/roundhouse.ogg",
-                "game/sounds/roundhouse.ogg",
-              ]);
+              // this.sounds[SOUND.ROUNDHOUSE] = this.loadSound([
+              //   "game/sounds/roundhouse.ogg",
+              //   "game/sounds/roundhouse.ogg",
+              // ]);
 
-              this.sounds[SOUND.BIGHIT] = this.loadSound([
-                "game/sounds/big-hit.ogg",
-                "game/sounds/big-hit-2.ogg",
-                "game/sounds/big-hit.ogg",
-                "game/sounds/big-hit-2.ogg",
-              ]);
+              // this.sounds[SOUND.BIGHIT] = this.loadSound([
+              //   "game/sounds/big-hit.ogg",
+              //   "game/sounds/big-hit-2.ogg",
+              //   "game/sounds/big-hit.ogg",
+              //   "game/sounds/big-hit-2.ogg",
+              // ]);
 
-              this.sounds[SOUND.STRONG_HIT] = this.loadSound([
-                "game/sounds/strong-hit.ogg",
-                "game/sounds/strong-hit-2.ogg",
-              ]);
+              // this.sounds[SOUND.STRONG_HIT] = this.loadSound([
+              //   "game/sounds/strong-hit.ogg",
+              //   "game/sounds/strong-hit-2.ogg",
+              // ]);
 
-              this.sounds[SOUND.BEAST_READY] = this.loadSound(["game/sounds/beast-ready.ogg"]);
+              // this.sounds[SOUND.BEAST_READY] = this.loadSound(["game/sounds/beast-ready.ogg"]);
 
-              this.sounds[SOUND.BEAST_YES] = this.loadSound([
-                "game/sounds/beast-yes.ogg",
-                "game/sounds/beast-yes-2.ogg",
-              ]);
+              // this.sounds[SOUND.BEAST_YES] = this.loadSound([
+              //   "game/sounds/beast-yes.ogg",
+              //   "game/sounds/beast-yes-2.ogg",
+              // ]);
 
-              this.sounds[SOUND.BEAST_DIE] = this.loadSound(["game/sounds/beast-die.ogg"]);
+              // this.sounds[SOUND.BEAST_DIE] = this.loadSound(["game/sounds/beast-die.ogg"]);
 
-              this.sounds[SOUND.FLAK] = this.loadSound([
-                "game/sounds/flak1.ogg",
-                "game/sounds/flak2.ogg",
-                "game/sounds/flak3.ogg",
-              ]);
+              // this.sounds[SOUND.FLAK] = this.loadSound([
+              //   "game/sounds/flak1.ogg",
+              //   "game/sounds/flak2.ogg",
+              //   "game/sounds/flak3.ogg",
+              // ]);
 
-              this.sounds[SOUND.SHOCKWAVE] = this.loadSound([
-                "game/sounds/shockwave.ogg",
-                "game/sounds/shockwave.ogg",
-              ]);
+              // this.sounds[SOUND.SHOCKWAVE] = this.loadSound([
+              //   "game/sounds/shockwave.ogg",
+              //   "game/sounds/shockwave.ogg",
+              // ]);
 
-              this.sounds[SOUND.FIREBALL] = this.loadSound([
-                "game/sounds/fireball.ogg",
-                "game/sounds/fireball.ogg",
-              ]);
+              // this.sounds[SOUND.FIREBALL] = this.loadSound([
+              //   "game/sounds/fireball.ogg",
+              //   "game/sounds/fireball.ogg",
+              // ]);
 
-              this.sounds[SOUND.SKELETON_PAIN] = this.loadSound([
-                "game/sounds/skeleton-hit.ogg",
-                "game/sounds/skeleton-hit.ogg",
-              ]);
+              // this.sounds[SOUND.SKELETON_PAIN] = this.loadSound([
+              //   "game/sounds/skeleton-hit.ogg",
+              //   "game/sounds/skeleton-hit.ogg",
+              // ]);
 
-              this.sounds[SOUND.SKELETON_YES] = this.loadSound([
-                "game/sounds/skeleton1.ogg",
-                "game/sounds/skeleton3.ogg",
-              ]);
+              // this.sounds[SOUND.SKELETON_YES] = this.loadSound([
+              //   "game/sounds/skeleton1.ogg",
+              //   "game/sounds/skeleton3.ogg",
+              // ]);
 
-              this.sounds[SOUND.SKELETON_SPAWN] = this.loadSound([
-                "game/sounds/skeleton2.ogg",
-                "game/sounds/skeleton2.ogg",
-              ]);
+              // this.sounds[SOUND.SKELETON_SPAWN] = this.loadSound([
+              //   "game/sounds/skeleton2.ogg",
+              //   "game/sounds/skeleton2.ogg",
+              // ]);
 
-              this.sounds[SOUND.AURA_HEAL] = this.loadSound([
-                "game/sounds/heal-aura.ogg",
-                "game/sounds/heal-aura.ogg",
-              ]);
+              // this.sounds[SOUND.AURA_HEAL] = this.loadSound([
+              //   "game/sounds/heal-aura.ogg",
+              //   "game/sounds/heal-aura.ogg",
+              // ]);
 
-              this.sounds[SOUND.PLASMA_SHIELD] = this.loadSound([
-                "game/sounds/plasma-shield.ogg",
-                "game/sounds/plasma-shield2.ogg",
-                "game/sounds/plasma-shield3.ogg",
-              ]);
+              // this.sounds[SOUND.PLASMA_SHIELD] = this.loadSound([
+              //   "game/sounds/plasma-shield.ogg",
+              //   "game/sounds/plasma-shield2.ogg",
+              //   "game/sounds/plasma-shield3.ogg",
+              // ]);
 
-              this.sounds[SOUND.BATTLE_FANFARE] = this.loadSound([
-                "game/sounds/battle-fanfare.ogg",
-              ]);
+              // this.sounds[SOUND.BATTLE_FANFARE] = this.loadSound([
+              //   "game/sounds/battle-fanfare.ogg",
+              // ]);
 
-              this.sounds[SOUND.A_WS] = this.loadSound(["game/sounds/advanced_Workshop.ogg"]);
+              // this.sounds[SOUND.A_WS] = this.loadSound(["game/sounds/advanced_Workshop.ogg"]);
 
-              this.sounds[SOUND.CC] = this.loadSound(["game/sounds/cc.ogg"]);
+              // this.sounds[SOUND.CC] = this.loadSound(["game/sounds/cc.ogg"]);
 
-              this.sounds[SOUND.CHURCH] = this.loadSound(["game/sounds/church.ogg"]);
+              // this.sounds[SOUND.CHURCH] = this.loadSound(["game/sounds/church.ogg"]);
 
-              this.sounds[SOUND.DRAGONS_LAIR] = this.loadSound(["game/sounds/dragons_lair.ogg"]);
+              // this.sounds[SOUND.DRAGONS_LAIR] = this.loadSound(["game/sounds/dragons_lair.ogg"]);
 
-              this.sounds[SOUND.FORGE] = this.loadSound(["game/sounds/forge.ogg"]);
+              // this.sounds[SOUND.FORGE] = this.loadSound(["game/sounds/forge.ogg"]);
 
-              this.sounds[SOUND.HOUSE] = this.loadSound(["game/sounds/house.ogg"]);
+              // this.sounds[SOUND.HOUSE] = this.loadSound(["game/sounds/house.ogg"]);
 
-              this.sounds[SOUND.LAB] = this.loadSound(["game/sounds/lab.ogg"]);
+              // this.sounds[SOUND.LAB] = this.loadSound(["game/sounds/lab.ogg"]);
 
-              this.sounds[SOUND.MAGES_GUILD] = this.loadSound(["game/sounds/magesguild.ogg"]);
+              // this.sounds[SOUND.MAGES_GUILD] = this.loadSound(["game/sounds/magesguild.ogg"]);
 
-              this.sounds[SOUND.RAX] = this.loadSound(["game/sounds/rax.ogg"]);
+              // this.sounds[SOUND.RAX] = this.loadSound(["game/sounds/rax.ogg"]);
 
-              this.sounds[SOUND.WW_DEN] = this.loadSound(["game/sounds/ww_den.ogg"]);
+              // this.sounds[SOUND.WW_DEN] = this.loadSound(["game/sounds/ww_den.ogg"]);
 
-              this.sounds[SOUND.W_DEN] = this.loadSound(["game/sounds/w_den.ogg"]);
+              // this.sounds[SOUND.W_DEN] = this.loadSound(["game/sounds/w_den.ogg"]);
 
-              this.sounds[SOUND.WORKSHOP] = this.loadSound(["game/sounds/workshop.ogg"]);
+              // this.sounds[SOUND.WORKSHOP] = this.loadSound(["game/sounds/workshop.ogg"]);
 
-              this.buildingClickSound = [];
+              // this.buildingClickSound = [];
             }
 
+            // Not called anywhere
             SoundManager.prototype.loadSound = function (files) {
               var target = [];
 
@@ -29594,6 +29596,7 @@
               return target;
             };
 
+            // Not called anywhere
             SoundManager.prototype.getVolumeModifier = function (pos) {
               var volume = 1;
 
@@ -29620,6 +29623,7 @@
               return volume;
             };
 
+            // Not called anywhere
             // pos has influence on the volume; if a pos is given, the distance from the screen to pos is checked, and the volume is lower, the higher the distance is
             SoundManager.prototype.playSound = function (
               sound,
@@ -29631,10 +29635,10 @@
               if (!(this.volume.get() > 0) || !this.sounds[sound]) return;
 
               // check distance => volume
-              let volume = pos ? this.getVolumeModifier(pos) : 1;
-              volume = volume * volumeModifier;
+              // let volume = pos ? this.getVolumeModifier(pos) : 1;
+              // volume = volume * volumeModifier;
 
-              if (volume <= 0) return;
+              // if (volume <= 0) return;
 
               var s = this.sounds[sound];
               var readySounds = [];
@@ -29664,7 +29668,7 @@
                 });
             };
 
-            const soundManager = new SoundManager();
+            // const soundManager = new SoundManager();
 
             function MapEditor(width = 64, height = 64, themeName = "Grass", defaultHeight = 0) {
               game = new Game();
@@ -29854,7 +29858,7 @@
                   editor.selectedItemType = undefined;
                   editor.randomTree = false;
                   game.selectedUnits = [];
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                 };
 
                 for (var k = 0; k < types[i].length; k++)
@@ -29905,7 +29909,7 @@
                       editor.randomTree = false;
                       editor.selectedItemType = this.type_;
                       game.selectedUnits = [];
-                      soundManager.playSound(SOUND.CLICK);
+                      // soundManager.playSound(SOUND.CLICK);
                     };
                   }
               }
@@ -29968,7 +29972,7 @@
                     editor.randomTree = true;
                     editor.selectedItemType = this.type_;
                     game.selectedUnits = [];
-                    soundManager.playSound(SOUND.CLICK);
+                    // soundManager.playSound(SOUND.CLICK);
                   };
                 }
             };
@@ -30286,7 +30290,7 @@
                   return;
               }
 
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
             };
 
             MapEditor.prototype.draw = function () {
@@ -30503,7 +30507,7 @@
                   editor.removeObjects(u);
                   // undoing a delete action
                 } else if (action.type == "DeleteMapObject") {
-                  soundManager.playSound(SOUND.PLACE);
+                  // soundManager.playSound(SOUND.PLACE);
                   var field = u.pos;
                   var type = u.type;
                   var owner = u.owner;
@@ -31184,7 +31188,7 @@
                     b.title = "delete this map";
                     b.onclick = function () {
                       network.send("map-delete-request<<$" + this.i_);
-                      soundManager.playSound(SOUND.CLICK);
+                      // soundManager.playSound(SOUND.CLICK);
                     };
 
                     p.appendChild(b);
@@ -31258,7 +31262,7 @@
                       .add(`<br><br><p id='ladderStartCounter'>${counter}</p>`)
                       .insertInto("#ladderWindow");
 
-                    soundManager.playSound(SOUND.LADDER_START);
+                    // soundManager.playSound(SOUND.LADDER_START);
                     const decrementCounterAndStart = () => {
                       $("#ladderStartCounter").html(counter--);
                       if (counter > 0) {
@@ -31384,7 +31388,7 @@
                     }
                   }
                 } else if (splitMsg[0] == "chat-server") {
-                  soundManager.playSound(SOUND.POSITIVE);
+                  // soundManager.playSound(SOUND.POSITIVE);
                   interface_.addMessage(splitMsg[1], "yellow", imgs.attentionmarkYellow);
                 } else if (splitMsg[0] == "ping") {
                   this.pings.push(Date.now() - timeOfLastPingSent);
@@ -31417,7 +31421,7 @@
                     "yellow",
                     imgs.attentionmarkYellow
                   );
-                  soundManager.playSound(SOUND.POSITIVE);
+                  // soundManager.playSound(SOUND.POSITIVE);
                   worker.postMessage({ what: "setPause", val: game_paused });
                 } else if (splitMsg[0] == "game-unpaused") {
                   game_paused = false;
@@ -31426,7 +31430,7 @@
                     "yellow",
                     imgs.attentionmarkYellow
                   );
-                  soundManager.playSound(SOUND.POSITIVE);
+                  // soundManager.playSound(SOUND.POSITIVE);
                   worker.postMessage({ what: "setPause", val: game_paused });
                 } else if (splitMsg[0] == "map-ping") {
                   if (!AccountInfo.ignores.contains(splitMsg[3].toLowerCase())) {
@@ -31434,7 +31438,7 @@
                       field: new Field(parseInt(splitMsg[1]), parseInt(splitMsg[2])),
                       time: Date.now(),
                     });
-                    soundManager.playSound(SOUND.BING2);
+                    // soundManager.playSound(SOUND.BING2);
                   }
                 }
 
@@ -32138,7 +32142,7 @@
                         addChatMsg("Server", `Player ${p} joined`);
                     });
                   }
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                 });
 
                 network.registerListener(GAME.LOBBY, "start-game", () => (this.active = false));
@@ -33300,7 +33304,7 @@
 
                   if (key == KEY.ESC) {
                     fadeOut($("#optionsWindow"));
-                    soundManager.playSound(SOUND.CLICK);
+                    // soundManager.playSound(SOUND.CLICK);
                   }
                 }
               );
@@ -33542,7 +33546,7 @@
                     }
                   };
 
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                 })
               );
               $("#loadAIButton")[0].title =
@@ -33569,7 +33573,7 @@
                 // Exiting the editor into the lobby
                 if (game_state == GAME.EDITOR) {
                   game_state = GAME.LOBBY;
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                   network.send("leave-game");
                   worker.postMessage({ what: "end-game" });
                 } else {
@@ -33629,7 +33633,7 @@
               $("#buttonDaddy").append(
                 this.createButton("ladderButton", "Ranked Match", function () {
                   network.send("get-laddermaps");
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                 })
               );
               $("#ladderButton")[0].title = "Play a ranked 1v1 match via auto matchmaking.";
@@ -33642,7 +33646,7 @@
 
                   game_state = GAME.EDITOR;
                   editor = new MapEditor();
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                   network.send("leave-lobby");
                 })
               );
@@ -33813,12 +33817,12 @@
 
               var replayPlusButton = this.createButton("replayPlusButton", "+", function () {
                 setReplaySpeed(replaySpeedIndex + 1);
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
               });
 
               var replayMinusButton = this.createButton("replayMinusButton", "-", function () {
                 setReplaySpeed(replaySpeedIndex - 1);
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
               });
 
               var replayShowSpeed = document.createElement("p");
@@ -33895,7 +33899,7 @@
                 this.createButton("editorSelectButton", "", function () {
                   editor.selectedItemType = null;
                   editor.terrainModifier = 0;
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                 })
               );
               $("#editorSelectButton")[0].title = "Select Mode";
@@ -33962,7 +33966,7 @@
                   "<span class='mapEditorHotkey'>[U]</span>",
                   function () {
                     editor.clipboard.history.undo();
-                    soundManager.playSound(SOUND.CLICK);
+                    // soundManager.playSound(SOUND.CLICK);
                   }
                 )
               );
@@ -34018,7 +34022,7 @@
               showGridCheckbox.type = "checkbox";
               showGridCheckbox.id = "showGridCheckbox";
               showGridCheckbox.onchange = function () {
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
               };
               $("#mapEditorInterface").append(showGridCheckbox);
 
@@ -34041,7 +34045,7 @@
                     type: "text/plain;charset=utf-8",
                   });
                   saveAs(blob, `${game.name}.json`);
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                 })
               );
 
@@ -34056,7 +34060,7 @@
               $("#mapEditorInterface").append(
                 this.createButton("editorNewButton", "New", function () {
                   fadeIn($("#newMapWindow"));
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                 })
               );
 
@@ -34070,7 +34074,7 @@
                     } else displayInfoMsg("You need to set a map name first");
                   } else displayInfoMsg("You need to be logged in to upload your map!");
 
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                 })
               );
 
@@ -34078,7 +34082,7 @@
               $("#mapEditorInterface").append(
                 this.createButton("mapSettingsButton", "Settings", function () {
                   fadeIn($("#mapSettingsWindow"));
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                 })
               );
 
@@ -34089,7 +34093,7 @@
 
                   network.send("request-my-maps");
 
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                 })
               );
 
@@ -34126,7 +34130,7 @@
                     fadeIn($("#customGraphicsWindow"));
                     refreshCustomImgs();
                   } else fadeOut($("#customGraphicsWindow"));
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                 })
               );
 
@@ -34210,7 +34214,7 @@
               clansButton.domElement.title = "Clans";
               $("#clansButton")[0].onclick = function () {
                 network.send("request-my-clan-info");
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
               };
 
               // friends button
@@ -34240,7 +34244,7 @@
               emotesButton.domElement.title = "Unlockable Items";
               $("#emotesButton")[0].onclick = function () {
                 Microtransactions.showMicroTransWindow();
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
               };
 
               // achivements button
@@ -34252,7 +34256,7 @@
               achivementsButton.domElement.title = "Achievements";
               $("#achivementsButton")[0].onclick = function () {
                 network.send("get-achivements");
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
               };
 
               // Bing message
@@ -34795,7 +34799,7 @@
             MapEditorData.prototype.killType = function (t, skipRedraw) {
               // Default to the current type
               if (!t) t = this.type;
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
 
               if (t.getBasicType()) {
                 displayInfoMsg("You can't delete basic units");
@@ -34974,7 +34978,7 @@
                   div.onclick = function () {
                     mapEditorData.saveUnit(true);
                     // reset active class
-                    soundManager.playSound(SOUND.CLICK);
+                    // soundManager.playSound(SOUND.CLICK);
                     var children = $("#typesList").children();
                     for (var k = 0; k < children.length; k++)
                       children[k].className = "dataTypeListDiv";
@@ -34995,7 +34999,7 @@
               const el = document.getElementById(id);
               el.parentNode.parentNode.removeChild(el.parentNode);
               mapEditorData.saveUnit();
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
             }
 
             MapEditorData.prototype.fieldIsDefault = function (field, type) {
@@ -35247,7 +35251,7 @@
             };
 
             MapEditorData.prototype.addField_ = function (i, i2) {
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
 
               const builder = new HTMLBuilder();
 
@@ -35270,7 +35274,7 @@
             };
 
             MapEditorData.prototype.addField2_ = function (elID, fieldName) {
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
               const inputID = uniqueID();
               const buttonID = uniqueID();
               new HTMLBuilder()
@@ -35491,7 +35495,7 @@
             MapEditorData.prototype.resetType = function (type, skipRedraw) {
               // Default to the current type
               if (!type) type = this.type;
-              soundManager.playSound(SOUND.CLICK);
+              // soundManager.playSound(SOUND.CLICK);
 
               fadeOut($("#infoWindow"));
 
@@ -36321,7 +36325,7 @@
 
                 if (shouldOpenChat) {
                   // Play a different sound based on whether or not the chat window was already open
-                  soundManager.playSound(chatWindow.hidden ? SOUND.BING : SOUND.ZIP3, false, 0.8);
+                  // soundManager.playSound(chatWindow.hidden ? SOUND.BING : SOUND.ZIP3, false, 0.8);
                   this.openChatFor(name);
                 } else if (chatWindow.hidden) {
                   // If the chats window is not visible, blink the icon
@@ -36373,7 +36377,7 @@
               // Make the chat window close when the ESC button is pressed
               this.window.keydown((e) => {
                 if (keyManager.getKeyCode(e) == KEY.ESC) {
-                  soundManager.playSound(SOUND.CLICK);
+                  // soundManager.playSound(SOUND.CLICK);
                   this.hide();
                 }
               });
@@ -36765,7 +36769,7 @@
 
               if (!this.addExplosion || !this.isExpired()) return;
 
-              soundManager.playSound(SOUND.FLAK, targetPos);
+              // soundManager.playSound(SOUND.FLAK, targetPos);
 
               // crate explosion
               for (var i = 0; i < 10; i++)
@@ -37702,8 +37706,8 @@
               if (!this.isExpired()) return;
 
               // play sound
-              if (PLAYING_PLAYER.team.canSeeField(this.pos.x, this.pos.y))
-                soundManager.playSound(SOUND.CATA_IMPACT, volume ? null : this.pos, volume ?? null);
+              // if (PLAYING_PLAYER.team.canSeeField(this.pos.x, this.pos.y))
+              //   soundManager.playSound(SOUND.CATA_IMPACT, volume ? null : this.pos, volume ?? null);
 
               // create impact dust
               for (var i = 0; i < 5; i++)
@@ -38016,7 +38020,7 @@
               this.scale = data.scale ? data.scale : 1;
               this.density = data.density ? data.density : 1;
 
-              soundManager.playSound(SOUND.SPELL, this.pos, 1);
+              // soundManager.playSound(SOUND.SPELL, this.pos, 1);
 
               this.borderLeft = this.x;
               this.borderRight = this.x;
@@ -38361,11 +38365,11 @@
                 ticksCounter + 40 < this.tickOfDeath
               ) {
                 this.timeOFLastSound = timestamp;
-                soundManager.playSound(
-                  this.sound,
-                  this.unit ? this.unit.drawPos : this.pos,
-                  this.volume
-                );
+                // soundManager.playSound(
+                //   this.sound,
+                //   this.unit ? this.unit.drawPos : this.pos,
+                //   this.volume
+                // );
               }
             };
 
@@ -38881,13 +38885,13 @@
                       ) {
                         createExplosion(u.drawPos.px, u.drawPos.py, u.type.size);
 
-                        if (u.type.deathSound) soundManager.playSound(u.type.deathSound, u.pos);
+                        // if (u.type.deathSound) soundManager.playSound(u.type.deathSound, u.pos);
                       } else if (
                         u.type.isUnit &&
                         PLAYING_PLAYER.team.canSeeUnit(u, true) &&
                         msg[3] == 0
                       ) {
-                        soundManager.playSound(u.type.deathSound, u.pos);
+                        // soundManager.playSound(u.type.deathSound, u.pos);
                         u.bodyPower =
                           u2 && u2.type.bodyPower
                             ? u2.type.bodyPower / (u.type.bodyPower ? u.type.bodyPower : 1)
@@ -39016,16 +39020,16 @@
                       u1.hitOffsetTill = timestamp + 200;
                       u1.hitOffsetPos = u2.pos.getCopy();
                     }
-                  } else if (msg[0] == "playSnd")
-                    soundManager.playSound(
-                      msg[1],
-                      msg[3] && msg[4] ? new Field(msg[3], msg[4], true) : null,
-                      msg[2]
-                    );
-                  else if (msg[0] == "playYesSnd") {
+                  } else if (msg[0] == "playSnd") {
+                    // soundManager.playSound(
+                    //   msg[1],
+                    //   msg[3] && msg[4] ? new Field(msg[3], msg[4], true) : null,
+                    //   msg[2]
+                    // );
+                  } else if (msg[0] == "playYesSnd") {
                     var u = game.getUnitById(msg[1]);
-                    if (u)
-                      soundManager.playSound(u.type.yesSound, u.drawPos, u.type.yesSoundVolume);
+                    // if (u)
+                    //   soundManager.playSound(u.type.yesSound, u.drawPos, u.type.yesSoundVolume);
                   } else if (msg[0] == "attPing")
                     game.minimap.attackPingAt(new Field(msg[1], msg[2], true));
                   else if (msg[0] == "killPsdBld") {
@@ -39225,7 +39229,7 @@
 
                         // play sound and make shield effect
                         if (u) {
-                          soundManager.playSound(SOUND.PLASMA_SHIELD, u.pos, 1);
+                          // soundManager.playSound(SOUND.PLASMA_SHIELD, u.pos, 1);
                           game.addToObjectsToDraw(
                             new PlasmaShield({
                               from: u,
@@ -39249,7 +39253,7 @@
 
                         // play sound and make shield effect
                         if (u) {
-                          soundManager.playSound(SOUND.PLASMA_SHIELD, u.pos, 1);
+                          // soundManager.playSound(SOUND.PLASMA_SHIELD, u.pos, 1);
                           game.addToObjectsToDraw(new PlasmaShield({ from: u, to: eff.pos }));
                         }
 
@@ -39334,7 +39338,7 @@
                     //   game.playingPlayerWon ? "victoryclosebutton" : "lossclosebutton"
                     // );
                     // uimanager.winLossWindow.active = true;
-                    soundManager.playSound(game.playingPlayerWon ? SOUND.VICTORY : SOUND.DEFEAT);
+                    // soundManager.playSound(game.playingPlayerWon ? SOUND.VICTORY : SOUND.DEFEAT);
                     clearCache(game.playingPlayerWon);
                     if (!game.playingPlayerWon) PLAYING_PLAYER.team = game.teams[0];
                   } else if (msg[0] == "aiLoaded") {
@@ -39356,7 +39360,7 @@
                     $("#loadingWindow").css("display", "none");
 
                     // play game start sound
-                    soundManager.playSound(SOUND.GAME_START);
+                    // soundManager.playSound(SOUND.GAME_START);
                   } else if (msg[0] == "editorUnitsKilled") {
                     // redraw ground tiles canvas (we might have killed a ground tile)
                     game.generateGroundTextureCanvas();
@@ -39372,7 +39376,7 @@
 
                     game.selectedUnits = [];
 
-                    soundManager.playSound(SOUND.PLACE);
+                    // soundManager.playSound(SOUND.PLACE);
                   } else if (msg[0] == "createTile") {
                     var type = msg[1].toUnitType();
                     var x = parseFloat(msg[2]);
@@ -39389,7 +39393,7 @@
                       dontRefreshNBs: true,
                     });
 
-                    soundManager.playSound(SOUND.PLACE);
+                    // soundManager.playSound(SOUND.PLACE);
 
                     if (type.blocking)
                       // if its a blocking tile (those are pre-drawn on "cache"-canvasses, refresh the corresponding cache canvas)
@@ -39505,7 +39509,7 @@
 
                     if (msg[3] == 0.5 || msg[3] == -0.5) game.generateGroundTextureCanvas();
 
-                    soundManager.playSound(SOUND.PLACE);
+                    // soundManager.playSound(SOUND.PLACE);
                   } else if (msg[0] == "printPath") {
                     path2Print = JSON.parse(msg[1]);
                   }
@@ -40561,7 +40565,7 @@
                   $("#loginWindowState").html("Please fill in all the fields");
                 }
 
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
               };
 
               Login_.prototype.__saveLogin = function () {
@@ -41299,7 +41303,7 @@
 
                 network.send(`get-clan-list<<$${search}<<$${page}`);
 
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
               };
 
               Clans_.prototype.__getClanRiders = function () {
@@ -41464,12 +41468,12 @@
               };
 
               Clans_.prototype.__editClanNameSubmit = function () {
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
                 network.send("change-clan-name<<$" + $("#clanNameInput")[0].value);
               };
 
               Clans_.prototype.__editClanName = function () {
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
                 $("#clanName").html(
                   `<input type='text' id='clanNameInput' value='${$("#clanName").html()}' />`
                 );
@@ -41499,7 +41503,7 @@
                   b.html("edit");
                 }
 
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
               };
 
               Clans_.prototype.setClan = function (tag, name, desc, members, admin, apps) {
@@ -41632,7 +41636,7 @@
               };
 
               Clans_.prototype.getClanInfo = function (tag) {
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
                 network.send("get-clan-info<<$" + tag);
               };
 
@@ -41726,7 +41730,7 @@
                 let item = getItemFromArtNr(artNr);
                 if (!item) return;
 
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
 
                 const builder = new HTMLBuilder();
                 builder.add("<span style='font-size: 16px;'><div class='legalDiv'>");
@@ -41821,7 +41825,7 @@
 
               // Displays a dialog allowing the user to confirm they want to purchase the item identified by artNr
               function getItemForGold(artNr) {
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
 
                 let arch = emotes.concat(skins, dances, specials);
                 let matchingItem = arch.find((item) => item.artNr == artNr);
@@ -42068,7 +42072,7 @@
                       .removeClass("b_inactive")
                       .addClass("b_active");
 
-                    soundManager.playSound(SOUND.CLICK);
+                    // soundManager.playSound(SOUND.CLICK);
                     network.send("set-skin<<$" + artNr + "<<$" + unitType);
                   };
 
@@ -42281,7 +42285,7 @@
                 // uimanager.playerInfoWindow.setHeadRider(new HTMLBuilder());
                 // uimanager.playerInfoWindow.setRider(new HTMLBuilder());
                 fadeIn($("#playerInfoWindow"));
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
               }
 
               function showMicroTransWindow() {
@@ -42485,7 +42489,7 @@
                     "Ignore this player",
                     () => {
                       network.send("ignore<<$" + player);
-                      soundManager.playSound(SOUND.CLICK);
+                      // soundManager.playSound(SOUND.CLICK);
                       setVisibility(true);
                     },
                     "ignore"
@@ -42497,7 +42501,7 @@
                     "Unignore this player",
                     () => {
                       network.send("unignore<<$" + player);
-                      soundManager.playSound(SOUND.CLICK);
+                      // soundManager.playSound(SOUND.CLICK);
                       setVisibility(false);
                     },
                     "unignore"
@@ -42801,7 +42805,7 @@
                 );
 
                 this.__showLoading();
-                soundManager.playSound(SOUND.CLICK);
+                // soundManager.playSound(SOUND.CLICK);
               };
 
               MapSelection_.prototype.openWindow = function (selectionAction) {
@@ -42898,7 +42902,7 @@
                         };
 
                         fileInput.click();
-                        soundManager.playSound(SOUND.CLICK);
+                        // soundManager.playSound(SOUND.CLICK);
                       },
                       "Load external"
                     )
