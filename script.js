@@ -338,6 +338,14 @@ async function setupReplay(fileList) {
   // Get the json data from the file object
   const data = JSON.parse(await fileList[0].text());
 
+  // Assign losing (leaving) player name
+  window.losingPlayer = data.players.filter(
+    (player) => player.nr === data.playerLefts[Object.keys(data.playerLefts)[0]][0]
+  )[0];
+
+  // Assign final tick number to window
+  window.finalTickNumber = data.ticksCounter;
+
   if (validateReplayFile(data)) {
     // Display static game info
 

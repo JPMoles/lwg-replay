@@ -95,10 +95,33 @@ window.resetDisplayData = resetData;
 const replayOutputInterval = setInterval(() => {
   // Check if the replay is over every 5 seconds
   if (window.replayStats && Object.keys(window.replayStats).length > 0) {
-    if (window.replayStats["16275"]) {
+    if (window.finalTickNumber === window.currentGameTick) {
       // Clear the interval
       // console.log("Clearing the interval checking for replay finishing!");
       // clearInterval(replayOutputInterval);
+
+      // Losing player: window.losingPlayerNumber
+
+      const playerOneNameDiv = document.getElementById("playerOneName");
+      const playerTwoNameDiv = document.getElementById("playerTwoName");
+      // playerOneNameDiv.innerText = data.players[0].name;
+      // playerTwoNameDiv.innerText = data.players[1].name;
+
+      console.log("Losing player is: ", window.losingPlayer);
+
+      // Set player one's name color
+      if (playerOneNameDiv.innerText === window.losingPlayer.name) {
+        playerOneNameDiv.style.color = "red";
+      } else {
+        playerOneNameDiv.style.color = "green";
+      }
+
+      // Set player two's name color
+      if (playerTwoNameDiv.innerText === window.losingPlayer.name) {
+        playerTwoNameDiv.style.color = "red";
+      } else {
+        playerTwoNameDiv.style.color = "green";
+      }
     }
 
     // Player 1
