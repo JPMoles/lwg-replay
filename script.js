@@ -363,6 +363,8 @@ async function setupReplay(fileList) {
     const playerTwoNameDiv = document.getElementById("playerTwoName");
     playerOneNameDiv.innerText = data.players[0].name;
     playerTwoNameDiv.innerText = data.players[1].name;
+    playerOneNameDiv.style.color = "black";
+    playerTwoNameDiv.style.color = "black";
 
     // Reset all units/buildings and graphs
     window.resetDisplayData();
