@@ -28756,8 +28756,8 @@
 
             Rain.prototype.draw = function () {
               if (interface_.noRain.get()) {
-                musicManager.rain[0].volume = 0;
-                musicManager.rain[1].volume = 0;
+                // musicManager.rain[0].volume = 0;
+                // musicManager.rain[1].volume = 0;
                 return;
               }
               var time = ticksCounter / 20 / 60;
@@ -28773,8 +28773,8 @@
 
               // If we're not in a rain period, disable the sound and exit
               if (!period) {
-                musicManager.rain[0].volume = 0;
-                musicManager.rain[1].volume = 0;
+                // musicManager.rain[0].volume = 0;
+                // musicManager.rain[1].volume = 0;
                 return;
               }
 
@@ -28784,24 +28784,24 @@
               else if (time > period.end - 0.1) dropCountDensity = (period.end - time) / 0.1;
 
               // TODO: don't directly set variables in MusicManager
-              musicManager.rain[0].volume = 0.6 * soundManager.volume.get() * dropCountDensity;
-              musicManager.rain[1].volume = 0.6 * soundManager.volume.get() * dropCountDensity;
+              // musicManager.rain[0].volume = 0.6 * soundManager.volume.get() * dropCountDensity;
+              // musicManager.rain[1].volume = 0.6 * soundManager.volume.get() * dropCountDensity;
 
-              if (
-                this.lastRainSoundStart + 2000 < timestamp &&
-                (musicManager.rain[0].currentTime <= 0 ||
-                  musicManager.rain[0].currentTime >= musicManager.rain[0].duration - 0.1) &&
-                (musicManager.rain[1].currentTime <= 0 ||
-                  musicManager.rain[1].currentTime >= musicManager.rain[1].duration - 0.1)
-              ) {
-                if (musicManager.rain[0].currentTime >= musicManager.rain[0].duration - 0.1) {
-                  // musicManager.rain[1].play();
-                } else {
-                  // musicManager.rain[0].play();
-                }
+              // if (
+              //   this.lastRainSoundStart + 2000 < timestamp &&
+              //   (musicManager.rain[0].currentTime <= 0 ||
+              //     musicManager.rain[0].currentTime >= musicManager.rain[0].duration - 0.1) &&
+              //   (musicManager.rain[1].currentTime <= 0 ||
+              //     musicManager.rain[1].currentTime >= musicManager.rain[1].duration - 0.1)
+              // ) {
+              //   if (musicManager.rain[0].currentTime >= musicManager.rain[0].duration - 0.1) {
+              //     // musicManager.rain[1].play();
+              //   } else {
+              //     // musicManager.rain[0].play();
+              //   }
 
-                this.lastRainSoundStart = timestamp;
-              }
+              //   this.lastRainSoundStart = timestamp;
+              // }
 
               c.strokeStyle = "rgba(255, 255, 255, 1)";
               c.beginPath();
@@ -30781,7 +30781,7 @@
               }
             };
 
-            const musicManager = new MusicManager();
+            // const musicManager = new MusicManager();
 
             function Network() {
               this.pings = []; // contains the last ~10 ping values, when a new one comes, the oldest one gets killed
@@ -33341,13 +33341,13 @@
               $("#optionsChecklistDiv").append(musicVolumeLabel);
 
               // music volume slider
-              var optionsMusicButton = document.createElement("div");
-              optionsMusicButton.id = "optionsMusicButton";
-              $("#musicVolumeLabel").append(optionsMusicButton);
-              $("#optionsMusicButton").slider({
-                change: (event, ui) => musicManager.volume.set(ui.value / 100),
-              });
-              $("#optionsMusicButton").slider("value", musicManager.volume.get() * 100);
+              // var optionsMusicButton = document.createElement("div");
+              // optionsMusicButton.id = "optionsMusicButton";
+              // $("#musicVolumeLabel").append(optionsMusicButton);
+              // $("#optionsMusicButton").slider({
+              //   change: (event, ui) => musicManager.volume.set(ui.value / 100),
+              // });
+              // $("#optionsMusicButton").slider("value", musicManager.volume.get() * 100);
 
               // LCG volume label
               const lcgVolumeLabel = document.createElement("p");
@@ -33463,55 +33463,55 @@
               $("#hpBarsLabel").append(hpBarsCheckbox);
 
               // no main manu music
-              var noMainMenuMusicLabel = document.createElement("p");
-              noMainMenuMusicLabel.id = "noMainMenuMusicLabel";
-              noMainMenuMusicLabel.innerHTML = "No menu / lobby music";
-              noMainMenuMusicLabel.title = "Don't play music in the menus / lobby.";
-              $("#optionsChecklistDiv").append(noMainMenuMusicLabel);
+              // var noMainMenuMusicLabel = document.createElement("p");
+              // noMainMenuMusicLabel.id = "noMainMenuMusicLabel";
+              // noMainMenuMusicLabel.innerHTML = "No menu / lobby music";
+              // noMainMenuMusicLabel.title = "Don't play music in the menus / lobby.";
+              // $("#optionsChecklistDiv").append(noMainMenuMusicLabel);
 
-              var noMainMenuMusicCheckbox = document.createElement("input");
-              noMainMenuMusicCheckbox.id = "noMainMenuMusicCheckbox";
-              noMainMenuMusicCheckbox.type = "checkbox";
-              noMainMenuMusicCheckbox.onclick = addClickSound(() =>
-                musicManager.noMainMenuMusic.set(noMainMenuMusicCheckbox.checked)
-              );
-              noMainMenuMusicCheckbox.checked = musicManager.noMainMenuMusic.get();
-              $("#noMainMenuMusicLabel").append(noMainMenuMusicCheckbox);
+              // var noMainMenuMusicCheckbox = document.createElement("input");
+              // noMainMenuMusicCheckbox.id = "noMainMenuMusicCheckbox";
+              // noMainMenuMusicCheckbox.type = "checkbox";
+              // noMainMenuMusicCheckbox.onclick = addClickSound(() =>
+              //   musicManager.noMainMenuMusic.set(noMainMenuMusicCheckbox.checked)
+              // );
+              // noMainMenuMusicCheckbox.checked = musicManager.noMainMenuMusic.get();
+              // $("#noMainMenuMusicLabel").append(noMainMenuMusicCheckbox);
 
               // no rain
-              var noRainLabel = document.createElement("p");
-              noRainLabel.id = "noRainLabel";
-              noRainLabel.innerHTML = "No rain effects";
-              noRainLabel.title = "Disable in-game rain effects";
-              $("#optionsChecklistDiv").append(noRainLabel);
+              // var noRainLabel = document.createElement("p");
+              // noRainLabel.id = "noRainLabel";
+              // noRainLabel.innerHTML = "No rain effects";
+              // noRainLabel.title = "Disable in-game rain effects";
+              // $("#optionsChecklistDiv").append(noRainLabel);
 
-              var noRainCheckbox = document.createElement("input");
-              noRainCheckbox.id = "noRainCheckbox";
-              noRainCheckbox.type = "checkbox";
-              noRainCheckbox.onclick = addClickSound(() =>
-                interface_.noRain.set(noRainCheckbox.checked)
-              );
-              Initialization.onDocumentReady(
-                () => (noRainCheckbox.checked = interface_.noRain.get())
-              );
-              $("#noRainLabel").append(noRainCheckbox);
+              // var noRainCheckbox = document.createElement("input");
+              // noRainCheckbox.id = "noRainCheckbox";
+              // noRainCheckbox.type = "checkbox";
+              // noRainCheckbox.onclick = addClickSound(() =>
+              //   interface_.noRain.set(noRainCheckbox.checked)
+              // );
+              // Initialization.onDocumentReady(
+              //   () => (noRainCheckbox.checked = interface_.noRain.get())
+              // );
+              // $("#noRainLabel").append(noRainCheckbox);
 
               // open custom hotkeys window
-              $("#optionsButtonsDiv").append(
-                this.createButton("hotkeyWindowButton", "Hotkeys", function () {
-                  Hotkeys.showWindow();
-                  fadeOut($("#optionsWindow"));
-                  soundManager.playSound(SOUND.CLICK);
-                })
-              );
+              // $("#optionsButtonsDiv").append(
+              //   this.createButton("hotkeyWindowButton", "Hotkeys", function () {
+              //     Hotkeys.showWindow();
+              //     fadeOut($("#optionsWindow"));
+              //     soundManager.playSound(SOUND.CLICK);
+              //   })
+              // );
 
               // open FAQ window
-              $("#optionsButtonsDiv").append(
-                this.createButton("openFaqButton", "F.A.Q.", function () {
-                  fadeIn($("#faqWindow"));
-                  soundManager.playSound(SOUND.CLICK);
-                })
-              );
+              // $("#optionsButtonsDiv").append(
+              //   this.createButton("openFaqButton", "F.A.Q.", function () {
+              //     fadeIn($("#faqWindow"));
+              //     soundManager.playSound(SOUND.CLICK);
+              //   })
+              // );
 
               // open window to load custom AI
               $("#optionsButtonsDiv").append(
@@ -39737,7 +39737,7 @@
                 c.fillRect(0, 0, WIDTH, HEIGHT);
               }
 
-              // musicManager.draw();
+              // musicManager.draw(); // manager for all music, not doing anything at the moment
               // uimanager.draw(); // draws the main ui on the home page
               // UIManagerSingleton.draw(); // no idea what this does
             }
