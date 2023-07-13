@@ -8,8 +8,6 @@ const buildOrderPlayerTwoDiv = document.getElementById("buildOrderP2");
 const buildOrderBuildingsPlayerOneDiv = document.getElementById("buildOrderBuildingsP1");
 const buildOrderBuildingsPlayerTwoDiv = document.getElementById("buildOrderBuildingsP2");
 
-let lastTickChecked = 0;
-
 let plot = Plot.rectY({ length: 10000 }, Plot.binX({ y: "count" }, { x: Math.random })).plot();
 const div = document.querySelector("#unusedGoldPlot");
 div.append(plot);
@@ -30,25 +28,69 @@ let plot5 = Plot.rectY({ length: 10000 }, Plot.binX({ y: "count" }, { x: Math.ra
 const armySupplyDiv = document.querySelector("#armySupplyPlot");
 armySupplyDiv.append(plot5);
 
+// Unused?
 const replayOutputDataDiv = document.getElementById("replayOutputData");
 
 // All player 1 & player 2 data
-const playerOneData = [];
-const playerTwoData = [];
+let playerOneData = [];
+let playerTwoData = [];
 
 // Player 1 & 2 units (and tick data)
-const playerOneBuildUnits = [];
+let playerOneBuildUnits = [];
 let p1UnitsIndex = 0;
-const playerTwoBuildUnits = [];
+let playerTwoBuildUnits = [];
 let p2UnitsIndex = 0;
 
 // Player 1 & 2 buildings (and tick data)
-const playerOneBuildBuildings = [];
+let playerOneBuildBuildings = [];
 let p1BuildingsIndex = 0;
-const playerTwoBuildBuildings = [];
+let playerTwoBuildBuildings = [];
 let p2BuildingsIndex = 0;
 
 let lastTickProcessed = -1;
+
+function resetData() {
+  // Reset player unit div
+  buildOrderPlayerOneDiv.innerHTML = "";
+  buildOrderPlayerTwoDiv.innerHTML = "";
+
+  // Reset player building div
+  buildOrderBuildingsPlayerOneDiv.innerHTML = "";
+  buildOrderBuildingsPlayerTwoDiv.innerHTML = "";
+
+  // Reset all graphs to default graph
+  div.replaceChildren(plot);
+  totalSupplyDiv.replaceChildren(plot2);
+  unitsLostDiv.replaceChildren(plot3);
+  workerSupplyDiv.replaceChildren(plot4);
+  armySupplyDiv.replaceChildren(plot5);
+
+  // Reset player data array
+  playerOneData = [];
+  playerTwoData = [];
+
+  // Reset player units array
+  playerOneBuildUnits = [];
+  playerTwoBuildUnits = [];
+
+  // Reset units displayed index
+  p1UnitsIndex = 0;
+  p2UnitsIndex = 0;
+
+  // Reset buildings display array
+  playerOneBuildBuildings = [];
+  playerTwoBuildBuildings = [];
+
+  // Reset buildings displayed index
+  p1BuildingsIndex = 0;
+  p2BuildingsIndex = 0;
+
+  // Reset last tick processed
+  lastTickProcessed = -1;
+}
+
+// Add reset data function to window
+window.resetDisplayData = resetData;
 
 const replayOutputInterval = setInterval(() => {
   // Check if the replay is over every 5 seconds

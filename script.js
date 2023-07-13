@@ -356,6 +356,9 @@ async function setupReplay(fileList) {
     playerOneNameDiv.innerText = data.players[0].name;
     playerTwoNameDiv.innerText = data.players[1].name;
 
+    // Reset all units/buildings and graphs
+    window.resetDisplayData();
+
     window.receiveReplayFile(data);
   }
 }
