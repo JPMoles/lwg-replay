@@ -19458,7 +19458,7 @@
             }
 
             function setReplaySpeed(index) {
-              replaySpeedIndex = Math.max(Math.min(index, game_speeds.length - 1), 0);
+              replaySpeedIndex = Math.max(Math.min(index, game_speeds.length - 1), 0); // Clamps replaySpeedIndex to 0-5
               TICK_TIME = game_speeds[replaySpeedIndex].tick_time;
               $("#replayShowSpeed").html(game_speeds[replaySpeedIndex].caption);
               worker.postMessage({ what: "setTickTime", tickTime: TICK_TIME });
@@ -31071,6 +31071,11 @@
                     playerLefts = replayFile.playerLefts;
 
                     mapData = "";
+
+                    // Set replay speed to 16x (index 5)
+                    setReplaySpeed(5);
+
+                    // Could set a div to show current speed before/after the call
 
                     // $("#replayShowSpeed").html("1x");
                   }, 50);
