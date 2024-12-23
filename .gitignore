@@ -6,6 +6,6 @@ download-sounds.js
 lwg.har
 
 # Ignore everything in game folder and all sub directories
-game/*
+# game/*
 # Override and include the lwg-4.9.3.js file in the game/ directory 
-!game/lwg-4.9.3.js
+# !game/lwg-4.9.3.js

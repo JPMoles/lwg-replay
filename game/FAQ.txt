@@ -1,0 +1,72 @@
+<style>
+    #faqContentsList a:link {
+        color: #FFF839;
+    }
+</style>
+
+<h2>Table Of Contents</h2>
+<ul id="faqContentsList">
+<li><a href="#basics">Basics / How to Play</a></li>
+<li><a href="#fullscreen">Fullscreen</a></li>
+<li><a href="#menu_ui">Menu and UI</a></li>
+<li><a href="#play">Play</a></li>
+<li><a href="#play_vs_cpu">Play vs CPU</a></li>
+<li><a href="#ranked_match">Ranked Match</a></li>
+<li><a href="#editor">Editor</a></li>
+<li><a href="#load_replay">Load Replay</a></li>
+<li><a href="#tutorials">Tutorials</a></li>
+<li><a href="#custom_ai">Custom AI</a></li>
+<li><a href="#littlechatgame">LittleChatGame</a></li>
+<li><a href="#developers">The Developers</a></li>
+<li><a href="#bugs_issues">Bugs & Issues</a></li>
+</ul>
+
+<h2 id="basics">Basics / How to Play</h2>
+<p>LittleWarGame is a real-time strategy (RTS) game in which you start with one Castle and a handful of Workers and build up an army to defeat your opponents. If you have experience with other RTS 
+games, you will find that LWG has a familiar feel to it. If you're feeling a little lost, try the "Tutorials" section in the bottom-right of the screen.<br />Good luck, have fun !</p>
+
+<h2 id="fullscreen">Fullscreen</h2>
+<p>You can press F8 at any time to switch to fullscreen mode. Press F8 again to exit fullscreen mode.</p>
+
+<h2 id="menu_ui">Menu and UI</h2>
+<p>All game modes are accessible directly from the main screen via the buttons in the bottom. The section on the left marked "Games" 
+shows all currently played multiplayer games.<br />You can join any game that is not "running" to hop into a multiplayer experience! To its right is the central screen that 
+acts as the chat system for the game. On the right there is a list of all the players that are currently online. Guest account are grey, registered users are yellow, moderators are orange and admins are red.</p>
+
+<h2 id="play">Play</h2>
+<p>This button opens a list of all maps in LWG and allows you to search for a map, create a name for your game, or set a password. After you selected a map, the game will be hosted and listed in the "Games" window on the left, where other players can see and join it. 
+As the creator of the game, you will have the power to move players, kick players, or adjust teams.</p>
+
+<h2 id="play_vs_cpu">Play vs CPU</h2>
+<p>Works the same way as the "Play" button, but the game will not be shown in the "Games" window and no other players can join it. Instead, you can play vs CPU opponents. 
+Excellent for practice and getting a feel for LWG.</p>
+
+<h2 id="ranked_match">Ranked Match</h2>
+<p>In a ranked match, the game will automatically search for an opponent and start a 1v1 game on a specified map. The winner will receive ranking points while the loser will lose ranking points. After your first five games, 
+the game will place you in a division. Your division and your ranking within it can change as you win or lose games.</p>
+
+<h2 id="editor">Editor</h2>
+<p>The Editor allows players to create their own maps or modify existing maps. You can place units, buildings, cliffs, trees, and more. By clicking the "Data" button within the Editor, 
+you can change the abilities, values or attributes for any unit or building in the game for your map. Once you're satisfied with your map and have given it both a name and a description in the "Settings" 
+box, select "Upload" to add it to the list of maps, where any player can find and host it. </br>Let's see what you can come up with!</p>
+
+<h2 id="load_replay">Load Replay</h2>
+<p>After completing a game you will see a Statistics window that contains a "Save Replay" button. Clicking it allows you to save your replay to a file. 
+You can view this replay by selecting "Load Replay" and navigating to that replay file.</p>
+
+<h2 id="tutorials">Tutorials</h2>
+<p>Loads a screen of several Tutorials that will guide you through the basics of the game. After selecting a Tutorial to play, read through the description to the right of the map image. 
+When you're ready, press "Start"! Contact a moderator (orange player name) if you have any questions or suggestions.</p>
+
+<h2 id="custom_ai">Custom AI</h2>
+<p>In LWG it's possible to write your own AI using javascript. You can get more information <a href="/blog/the-littlewargame-ai-api/" class="underline" target="_blank">HERE</a>. Once you've finished writing an AI, select the "Options" button in the top-left 
+part of the screen and click "Load Custom AI". Select the file containing the AI to upload it.</p>
+
+<h2 id="littlechatgame">LittleChatGame</h2>
+<p>LittleChatGame is a mini-game you can play in the LittleWarGame lobby chat using emotes that you've unlocked or purchased. Type "/lcg help" in chat for more info.</p>
+
+<h2 id="developers">The Developers</h2>
+<p> Littlewargame is currently developed by glaba, Aicy, Sqrtofneg1 and Khaled. We are all members of the community that began by being fans of the game and got into developing it because we want to help it grow.</p>
+
+<h2 id="bugs_issues">Bugs & issues</h2>
+<p>There are a couple of minor browser related known issues. If you experience any sort of problems, it often helps to disable plugins and / or adblock. If you have any questions, contact a moderator or an admin. You can also report issues on our <a href="https://discord.gg/y334eXGQ8J" style="color: #FFF839; text-decoration: underline" target="_blank">Discord server</a> or <a href="https://www.reddit.com/r/Littlewargame/" style="color: #FFF839; text-decoration: underline" target="_blank">subreddit</a>.</p>

@@ -1,0 +1,54 @@
+#optionsChecklistDiv,
+#optionsButtonsDiv,
+#optionsQuitButton {
+  display: block;
+  left: 50px;
+  margin-right: 100px;
+  position: relative;
+}
+
+#optionsButtonsDiv {
+  margin-top: 75px;
+}
+
+#optionsChecklistDiv,
+#optionsQuitButton {
+  margin-top: 15px;
+}
+
+#optionsChecklistDiv p,
+#optionsChecklistDiv div {
+  position: relative;
+  display: block;
+}
+#optionsChecklistDiv p {
+  padding-bottom: 20px;
+}
+
+#optionsChecklistDiv p input {
+  display: inline;
+  right: 5px;
+  position: absolute;
+}
+
+#optionsChecklistDiv p select {
+  display: inline;
+  right: 5px;
+  position: absolute;
+  background-color: #2e6cd4;
+  font-size: 16px;
+}
+
+#optionsChecklistDiv p div {
+  top: 10px;
+}
+
+#optionsButtonsDiv button {
+  position: relative;
+  display: inline;
+}
+
+#optionsButtonsDiv button {
+  position: relative;
+  display: inline;
+}

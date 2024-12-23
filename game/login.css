@@ -1,0 +1,26 @@
+/* Unused */
+
+#loginInfo {
+  width: auto;
+  height: 25%;
+  left: 25%;
+  right: 25%;
+  top: 50%;
+  bottom: 35%;
+  position: absolute;
+}
+
+#loadingSoldier {
+  background: url("favicon.png");
+  position: absolute;
+  left: 50%;
+  top: 25%;
+  width: 100px;
+  height: 100px;
+  margin-left: -50px;
+  z-index: 1009;
+  background-size: 100% auto;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: pixelated;
+}

@@ -1,0 +1,506 @@
+<style>
+  .banner
+  {
+      width: 100%;
+  }
+  
+  .changelogHeading
+  {
+      font-size: 32px;
+  }
+  
+  .changelogSubheading
+  {
+      font-size: 24px;
+  }
+  
+  .changelogLink
+  {
+      color: #FFF839;
+  }
+  
+  .infoTable
+  {
+      width: 100%;
+  }
+  
+  .infoDescription
+  {
+      width: 70%;
+  }
+  
+  .infoImage
+  {
+      position: relative;
+      width: 30%;
+  }
+  
+  .infoImage div
+  {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      image-rendering: -moz-crisp-edges;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: pixelated;
+  }
+  
+  .featureName
+  {
+      font-weight: bold;
+  }
+  
+  .jumpTarget {}
+  
+  .highlightedFromJump
+  {
+      color: #FFF839;
+  }
+  
+  .changelogList li
+  {
+      padding: 5px 0px;
+  }
+  
+  .developerNote {
+      margin-left: 0;
+      background-color: #003456;
+  }
+  </style>
+  
+  <div style="margin: 0 40px; font-size: 20px">
+  
+  <h2 class="changelogHeading">» Patches</h2>
+  
+  <h2 >» Patch 4.9.3 (March 6, 2022)</h3>
+  
+  <ul class="changelogList"></ul>
+      <li>Revert editor changes in Patch 4.9</li>
+  </ul>
+  
+  <h2 >» Patch 4.9 (March 4, 2022)</h3>
+  
+  <h3>» Features</h3>
+  
+  <ul class="changelogList">
+      <li>Can now see player's MMR (match making rank) in their profile</li>
+      <li>Max map size has been increased from 172 to 256</li>
+      <li>Upgrades affecting lifetime now work correctly</li>
+      <li>Map settings now has a Passive option which makes disables the neutral player from attacking</li>
+      <li>You can now watch old map versions</li>
+      <li>Editor has been alphabetized</li>
+      <li>Can now view all clans and search for them</li>
+      <li>Banned players will now see a ban reason</li>
+      <li>New AI function “leaveGame” for the AI to leave the game</li>
+  </ul>
+  
+  <h3>» Bug fixes</h3>
+  
+  <ul class="changelogList">
+      <li>Fix friends list messing up on logout</li>
+      <li>Fix &lt;br&gt; showing in error messages</li>
+      <li>Fix Caltrops having negative health after being smashed by Werewolves</li>
+      <li>Fix income tab going to a new line if values were too high</li>
+      <li>Wolf attack icon is no longer hidden behind the sprint icon</li>
+  </ul>
+  
+  <h3>» Quality of life</h3>
+  
+  <ul class="changelogList">
+      <li>Can no longer highlight text in overlay when spectating</li>
+      <li>Popup now appears if you create a map with incorrect dimensions</li>
+      <li>Turned off rain effects by default as they can cause lag</li>
+      <li>Changing teams is now a dropdown instead of a button</li>
+  </ul>
+  
+  <h3>» Microtransactions</h3>
+  
+  <ul class="changelogList">
+      <li>Paid microstransactions have been disabled for now</li>
+  </ul>
+  
+  <h2 >» 4.8 Patch (October 4, 2022)</h3>
+  
+  <h3>» Littlechatgame update</h3>
+  
+  <img style="margin-left: 30px;" src="imgs/emotes/gatlinggun.gif" >
+  <img style="margin-left: 10px;" src="imgs/emotes/snake.gif" >
+  <img style="margin-left: 10px;" src="imgs/emotes/raider.gif" >
+  <img style="margin-left: 10px;" src="imgs/emotes/gyro.gif" >
+  
+  <ul class="changelogList">
+      <li>Add new emotes for the Gatling Gun, Raider and Gyrocraft which can be unlocked with gold</li>
+      <li>Each of these emotes can be used in littlechatgame with /lcg fight. Write /lcg help in the lobby chat for information</li>
+      <li>Fixed a bug where the lobby screen would go black after a lcg werewolf smashed</li>
+  </ul>
+  
+  <h3>» Balance</h3>
+  <ul class="changelogList">
+      <li>repairInefficiency field added to the editor for units, which is how inefficienct each subsequent worker is after the first at repairing</li>
+      <li>workers have a default repairInefficiency value of 0.25</li>
+      <li>A repair inefficiency value means that each additional worker will repair 25% slower than the previous one, while using the same gold per second as normal</li>
+      <li>Worker base repair rate increased from 9 to 12</li>
+      <blockquote class="developerNote">
+          Reasoning: This change improves repairing with one worker back to patch 4.6 levels, but makes repairing a unit with multiple workers slower and more expensive.<br>
+          The intended impact is that sending weak units back to be repaired will still be strong, but using many workers in a fight at once to repair will be costly.
+      </blockquote>
+  </ul>
+  
+  <h3>» Bug Fixes</h3>
+  
+  <ul class="changelogList">
+      <li>Some performance improvements contributed by Khaled</li>
+      <li>Fixed &lt;br&gt; showing up in map descriptions</li>
+      <li>Fixed "Map by" not showing up in map descriptions</li>
+      <li>Fixed a bug that caused some old mods to not load</li>
+      <li>Fixed /stats command to work properly for units/buildings with a space within their name</li>
+      <li>Fixed a rare bug that caused visuals in game to not draw due to attempting to draw a GroundOrder with a negative radius</li>
+      <li>Updated replay game speeds to more accurately match the name</li>
+  </ul>
+  
+  <h3>» Quality of Life and General</h3>
+  
+  <ul class="changelogList">
+      <li>Add Attack speed in a units stats box</li>
+      <li>Add Armor penetration in a units stats box, only for units which have armor penetration</li>
+      <li>Add UnitID for AI builders in API</li>
+      <li>Add sound when a message is sent within game lobby</li>
+      <li>Adaptive framerate for more consistent performance on potatoes (thx Khaled)</li>
+  </ul>
+  
+  <h2 >» 4.7 Balance patch (April 9, 2022)</h3>
+  
+  Welcome to the long awaited balance patch!
+  <br>
+  <br>
+  This patch sees many balance changes mostly at improving general design and strategy diversity, but with an overall  nerf to mechanical play. Many players have complained that mechanical play is too strong, and mech vs mech is the most common matchup in high level play.
+  <br>
+  <br>
+  The most significant nerf to mech play is a reduction to worker repair rate which will severely hamper some worker assited mech pushes, and the common defense where a single mech unit (aided by half a dozen workers) will heroically defend a small army on it's own.
+  <br>
+  <br>
+  In addition we are bringing back the iconic werewolf smash ability, giving werewolves an attack speed decrease to compensate. It's a cool ability and it's nice to have cool abilities in the game.
+  <br>
+  <br>
+  We will be monitoring (and playing!) the game after these changes, and if anything feels too strong or weak there will be future changes to adjust.
+  <br>
+  <br>
+  
+  <img width="48" height="60" src="imgs/emotes/worker.gif" align="left">
+  <h3 style="margin-left: 65px; margin-top: 30px" >» General</h3>
+  <ul class="changelogList">
+      <li>Repair Rate reduced from 12.5 to 9</li>
+      <blockquote class="developerNote">
+          Reason: Multiple workers repairing a single mechanical unit could often repair faster than a small force of enemy units, removing the vulnerability of undefended units
+      </blockquote>
+      <li>Bird vision increase from 9 to 10</li>
+      <li>Bird cost reduced from 100 to 75 gold</li>
+      <li>Bird acceleration increased from 0.03 to 0.05</li>
+      <blockquote class="developerNote">
+          Reason: Birds are quite fragile and easily fly into enemy fire, meaning they are rarely used. By giving birds more agility and vision they should stay alive for longer, and with the cost reduction we hope to see them more often in early game play.
+      </blockquote>
+      <li>Airship health reduced from 300 to 250</li>
+      <li>Airship size reduced by 20%</li>
+      <blockquote class="developerNote">
+          Reason: Long ago we deliberately made airships overpowered to encourage their use. Airships are cheap, fast, easy to tech to, and very durable. <br>Now airships are used almost every high level game and feel too strong. A health decrease should make a player think twice before diving a drop into a tower or other defenses. Also they looked stupidly big.
+      </blockquote>
+      <li>Attack and defence upgrades for each faction initial cost increased from 140 to 150 gold (from 125 gold for mechanical)</li>
+      <li>All upgrades cost increment decreased from 60 to 50 gold</li>
+      <blockquote class="developerNote">
+          Reason: Having upgrades in increments of 50 makes them easier to remember e.g Level 3 will now cost 250 instead of 260 gold and level 4 will cost 300 instead of 320 gold.<br>
+          This will also increase the chance that players get both level 5 upgrades, which rarely happens.
+      </blockquote>
+  </ul>
+  <img width="64" height="64" src="imgs/emotes/soldier.png" align="left">
+  <h3 style="margin-left: 81px; margin-top: 32px" >» Human</h3>
+  <ul class="changelogList">
+      <li>Soldier cost reduced from 85 to 80 gold</li>
+      <li>Archer cost reduced from 85 to 80 gold</li>
+      <blockquote class="developerNote">
+          Reason: In barracks play we see a dominance of raider openings, with early soldier and archer play rarely seen. We hope this change will allow more variation in openings for rax players, in addition to giving the faction a small boost in general.</li>
+      </blockquote>
+      <li>Shroud casting range increased from 5 to 6</li>
+      <blockquote class="developerNote">
+          Reason: It can be quite difficult to get good shrouds off, especially once archer range has been researched. </li>
+      </blockquote>
+  </ul>
+  <img width="64" height="64" src="imgs/emotes/wolf.png" align="left">
+  <h3 style="margin-left: 81px; margin-top: 32px">» Beast</h3>
+  <ul class="changelogList">
+      <li>Werewolves attack cooldown increased from 1.1 to 1.4 seconds</li>
+      <li>Werewolves regain their iconic smash ability</li>
+      <blockquote class="developerNote">
+          Reason: Smashy smashy
+      </blockquote>
+      <li>Dragons lairs no longer require a wolves den</li>
+      <blockquote class="developerNote">
+          Reason: It is not intuitive that a dragons lair should require a wolves den, and there is already the fort requirement.
+      </blockquote>
+      <li>Wolf sprint fast duration increased from 5 to 8 seconds</li>
+      <li>Wolf sprint slow duration decreased from 10 to 5 seconds</li>
+      <blockquote class="developerNote">
+          Reason: Currently using wolf sprint has quite a small benefit with perhaps and even larger downside with the slowdown, these large buffs should increase it's utility.
+      </blockquote>
+  
+  </ul>
+  
+  <img width="64" height="64" src="imgs/emotes/catapult.png" align="left">
+  <h3 style="margin-left: 81px; margin-top: 32px">» Mechanical</h3>
+  <ul class="changelogList">
+      <li>Gatling Caltrop slow duration reduced from 7 to 5 seconds</li>
+      <blockquote class="developerNote">
+          Reason: Seven seconds is quite long and can be frustrating to deal with. This change should keep caltrop's utility when catching units with nearby forces to kill them, while reducing the annoyance when running into a caltrop randomly somewhere in the map.
+      </blockquote>
+      <li>Gatling gun armor penetration increased from 0 to 5</li>
+      <li>Gatling gun damage reduced from 14 to 13</li>
+      <blockquote class="developerNote">
+          Reason: Gatling guns fill a "sort of good against everything" role. These change makes it more of a specalist unit, allowing players on either side more counter options.
+      </blockquote>
+      <li>Gatling gun cargo use reduced from 4 to 2</li>
+      <blockquote class="developerNote">
+          Reason: Only being able to fit two gatling guns into an airship makes gatling gun drops very ineffective, increasing to four per dropship should bring gatling drops more in line with the power of drops for other units.
+      </blockquote>
+      <li>Catapult attack upgrades increment decreased from 5 to 3</li>
+      <li>Gatling gun attack upgrades increment increase from 1 to 2</li>
+      <li>Gyrocraft attack upgrades increment increase from 1 to 2</li>
+      <blockquote class="developerNote">
+          Reason: Many players are familiar with the lategame catapult deathball which can feel imposible to defeat. By reducing catapult's attack upgrade scaling and increasing  for other mechanical units we hope to see less catapult-heavy lategame armies.
+      </blockquote>
+      <li>Ballista attack upgrades increment decreased from 6 to 4</li>
+      <li>Ballista defence upgrades increment increase from 1 to 1.5</li>
+      <blockquote class="developerNote">
+          Reason: Lategame ballistas are often extemely powerful versus air units, but only if they get the opportunity to shoot them. At the same time, as attack upgrades for other units scale, ballistas become increasingly vulnerable to ground forces.<br>
+          These upgrade changes should make ballistas a bit more well rounded in the lategame, promote micro where ballistas can be used as a shield for other units, and with the airship health nerf still allow airships a chance vs ballitas.
+      </blockquote>
+      <blockquote class="developerNote">
+          Note: 0.5 armor has no effect against whole number damage, but 0.5 + 0.5 = 1 obviously will. This means that level 1 armor will still get 1 extra armor, but level 2 will give 2 extra armor.
+      </blockquote>
+      <li>Workshop cost decreased from 150 to 125 gold</li>
+      <blockquote class="developerNote">
+          Reason: Workshop openings have a hard time against raider openers, and the nerfs worker repair speed and to base gatling gun damage certainly won't help with this. Reducing workshop cost and allowing the first workshop to finish earlier should help get that first and second gatling gun out earlier to fend off raiders.
+      </blockquote>
+  </ul>
+  
+  Credit for these changes go to Aicy, Sqrtofneg1, WeirdRat and everyone who helped with testing.
+  
+  GLHF!
+  
+  <h3 >» 4.6 (March 26, 2022)</h3>
+  <h4 >» Bug fixes</h4>
+  <ul class="changelogList">
+      <li>Fixed ramps from being asymmetrical and units being able to block ramps out of vision
+      <li>Change default goldPerDelivery on Castle from 5 to 0 to avoid infinite gold glitch on modded maps   </li>
+  </ul>
+  
+  <h3 >» 4.5.1 (December 13, 2021)</h3>
+  <h4 >It's Christmas!!! 🎄🎄🎄</h4>
+  
+  <p>As an early Christmas present we have the following changes:</p>
+  <ul class="changelogList">
+      <li>Some christmas cheer gameplay 🎁</li>
+      <li>Fix bug where the supply count would show incorrectly when an ally leaves the game</li>
+  </ul>
+  
+  <h3 >» 4.5 (December 6, 2021)</h3>
+  <h4 >» Features</h4>
+  <ul class="changelogList">
+      <li>You can now sort maps by most popular in the last 5 days, in the last month, in the last year, and new</li>
+      <li>Added new gryocraft sprite with 8 directions and a death animation - kudos to Invictus for the sprite</li>
+      <li>Added new gatling gun sprite with 8 directions and a death animation - kudos to Invictus for the sprite</li>
+      <li>Supply count now goes orange when within two supply of max</li>
+      <li>Gameplay tips now show at the bottom of the game</li>
+      <li>You can now see when a player created their account by hovering over their name in their profile</li>
+  </ul>
+  <h4 >» Quality of Life</h4>
+  <ul class="changelogList">
+      <li>Game now notifies you if you are on the wrong version and need to hard refresh (may only be effective from next version)</li>
+      <li>Message in chat when you try and join a game of a different version</li>
+      <li>Reorder units list in the editor to be group by factions (rax, beast, mech) and remove the shadowolf</li>
+      <li>isBiological and isMechanical now display as Biological and Mechanical</li>
+  </ul>
+      <h4 >» Bug fixes</h4>
+  <ul class="changelogList">
+      <li>Fixed bug where modded mines no longer worked
+      <li>No longer get a "forces under attack" notification when when healing wards, shrouds, and slow fields time out</li>
+  </ul>
+  
+  4.4.2 (October 27, 2021)
+  <ul class="changelogList">
+      <li>Changed castle, church and snake charmer hotkeys so they don't match the command card and get built accidentally</li>
+      <li>Fixed bug where clicking on offline friends in friendslist did not work</li>
+      <li>Fixed pathfinding bugs</li>
+      <li>(Hopefully) mitigated bug which caused the game to crash</li>
+  </ul>
+  
+  4.4.1 (October 16, 2021)
+  <ul class="changelogList">
+      <li>Fixed bug where some abilities didn't work</li>
+      <li>Fixed issue where friends and messages didn't appear for guests</li>
+  </ul>
+  
+  4.4 (October 16, 2021)
+  <ul class="changelogList">
+      <li>Auto-mining added to the start of the game. This should help new players jump into the game quicker. Mapmakers now have the option to choose if they want auto-mining enabled for their map.</li>
+      <li>Building construction menus on the worker have been rearranged into four categories: Basic, Human, Beast and Mechanical buildings. This should provide a more logical grouping.</li>
+      <li>You can now invite friends to join your game lobby in game</li>
+      <li>Gameplay tips now appear at the bottom left of the screen</li>
+      <li>You can now watch old replays with a warning</li>
+      <li>Fixed issue where play button was not visible on small monitors in game lobbies</li>
+      <li>Fixed a bug where bans lasted longer than expected</li>
+  </ul>
+  
+  4.3.4 (October 5, 2021)
+  <ul class="changelogList">
+      <li>Remove ads</li>
+  </ul>
+  
+  4.3.3 (March 26, 2021)
+  <ul class="changelogList">
+      <li>Setting LCG volume to 0 now works properly</li>
+      <li>Fixed bug where players could sometimes not load their own maps in the editor</li>
+      <li>Fixed bug where size >1 units pathing into a small space led to extreme lag</li>
+      <li>Marking a map unmodded now fully resets all unit data</li>
+      <li>Add status ( replay ) in the lobby for players watching a replay</li>
+      <li>Chat windows now always pop up in front</li>
+      <li>Fixed vertical centering of popup messages</li>
+  </ul>
+  
+  4.3.2 (March 3, 2021)
+  <ul class="changelogList">
+      <li>Players should no longer have cached code from previous versions, which led to a variety of issues</li>
+      <li>Cancel hotkey can be rebound again</li>
+      <li>Chat windows no longer focus whenever a message arrives</li>
+      <li>Spectator hotkeys are no longer triggered by chatting</li>
+      <li>Waypoints can be set in the editor again</li>
+      <li>LCG volume can be set in the settings window</li>
+  </ul>
+  
+  4.3.1 (March 1, 2021)
+  <ul class="changelogList">
+      <li>The hotkey window has been reworked and CTRL and SHIFT hotkeys can now be rebound</li>
+      <li>Players searching for a ranked game now show as ( searching ) in the lobby</li>
+      <li>Editor bug where values could not be set to 0 has been resolved</li>
+      <li>Personal text can now be set to empty</li>
+      <li>Map loading screens now show the correct map name and image</li>
+      <li>Fixed a bug where ladder games could record the wrong result</li>
+      <li>Inactive lobbies are now automatically closed after an hour</li>
+      <li>Windows no longer show up behind the game lobby</li>
+      <li>Leaving clan now requires confirmation</li>
+      <li>Various issues caused by cookie conflicts have been resolved</li>
+      <li>isUndead and isHuman can now be used in targetRequirements in the Editor</li>
+      <li>Teleporting a unit just as it dies no longer leaves behind a permanent vision circle</li>
+      <li>Username / password autofill no longer show up in lobby chat</li>
+      <li>Maps are no longer automatically marked as unlocked on load</li>
+      <li>Custom AIs can now be loaded again</li>
+      <li>Skins are now saved in replays, and replays with dances no longer desync</li>
+  </ul>
+  
+  <h2 class="changelogHeading">» Overview</h2>
+  For the past few years, the Ranked game mode has featured a number of <a href="#" class="changelogLink" data-target="newUnits">new units</a>, but these were not available on regular maps, adding an unnecessary barrier to entry and confusion for newer players. We are very happy to announce that these units are finally coming to the base game! For a full discussion of how this affects existing maps, continue reading <a href="#" class="changelogLink" data-target="frozenMapFeature">below</a>.<br><br>
+  
+  Additionally, there have been a large number of bug fixes, both <a href="#" class="changelogLink" data-target="majorBugs">major</a> and <a href="#" class="changelogLink" data-target="minorBugs">minor</a>, as well as a fair amount of internal code cleanup, which is vital to continue pushing out new features. More excitingly, some <a href="#" class="changelogLink" data-target="newFeatures">highly-requested features</a> have been added, and much more is planned for the future.<br><br>
+  
+  Finally, as some of you may already know, I (glaba) have become the primary developer of Littlewargame. I am committed to improving this game, increasing the player count, and most importantly, taking community input and remaining transparent. A huge thanks as well to silverboss and Aicy, who have helped with development, and to the countless others who have helped by giving suggestions, testing, and encouragement.
+  
+  <h2 class="changelogHeading">» Balance Changes</h2>
+  
+  There have been a significant number of balance changes from Version 4.2. For those of you who play the Ranked mode, you will already be familiar with these changes in the form of the AA4 maps. For those who are not, the following is a quick summary of the most significant changes to existing units and buildings:
+  
+  <ul class="changelogList">
+      <li>The HP, armor, health regeneration, and damage of all units and buildings have doubled, to allow for greater granularity when balancing</li>
+      <li>The starting gold amount has been reduced from 300 to 50</li>
+      <li>The supply cap has been increased from 100 to 150</li>
+      <li>All speed and range upgrades have been removed, replaced by the Range Upgrade for Archers, and the Sprint ability for Wolves</li>
+      <li>Dragons cost significantly less gold and supply, and are correspondingly weaker in HP and damage</li>
+      <li>The damage and HP of the Worker have been reduced to encourage aggression</li>
+  </ul>
+  
+  <h2 class="changelogHeading jumpTarget" id="newUnits">» New Units</h2>
+  <h3 class="changelogSubheading">Raider</h3>
+  <table class="infoTable"><tr>
+  <td class="infoDescription">The Raider is a new early-game unit intended for early scouting, harassment, and quick snipes, available right away from the Barracks. Its Flash ability allows it to teleport, allowing it to escape chasing units or jump forward aggressively into retreating units. Research from a new building, the Armory, also unlocks the Shroud ability, which allows the Raider to create an area in which opposing ranged units are reduced to melee range.</td>
+  <td class="infoImage" data-name="raider" data-type="unit"></td>
+  </tr></table>
+  
+  <h3 class="changelogSubheading">Gyrocraft</h3>
+  <table class="infoTable"><tr>
+  <td class="infoDescription">The Gyrocraft is an extremely fast mechanical air unit. Although it is fast, it is very fragile and very vulnerable to splash damage. The Gyrocraft is an essential component of a well-balanced mechanical army and can be built from a new building, the Mill.</td>
+  <td class="infoImage" data-name="gyrocopter" data-type="unit"></td>
+  </tr></table>
+  
+  <h3 class="changelogSubheading">Gatling gun</h3>
+  <table class="infoTable"><tr>
+  <td class="infoDescription">The Gatling gun is a powerful and quick mechanical unit built from the Workshop that is great for early-game defense, mid-game pushes, and late-game harassment. Its ability Drop Caltrops allows it to drop a spike at the current position, which will temporarily slow any enemy unit that steps over it, making it a useful positional tool.</td>
+  <td class="infoImage" data-name="gatling_gun" data-type="unit"></td>
+  </tr></table>
+  
+  <h3 class="changelogSubheading">Snake</h3>
+  <table class="infoTable"><tr>
+  <td class="infoDescription">The Snake is a new unit that can be built from the Wolves Den after completion of the Snake Charmer. It boasts one of the highest damage per cost values of any unit in the game, but it pays for this prowess by being a very fragile unit that is also highly vulnerable to air units. When combined with Wolves, Snakes pack a powerful punch.</td>
+  <td class="infoImage" data-name="snake" data-type="unit"></td>
+  </tr></table>
+  
+  <h2 class="changelogHeading">» New Buildings</h2>
+  
+  <h3 class="changelogSubheading">Armory</h3>
+  <table class="infoTable"><tr>
+  <td class="infoDescription">The Armory is a new technology building for Human units created from the Barracks. It allows you to unlock the Shroud ability for Raiders, or improve the range of Archers, with the Range Upgrade.</td>
+  <td class="infoImage" data-name="armory" data-type="building"></td>
+  </tr></table>
+  
+  <h3 class="changelogSubheading">Mill</h3>
+  <table class="infoTable"><tr>
+  <td class="infoDescription">The Mill is a new building that can be constructed after a Workshop, which allows you to construct Gyrocrafts.</td>
+  <td class="infoImage" data-name="mill" data-type="building"></td>
+  </tr></table>
+  
+  <h3 class="changelogSubheading">Snake Charmer</h3>
+  <table class="infoTable"><tr>
+  <td class="infoDescription">The Snake Charmer is a new building that can be constructed after building a Wolves Den. This unlocks the ability to make Snakes as well as upgrade Sprint for your Wolves.</td>
+  <td class="infoImage" data-name="buildings_snake" data-type="building"></td>
+  </tr></table>
+  
+  <h2 class="changelogHeading jumpTarget" id="newFeatures">» New Features</h2>
+  
+  A number of features have been added as a part of Version 4.3. The following is a comprehensive list of all the newly added features:
+  
+  <ul class="changelogList">
+      <li><span class="featureName">Replay Window</span>: The Load Replay button has been replaced with the Replays button, which opens a window where replays of recently played games are autosaved. These replays are saved to your computer and not your account, so clearing browser data will delete all autosaved replays. Replays can still be loaded and saved to your computer as before. Expect this feature to see more UI improvements in upcoming patches.</li>
+      <li><span class="featureName jumpTarget" id="frozenMapFeature">Frozen map files</span>: Mapmakers no longer need to worry about updates breaking their custom gameplay! Mapmakers now have the option to "freeze" their map files, saving all custom unit data and graphics such that any updates to the base game will not affect their map's gameplay. Many maps have automatically been converted to frozen map files as part of the upgrade to Version 4.3. Note that freezing a map file is irreversible, so if your map was automatically frozen and you would like for it to change with the base game instead, please contact a moderator or admin to help restore your map.</li>
+      <li><span class="featureName">Symmetric map editing</span>: A long-awaited feature, symmetric editing is finally available in the editor. Mapmakers have a choice of five modes: no mirroring, horizontal mirroring, vertical mirroring, diagonal mirroring, and four-way mirroring. When a symmetric map editing mode is active, any change to the map will automatically be mirrored according to the chosen mode in real-time.</li>
+      <li><span class="featureName">Editor image previews</span>: Many graphics fields in the editor now show image previews to simplify the process of setting graphics coordinates.</li>
+      <li><span class="featureName">Custom aura color and ability cursors</span>: Formerly, healing ward and slow field were hard-coded to have a green and blue aura color, and mapmakers who wanted custom aura colors were short of luck. Similarly, ability cursors were also hard-coded and could not be set manually. Now, custom aura colors and cursors can be set by mapmakers.</li>
+      <li><span class="featureName">Map compression</span>: Map files are now compressed while being loaded, which should lead to slightly better load times for those with poor Internet connections.</li>
+  </ul>
+  
+  <h2 class="changelogHeading">» Bug Fixes</h2>
+  <h3 class="changelogSubheading jumpTarget" id="majorBugs">Major bugs</h3>
+  <ul class="changelogList">
+      <li>Actively exploited XSS vulnerability has been removed</li>
+      <li>Logging out now actually logs out the user and clears the previous session's state</li>
+      <li>Force login works again</li>
+      <li>The map search window now shows the correct number of pages</li>
+      <li>Change map now works consistently in multiplayer and singleplayer</li>
+      <li>"Ghost lobbies" where the host is logged out are no longer possible</li>
+      <li>Users that have logged out should no longer incorrectly show as logged in in the lobby</li>
+      <li>Online friends list is now always accurate</li>
+      <li>Random graphics objects from previously played maps are no longer added to maps in the editor</li>
+      <li>Players kicked from lobbies now are actually kicked</li>
+  </ul>
+  
+  <h3 class="changelogSubheading jumpTarget" id="minorBugs">Minor bugs</h3>
+  <ul class="changelogList">
+      <li>Clicking the player link in the top left works again</li>
+      <li>Players with no ladder matches now see "Play 5 ranked matches" instead of "Play NaN ranked matches"</li>
+      <li>The unread message blinking animation sometimes was active when there were no unread messages</li>
+      <li>Players who loaded a map in the editor had a status of "CPU match" in the lobby</li>
+      <li>Santa Worker dance animation now works</li>
+      <li>Chat history is now visible in replays and users can mute chat and ping in replays</li>
+      <li>Bird tab priority is now lower than most other units</li>
+      <li>Editor buttons are no longer misaligned for users who had that issue</li>
+  </ul>
+  <br>
+  </div>
+  <img class="banner pixelated" src="imgs/footer_4_3.png"></img>
+  

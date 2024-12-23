@@ -1,0 +1,73 @@
+.S-rank-img,
+.A-rank-img,
+.B-rank-img,
+.C-rank-img {
+  height: 124px;
+  margin-top: -25px;
+  margin-bottom: -25px;
+}
+
+.S-rank,
+.A-rank,
+.B-rank,
+.C-rank {
+  display: inline-block;
+  overflow: hidden;
+  height: 124px;
+  width: 100px;
+}
+.S-rank {
+  width: 134px;
+}
+.S-rank-img {
+  margin-left: -314px;
+}
+.A-rank-img {
+  margin-left: -200px;
+}
+.B-rank-img {
+  margin-left: -100px;
+}
+.C-rank-img {
+  margin-left: -0px;
+}
+
+.rank-info {
+  display: block;
+  font-size: 24px;
+}
+
+#rankContainer {
+  text-align: center;
+}
+
+.S-rank div,
+.A-rank div,
+.B-rank div,
+.C-rank div {
+  text-align: center;
+  margin-top: 10px;
+}
+
+#guestAccountPrompt {
+  text-align: center;
+}
+
+.gainedLadderPoints {
+  color: #5eff3e;
+  font-size: 50px;
+}
+
+.lostLadderPoints {
+  color: red;
+  font-size: 50px;
+}
+
+#placementMessage {
+  color: white;
+  font-size: 20px;
+}
+
+#promotionTextDiv {
+  margin: 10px 20px 30px 20px;
+}

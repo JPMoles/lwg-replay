@@ -1,0 +1,42 @@
+#dataFieldsTable {
+  position: absolute;
+  left: 235px;
+  top: 60px;
+  height: 470px;
+  width: 795px;
+  overflow: auto;
+}
+
+#dataFieldsTable input {
+  font-size: 18px;
+  height: 16px;
+}
+
+#dataFieldsTable button {
+  font-size: 16px;
+  height: 24px;
+}
+
+#mapEditorData {
+  position: absolute;
+  left: 50%;
+  margin-left: -400px;
+  top: 50px;
+  width: 1050px;
+  height: 600px;
+  z-index: 1003;
+}
+
+#main_data_table {
+  width: 100%;
+}
+
+#main_data_table td {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.preview {
+  display: block;
+  height: 64px;
+  height: 64px;
+}
