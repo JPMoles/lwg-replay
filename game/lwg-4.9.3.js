@@ -2825,7 +2825,7 @@
             // var SERVER_ADRESS = 'ws://localhost:8083';
 
             // The server and special event placeholders will be filled out by the gulp build
-            var SERVER_ADRESS = "wss://sockets.littlewargame.com:8083";
+            var SERVER_ADRESS = "wss://lwg-dev-lon1.littlewargame.com:9000";
             const SPECIAL_EVENT = "@@special_event";
             const MICROTRANSACTIONSENABLED = false;
 
